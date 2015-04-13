@@ -1,9 +1,9 @@
-cc=gcc
+cc=g++
 BIN_PATH="../bin/"
 
 clean :
 	rm bin/*
 
-all : broker.c worker.c
-	$(CC) -o $(BIN_PATH)broker broker.c -lzmq
-	$(CC) -o $(BIN_PATH)worker worker.c -lzmq
+all : broker.cpp worker.cpp
+	g++ broker.cpp -o $(BIN_PATH)broker -lzmq
+	g++ worker.cpp -o $(BIN_PATH)worker -lzmq
