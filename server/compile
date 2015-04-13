@@ -1,0 +1,1 @@
+g++ broker.cpp -lzmq -o broker
