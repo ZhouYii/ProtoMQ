@@ -14,9 +14,6 @@ int main (void)
         printf ("Received request: [%s]\n", string);
         free (string);
 
-        //  Do some 'work'
-        sleep (1);
-
         //  Send reply back to client
         s_send (responder, "World");
     }
