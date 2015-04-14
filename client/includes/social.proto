@@ -16,6 +16,7 @@ message AppRequest {
   }
   required MessageType msg_type = 2;
 
+  // Implementation done
   message RegisterMessage {
     // Already have phone_id
     required string secured_password = 1;
