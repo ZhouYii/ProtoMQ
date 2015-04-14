@@ -5,4 +5,4 @@ clean :
 	rm bin/*
 
 all : client.cpp
-	g++ client.cpp -o client -lzmq -lprotobuf
+	g++ client.cpp includes/social.pb.cc -o client -lzmq -lprotobuf -g
