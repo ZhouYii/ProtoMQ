@@ -1,14 +1,32 @@
 #include <cassandra.h>
 #include <stdio.h>
+struct Basic_ {
+    cass_bool_t bln;
+    cass_float_t flt;
+    cass_double_t dbl;
+    cass_int32_t i32;
+    cass_int64_t i64;
+};
+
+CassCluster* create_cluster() {
+    CassCluster* cluster = cass_cluster_new();
+    cass_cluster_set_contact_points(cluster, "127.0.0.1");
+    return cluster;
+}
+
+typedef struct Basic_ Basic;
+
+/*
+ * Query abstractions for database
+ */
 
 int main() {
   /* Setup and connect to cluster */
-  CassFuture* connect_future = NULL;
-  CassCluster* cluster = cass_cluster_new();
+  CassCluster* cluster = create_cluster();
   CassSession* session = cass_session_new();
+  CassFuture* close_future = NULL;
 
   /* Add contact points */
-  cass_cluster_set_contact_points(cluster, "127.0.0.1");
 
   /* Provide the cluster object as configuration to connect the session */
   connect_future = cass_session_connect(session, cluster);
