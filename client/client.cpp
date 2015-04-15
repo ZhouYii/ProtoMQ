@@ -20,9 +20,10 @@ void attachPhotoToMessage(netmsg::AppRequest_StatusUpdate* msg,
         file.read(buf, size);
         file.close();
 
-        msg->add_photos(buf);
+        msg->add_photos(buf,size);
         delete[] buf;
         std::cout << "Client: Attached 1 photo" << std::endl;
+        std::cout << "Photo Size " << std::to_string(size) << std::endl;
     }
     else
     {
@@ -41,7 +42,7 @@ void createStatusMessage(netmsg::AppRequest* msg,
 
     // Set type
     netmsg::AppRequest_MessageType type =
-        netmsg::AppRequest_MessageType_tUpdateStatus;
+        netmsg::AppRequest_MessageType_tStatusUpdate;
     msg->set_msg_type(type);
 
     // Set text payload
@@ -116,15 +117,17 @@ int main (int argc, char *argv[])
                                 "password",
                                 "yi@email.com");
 
-    std::string* photo_paths[1];
+    std::string* photo_paths[2];
     std::string path1 = "img.jpeg";
+    std::string path2 = "img2.jpeg";
     photo_paths[0] = &path1;
+    photo_paths[1] = &path2;
     netmsg::AppRequest msg3;
     createStatusMessage(&msg3,
                             6505758649,
                             "New status message here.",
                             photo_paths,
-                            1);
+                            2);
 
     //s_send (requester, "Hello");
     sendMessage(&msg, &requester);
@@ -132,6 +135,10 @@ int main (int argc, char *argv[])
     std::cout << "Received reply [" << str << "]" << std::endl;
 
     sendMessage(&msg2, &requester);
+    str = s_recv (requester);
+    std::cout << "Received reply [" << str << "]" << std::endl;
+
+    sendMessage(&msg3, &requester);
     str = s_recv (requester);
     std::cout << "Received reply [" << str << "]" << std::endl;
 

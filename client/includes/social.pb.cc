@@ -271,7 +271,7 @@ void protobuf_AddDesc_social_2eproto() {
     "ppRequest.RoomType\022\027\n\017uuid_suggestion\030\003 "
     "\001(\014\032B\n\017RoomPostMessage\022\021\n\troom_uuid\030\001 \002("
     "\014\022\014\n\004body\030\002 \002(\t\022\016\n\006photos\030\003 \003(\014\"n\n\013Messa"
-    "geType\022\021\n\rtUpdateStatus\020\001\022\017\n\013tCreateRoom"
+    "geType\022\021\n\rtStatusUpdate\020\001\022\017\n\013tCreateRoom"
     "\020\002\022\017\n\013tCreatePost\020\003\022\021\n\rtRegistration\020\004\022\n"
     "\n\006tLogin\020\005\022\013\n\007tLogout\020\006\",\n\010RoomType\022\t\n\005E"
     "vent\020\001\022\013\n\007Profile\020\002\022\010\n\004Page\020\003\"|\n\010AppRepl"
@@ -327,7 +327,7 @@ bool AppRequest_MessageType_IsValid(int value) {
 }
 
 #ifndef _MSC_VER
-const AppRequest_MessageType AppRequest::tUpdateStatus;
+const AppRequest_MessageType AppRequest::tStatusUpdate;
 const AppRequest_MessageType AppRequest::tCreateRoom;
 const AppRequest_MessageType AppRequest::tCreatePost;
 const AppRequest_MessageType AppRequest::tRegistration;

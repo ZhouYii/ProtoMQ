@@ -44,7 +44,7 @@ class AppReply;
 class AppReply_CreateRoomReply;
 
 enum AppRequest_MessageType {
-  AppRequest_MessageType_tUpdateStatus = 1,
+  AppRequest_MessageType_tStatusUpdate = 1,
   AppRequest_MessageType_tCreateRoom = 2,
   AppRequest_MessageType_tCreatePost = 3,
   AppRequest_MessageType_tRegistration = 4,
@@ -52,7 +52,7 @@ enum AppRequest_MessageType {
   AppRequest_MessageType_tLogout = 6
 };
 bool AppRequest_MessageType_IsValid(int value);
-const AppRequest_MessageType AppRequest_MessageType_MessageType_MIN = AppRequest_MessageType_tUpdateStatus;
+const AppRequest_MessageType AppRequest_MessageType_MessageType_MIN = AppRequest_MessageType_tStatusUpdate;
 const AppRequest_MessageType AppRequest_MessageType_MessageType_MAX = AppRequest_MessageType_tLogout;
 const int AppRequest_MessageType_MessageType_ARRAYSIZE = AppRequest_MessageType_MessageType_MAX + 1;
 
@@ -685,7 +685,7 @@ class AppRequest : public ::google::protobuf::Message {
   typedef AppRequest_RoomPostMessage RoomPostMessage;
 
   typedef AppRequest_MessageType MessageType;
-  static const MessageType tUpdateStatus = AppRequest_MessageType_tUpdateStatus;
+  static const MessageType tStatusUpdate = AppRequest_MessageType_tStatusUpdate;
   static const MessageType tCreateRoom = AppRequest_MessageType_tCreateRoom;
   static const MessageType tCreatePost = AppRequest_MessageType_tCreatePost;
   static const MessageType tRegistration = AppRequest_MessageType_tRegistration;

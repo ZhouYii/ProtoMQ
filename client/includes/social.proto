@@ -7,7 +7,7 @@ message AppRequest {
   // This is a guarantee a message of a certain type will exist.
   // At time of writing, no situations will send concurrent messagse
   enum MessageType {
-    tUpdateStatus=1;
+    tStatusUpdate=1;
     tCreateRoom=2;
     tCreatePost=3;
     tRegistration=4;
