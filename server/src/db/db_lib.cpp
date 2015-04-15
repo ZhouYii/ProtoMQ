@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <vector>
 
 #include <assert.h>
 
@@ -73,6 +74,47 @@ CassError insert_into_basic(CassSession* session,
   return rc;
 }
 
+
+CassError select_from_friend_by_phoneid(CassSession* session,
+                                        const CassPrepared* prepared,
+                                        const int64_t phone_id,
+                                        std::vector<int64_t>* response)
+{
+    CassError rc = CASS_OK;
+    CassStatement* statement = NULL;
+    CassFuture* future = NULL;
+    statement = cass_prepared_bind(prepared);
+    cass_statement_bind_int64(statement, 0, phone_id);
+    future = cass_session_execute(session, statement);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) 
+    {
+        print_error(future);
+    } else
+    {
+        const CassResult* result = cass_future_get_result(future);
+        CassIterator* iterator = cass_iterator_from_result(result);
+        int64_t friend_id;
+
+        if (cass_iterator_next(iterator)) 
+        {
+            const CassRow* row = cass_iterator_get_row(iterator);
+            cass_value_get_int64(cass_row_get_column(row, 1), &friend_id);
+            response->push_back(friend_id);
+        }
+
+        cass_result_free(result);
+        cass_iterator_free(iterator);
+    }
+
+    cass_future_free(future);
+    cass_statement_free(statement);
+
+    return rc;
+}
+
 CassError select_from_user_by_phone(CassSession* session,
                                     const CassPrepared * prepared,
                                     const int64_t phone_id,
@@ -120,7 +162,47 @@ CassCluster* create_cluster() {
     return cluster;
 }
 
-CassError prepare_select_from_user_by_phone(CassSession* session,
+/*
+ *  Prepared Queries
+ */
+CassError prepare_query(CassSession* session,
+                        const CassPrepared** prepared,
+                        const char* query_string)
+{
+    CassError rc = CASS_OK;
+    CassFuture* future = NULL;
+    const char* query = query_string;
+
+    future = cass_session_prepare(session, query);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) {
+        print_error(future);
+    } else {
+        *prepared = cass_future_get_prepared(future);
+    }
+
+    cass_future_free(future);
+
+    return rc;
+}
+
+CassError prepare_select_from_blacklist_by_phoneid(CassSession* session,
+                                                 const CassPrepared** prepared)
+{
+    const char* query = "SELECT * FROM social.blacklist WHERE userid1=?";
+    return prepare_query(session, prepared, query);
+}
+
+CassError prepare_select_from_friend_by_phoneid(CassSession* session,
+                                               const CassPrepared** prepared)
+{
+    const char* query = "SELECT * FROM social.friend WHERE userid1=?";
+    return prepare_query(session, prepared, query);
+}
+
+CassError prepare_select_from_user_by_phoneid(CassSession* session,
                                             const CassPrepared** prepared)
 {
     CassError rc = CASS_OK;
@@ -184,16 +266,23 @@ int main() {
 
     db_create_new_user(session, 3333333333, "password", NULL);
 
-    std::cout  << 1 << std::endl;
-    if (prepare_select_from_user_by_phone(session, &prepared) == CASS_OK)
+    if (prepare_select_from_user_by_phoneid(session, &prepared) == CASS_OK)
     {
-        std::cout << 2 << std::endl;
         select_from_user_by_phone(session, prepared, 3333333333, &output);
-        std::cout << 3 << std::endl;
         cass_prepared_free(prepared);
         std::cout << "Retrieved password:" << output.password << std::endl;
     }
 
+    if (prepare_select_from_friend_by_phoneid(session, &prepared) == CASS_OK)
+    {
+        std::vector<int64_t> friends;
+        select_from_friend_by_phoneid(session,prepared,6505758649,&friends);
+        cass_prepared_free(prepared);
+
+        for (int i=0; i < friends.size(); i+= 1) {
+            std::cout << "Friend:" << friends.at(i) << std::endl;
+        }
+    }
 
     // Cleanup
     close_future = cass_session_close(session);
