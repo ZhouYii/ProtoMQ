@@ -98,7 +98,7 @@ CassError select_from_friend_by_phoneid(CassSession* session,
         CassIterator* iterator = cass_iterator_from_result(result);
         int64_t friend_id;
 
-        if (cass_iterator_next(iterator)) 
+        while (cass_iterator_next(iterator)) 
         {
             const CassRow* row = cass_iterator_get_row(iterator);
             cass_value_get_int64(cass_row_get_column(row, 1), &friend_id);
