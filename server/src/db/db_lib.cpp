@@ -125,7 +125,7 @@ CassError prepare_select_from_user_by_phone(CassSession* session,
 {
     CassError rc = CASS_OK;
     CassFuture* future = NULL;
-    const char* query = "SELECT * FROM social.user WHERE key = ?";
+    const char* query = "SELECT * FROM social.user WHERE phone_number =?";
 
     future = cass_session_prepare(session, query);
     cass_future_wait(future);
@@ -184,21 +184,26 @@ int main() {
 
     db_create_new_user(session, 3333333333, "password", NULL);
 
+    std::cout  << 1 << std::endl;
     if (prepare_select_from_user_by_phone(session, &prepared) == CASS_OK)
     {
+        std::cout << 2 << std::endl;
         select_from_user_by_phone(session, prepared, 3333333333, &output);
+        std::cout << 3 << std::endl;
         cass_prepared_free(prepared);
         std::cout << "Retrieved password:" << output.password << std::endl;
     }
 
-  close_future = cass_session_close(session);
-  cass_future_wait(close_future);
-  cass_future_free(close_future);
 
-  cass_cluster_free(cluster);
-  cass_session_free(session);
+    // Cleanup
+    close_future = cass_session_close(session);
+    cass_future_wait(close_future);
+    cass_future_free(close_future);
 
-  return 0;
+    cass_cluster_free(cluster);
+    cass_session_free(session);
+
+    return 0;
 }
 
 #endif
