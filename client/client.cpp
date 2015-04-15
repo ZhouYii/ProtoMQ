@@ -60,6 +60,27 @@ void createStatusMessage(netmsg::AppRequest* msg,
     std::cout << "Client: Attached " << r_msg->photos_size() << std::endl;
 }
 
+void createLoginMessage(netmsg::AppRequest* msg,
+                           int64_t phone_num,
+                           std::string password,
+                           std::string email) 
+{
+    // Set message key
+    msg->set_phone_id(phone_num);
+
+    // Set type
+    netmsg::AppRequest_MessageType type =
+        netmsg::AppRequest_MessageType_tLogin;
+    msg->set_msg_type(type);
+
+    // Set payload
+    netmsg::AppRequest_LoginMessage* l_msg =
+        new netmsg::AppRequest_LoginMessage();
+    l_msg->set_secured_password(password);
+    l_msg->set_email(email);
+    msg->set_allocated_login_msg(l_msg);
+}
+
 void createRegistrationMessage(netmsg::AppRequest* msg,
                                int64_t phone_num,
                                std::string username,
@@ -117,17 +138,25 @@ int main (int argc, char *argv[])
                                 "password",
                                 "yi@email.com");
 
-    std::string* photo_paths[2];
+    std::string* photo_paths[3];
     std::string path1 = "img.jpeg";
     std::string path2 = "img2.jpeg";
+    std::string path3 = "large.jpeg";
     photo_paths[0] = &path1;
     photo_paths[1] = &path2;
+    photo_paths[2] = &path3;
     netmsg::AppRequest msg3;
     createStatusMessage(&msg3,
                             6505758649,
                             "New status message here.",
                             photo_paths,
-                            2);
+                            3);
+
+    netmsg::AppRequest msg4;
+    createLoginMessage(&msg4,
+                        6505758648,
+                        "password",
+                        "yi@email.com");
 
     //s_send (requester, "Hello");
     sendMessage(&msg, &requester);
@@ -139,6 +168,10 @@ int main (int argc, char *argv[])
     std::cout << "Received reply [" << str << "]" << std::endl;
 
     sendMessage(&msg3, &requester);
+    str = s_recv (requester);
+    std::cout << "Received reply [" << str << "]" << std::endl;
+
+    sendMessage(&msg4, &requester);
     str = s_recv (requester);
     std::cout << "Received reply [" << str << "]" << std::endl;
 
