@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 
+// Request handlers are responsible for unpacking message contents
+
 void handleRequestLogin(netmsg::AppRequest* msg) 
 {
     netmsg::AppRequest_LoginMessage login_msg = msg->login_msg();
@@ -41,6 +43,33 @@ void handleRequestRegistration(netmsg::AppRequest* msg)
 
     // Validate email or something + check if it's zero-length string.
 
+}
+
+// Request handler for event creation
+void handleRequestCreateEvent(netmsg::AppRequest* msg) {
+    netmsg::AppRequest_CreateEvent create_event = msg->create_event();
+
+    // Validate message
+    if (create_event.has_host_id && create_event.has_title() &&
+            create_event.has_location() && create_event.has_time()) 
+    {
+        int64_t host_id = create_event.host_id();
+        int64_t posix_time = create_event.time();
+        std::string title = create_event.title();
+        std::string location = create_event.location();
+
+        int num_invited_users = create_event.invited_users_size();
+        if (num_invited_users > 0) {
+            for (int user_idx = 0; user_idx < num_invited_users; user_idx += 1) {
+                int64_t user_id = create_event.invited_users(user_idx);
+            }
+        }
+    } else {
+        // Input were not correct
+
+        // Send error response
+
+    }
 }
 
 void handleRequestStatusUpdate(netmsg::AppRequest* msg)

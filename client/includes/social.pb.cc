@@ -67,6 +67,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* AppReply_CreateEventUUID_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   AppReply_CreateEventUUID_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* AppReply_ResponseType_descriptor_ = NULL;
 
 }  // namespace
 
@@ -293,7 +294,7 @@ void protobuf_AssignDesc_social_2eproto() {
   AppRequest_RoomType_descriptor_ = AppRequest_descriptor_->enum_type(1);
   AppReply_descriptor_ = file->message_type(1);
   static const int AppReply_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppReply, success_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppReply, response_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppReply, create_reply_),
   };
   AppReply_reflection_ =
@@ -337,6 +338,7 @@ void protobuf_AssignDesc_social_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AppReply_CreateEventUUID));
+  AppReply_ResponseType_descriptor_ = AppReply_descriptor_->enum_type(0);
 }
 
 namespace {
@@ -423,7 +425,7 @@ void protobuf_AddDesc_social_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014social.proto\022\006netmsg\"\300\014\n\nAppRequest\022\020\n"
+    "\n\014social.proto\022\006netmsg\"\257\r\n\nAppRequest\022\020\n"
     "\010phone_id\030\001 \002(\003\0220\n\010msg_type\030\002 \002(\0162\036.netm"
     "sg.AppRequest.MessageType\0223\n\007reg_msg\030\003 \001"
     "(\0132\".netmsg.AppRequest.RegisterMessage\0222"
@@ -459,15 +461,20 @@ void protobuf_AddDesc_social_2eproto() {
     "\004name\030\001 \002(\t\022)\n\004type\030\002 \002(\0162\033.netmsg.AppRe"
     "quest.RoomType\022\027\n\017uuid_suggestion\030\003 \001(\014\032"
     "B\n\017RoomPostMessage\022\021\n\troom_uuid\030\001 \002(\014\022\014\n"
-    "\004body\030\002 \002(\t\022\016\n\006photos\030\003 \003(\014\"n\n\013MessageTy"
-    "pe\022\021\n\rtStatusUpdate\020\001\022\017\n\013tCreateRoom\020\002\022\017"
-    "\n\013tCreatePost\020\003\022\021\n\rtRegistration\020\004\022\n\n\006tL"
-    "ogin\020\005\022\013\n\007tLogout\020\006\",\n\010RoomType\022\t\n\005Event"
-    "\020\001\022\013\n\007Profile\020\002\022\010\n\004Page\020\003\"\244\001\n\010AppReply\022\017"
-    "\n\007success\030\001 \002(\010\0226\n\014create_reply\030\002 \001(\0132 ."
-    "netmsg.AppReply.CreateRoomReply\032\'\n\017Creat"
-    "eRoomReply\022\024\n\014success_uuid\030\001 \001(\014\032&\n\017Crea"
-    "teEventUUID\022\023\n\013event_uuid1\030\001 \002(\014", 1792);
+    "\004body\030\002 \002(\t\022\016\n\006photos\030\003 \003(\014\"\334\001\n\013MessageT"
+    "ype\022\021\n\rtStatusUpdate\020\001\022\020\n\014tCreateEvent\020\002"
+    "\022\020\n\014tEventInvite\020\004\022\020\n\014tEventAccept\020\005\022\020\n\014"
+    "tEventReject\020\006\022\021\n\rtPollAccepted\020\007\022\021\n\rtPo"
+    "llRejected\020\010\022\021\n\rtRegistration\020\t\022\n\n\006tLogi"
+    "n\020\n\022\013\n\007tLogout\020\013\022\017\n\013tCreateRoom\020\014\022\017\n\013tCr"
+    "eatePost\020\r\",\n\010RoomType\022\t\n\005Event\020\001\022\013\n\007Pro"
+    "file\020\002\022\010\n\004Page\020\003\"\372\001\n\010AppReply\0224\n\rrespons"
+    "e_type\030\001 \002(\0162\035.netmsg.AppReply.ResponseT"
+    "ype\0226\n\014create_reply\030\002 \001(\0132 .netmsg.AppRe"
+    "ply.CreateRoomReply\032\'\n\017CreateRoomReply\022\024"
+    "\n\014success_uuid\030\001 \001(\014\032&\n\017CreateEventUUID\022"
+    "\023\n\013event_uuid1\030\001 \002(\014\"/\n\014ResponseType\022\014\n\010"
+    "tSuccess\020\001\022\021\n\rtMissingInput\020\002", 1989);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "social.proto", &protobuf_RegisterTypes);
   AppRequest::default_instance_ = new AppRequest();
@@ -520,10 +527,16 @@ bool AppRequest_MessageType_IsValid(int value) {
   switch(value) {
     case 1:
     case 2:
-    case 3:
     case 4:
     case 5:
     case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
       return true;
     default:
       return false;
@@ -532,11 +545,17 @@ bool AppRequest_MessageType_IsValid(int value) {
 
 #ifndef _MSC_VER
 const AppRequest_MessageType AppRequest::tStatusUpdate;
-const AppRequest_MessageType AppRequest::tCreateRoom;
-const AppRequest_MessageType AppRequest::tCreatePost;
+const AppRequest_MessageType AppRequest::tCreateEvent;
+const AppRequest_MessageType AppRequest::tEventInvite;
+const AppRequest_MessageType AppRequest::tEventAccept;
+const AppRequest_MessageType AppRequest::tEventReject;
+const AppRequest_MessageType AppRequest::tPollAccepted;
+const AppRequest_MessageType AppRequest::tPollRejected;
 const AppRequest_MessageType AppRequest::tRegistration;
 const AppRequest_MessageType AppRequest::tLogin;
 const AppRequest_MessageType AppRequest::tLogout;
+const AppRequest_MessageType AppRequest::tCreateRoom;
+const AppRequest_MessageType AppRequest::tCreatePost;
 const AppRequest_MessageType AppRequest::MessageType_MIN;
 const AppRequest_MessageType AppRequest::MessageType_MAX;
 const int AppRequest::MessageType_ARRAYSIZE;
@@ -4885,6 +4904,27 @@ void AppRequest::Swap(AppRequest* other) {
 
 // ===================================================================
 
+const ::google::protobuf::EnumDescriptor* AppReply_ResponseType_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return AppReply_ResponseType_descriptor_;
+}
+bool AppReply_ResponseType_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#ifndef _MSC_VER
+const AppReply_ResponseType AppReply::tSuccess;
+const AppReply_ResponseType AppReply::tMissingInput;
+const AppReply_ResponseType AppReply::ResponseType_MIN;
+const AppReply_ResponseType AppReply::ResponseType_MAX;
+const int AppReply::ResponseType_ARRAYSIZE;
+#endif  // _MSC_VER
 #ifndef _MSC_VER
 const int AppReply_CreateRoomReply::kSuccessUuidFieldNumber;
 #endif  // !_MSC_VER
@@ -5349,7 +5389,7 @@ void AppReply_CreateEventUUID::Swap(AppReply_CreateEventUUID* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int AppReply::kSuccessFieldNumber;
+const int AppReply::kResponseTypeFieldNumber;
 const int AppReply::kCreateReplyFieldNumber;
 #endif  // !_MSC_VER
 
@@ -5372,7 +5412,7 @@ AppReply::AppReply(const AppReply& from)
 
 void AppReply::SharedCtor() {
   _cached_size_ = 0;
-  success_ = false;
+  response_type_ = 1;
   create_reply_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -5411,7 +5451,7 @@ AppReply* AppReply::New() const {
 
 void AppReply::Clear() {
   if (_has_bits_[0 / 32] & 3) {
-    success_ = false;
+    response_type_ = 1;
     if (has_create_reply()) {
       if (create_reply_ != NULL) create_reply_->::netmsg::AppReply_CreateRoomReply::Clear();
     }
@@ -5430,13 +5470,18 @@ bool AppReply::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required bool success = 1;
+      // required .netmsg.AppReply.ResponseType response_type = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &success_)));
-          set_has_success();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::netmsg::AppReply_ResponseType_IsValid(value)) {
+            set_response_type(static_cast< ::netmsg::AppReply_ResponseType >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(1, value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -5482,9 +5527,10 @@ failure:
 void AppReply::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:netmsg.AppReply)
-  // required bool success = 1;
-  if (has_success()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->success(), output);
+  // required .netmsg.AppReply.ResponseType response_type = 1;
+  if (has_response_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->response_type(), output);
   }
 
   // optional .netmsg.AppReply.CreateRoomReply create_reply = 2;
@@ -5503,9 +5549,10 @@ void AppReply::SerializeWithCachedSizes(
 ::google::protobuf::uint8* AppReply::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppReply)
-  // required bool success = 1;
-  if (has_success()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->success(), target);
+  // required .netmsg.AppReply.ResponseType response_type = 1;
+  if (has_response_type()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->response_type(), target);
   }
 
   // optional .netmsg.AppReply.CreateRoomReply create_reply = 2;
@@ -5527,9 +5574,10 @@ int AppReply::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required bool success = 1;
-    if (has_success()) {
-      total_size += 1 + 1;
+    // required .netmsg.AppReply.ResponseType response_type = 1;
+    if (has_response_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->response_type());
     }
 
     // optional .netmsg.AppReply.CreateRoomReply create_reply = 2;
@@ -5566,8 +5614,8 @@ void AppReply::MergeFrom(const ::google::protobuf::Message& from) {
 void AppReply::MergeFrom(const AppReply& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_success()) {
-      set_success(from.success());
+    if (from.has_response_type()) {
+      set_response_type(from.response_type());
     }
     if (from.has_create_reply()) {
       mutable_create_reply()->::netmsg::AppReply_CreateRoomReply::MergeFrom(from.create_reply());
@@ -5596,7 +5644,7 @@ bool AppReply::IsInitialized() const {
 
 void AppReply::Swap(AppReply* other) {
   if (other != this) {
-    std::swap(success_, other->success_);
+    std::swap(response_type_, other->response_type_);
     std::swap(create_reply_, other->create_reply_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

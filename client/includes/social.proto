@@ -8,11 +8,17 @@ message AppRequest {
   // At time of writing, no situations will send concurrent messagse
   enum MessageType {
     tStatusUpdate=1;
-    tCreateRoom=2;
-    tCreatePost=3;
-    tRegistration=4;
-    tLogin=5;
-    tLogout=6;
+    tCreateEvent=2;
+    tEventInvite=4;
+    tEventAccept=5;
+    tEventReject=6;
+    tPollAccepted=7;
+    tPollRejected=8;
+    tRegistration=9;
+    tLogin=10;
+    tLogout=11;
+    tCreateRoom=12;
+    tCreatePost=13;
   }
   required MessageType msg_type = 2;
 
@@ -110,7 +116,15 @@ message AppRequest {
 
 message AppReply {
   // fail -> error, error reason in message
-  required bool success = 1;
+  enum ResponseType {
+    // The generic success message
+    tSuccess=1;
+
+    // Failure Messages
+    // Missing content fields
+    tMissingInput=2;
+  }
+  required ResponseType response_type = 1;
 
   message CreateRoomReply {
     optional bytes success_uuid = 1;

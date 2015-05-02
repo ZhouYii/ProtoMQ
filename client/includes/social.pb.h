@@ -52,15 +52,21 @@ class AppReply_CreateEventUUID;
 
 enum AppRequest_MessageType {
   AppRequest_MessageType_tStatusUpdate = 1,
-  AppRequest_MessageType_tCreateRoom = 2,
-  AppRequest_MessageType_tCreatePost = 3,
-  AppRequest_MessageType_tRegistration = 4,
-  AppRequest_MessageType_tLogin = 5,
-  AppRequest_MessageType_tLogout = 6
+  AppRequest_MessageType_tCreateEvent = 2,
+  AppRequest_MessageType_tEventInvite = 4,
+  AppRequest_MessageType_tEventAccept = 5,
+  AppRequest_MessageType_tEventReject = 6,
+  AppRequest_MessageType_tPollAccepted = 7,
+  AppRequest_MessageType_tPollRejected = 8,
+  AppRequest_MessageType_tRegistration = 9,
+  AppRequest_MessageType_tLogin = 10,
+  AppRequest_MessageType_tLogout = 11,
+  AppRequest_MessageType_tCreateRoom = 12,
+  AppRequest_MessageType_tCreatePost = 13
 };
 bool AppRequest_MessageType_IsValid(int value);
 const AppRequest_MessageType AppRequest_MessageType_MessageType_MIN = AppRequest_MessageType_tStatusUpdate;
-const AppRequest_MessageType AppRequest_MessageType_MessageType_MAX = AppRequest_MessageType_tLogout;
+const AppRequest_MessageType AppRequest_MessageType_MessageType_MAX = AppRequest_MessageType_tCreatePost;
 const int AppRequest_MessageType_MessageType_ARRAYSIZE = AppRequest_MessageType_MessageType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* AppRequest_MessageType_descriptor();
@@ -92,6 +98,25 @@ inline bool AppRequest_RoomType_Parse(
     const ::std::string& name, AppRequest_RoomType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<AppRequest_RoomType>(
     AppRequest_RoomType_descriptor(), name, value);
+}
+enum AppReply_ResponseType {
+  AppReply_ResponseType_tSuccess = 1,
+  AppReply_ResponseType_tMissingInput = 2
+};
+bool AppReply_ResponseType_IsValid(int value);
+const AppReply_ResponseType AppReply_ResponseType_ResponseType_MIN = AppReply_ResponseType_tSuccess;
+const AppReply_ResponseType AppReply_ResponseType_ResponseType_MAX = AppReply_ResponseType_tMissingInput;
+const int AppReply_ResponseType_ResponseType_ARRAYSIZE = AppReply_ResponseType_ResponseType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* AppReply_ResponseType_descriptor();
+inline const ::std::string& AppReply_ResponseType_Name(AppReply_ResponseType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    AppReply_ResponseType_descriptor(), value);
+}
+inline bool AppReply_ResponseType_Parse(
+    const ::std::string& name, AppReply_ResponseType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<AppReply_ResponseType>(
+    AppReply_ResponseType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -1311,11 +1336,17 @@ class AppRequest : public ::google::protobuf::Message {
 
   typedef AppRequest_MessageType MessageType;
   static const MessageType tStatusUpdate = AppRequest_MessageType_tStatusUpdate;
-  static const MessageType tCreateRoom = AppRequest_MessageType_tCreateRoom;
-  static const MessageType tCreatePost = AppRequest_MessageType_tCreatePost;
+  static const MessageType tCreateEvent = AppRequest_MessageType_tCreateEvent;
+  static const MessageType tEventInvite = AppRequest_MessageType_tEventInvite;
+  static const MessageType tEventAccept = AppRequest_MessageType_tEventAccept;
+  static const MessageType tEventReject = AppRequest_MessageType_tEventReject;
+  static const MessageType tPollAccepted = AppRequest_MessageType_tPollAccepted;
+  static const MessageType tPollRejected = AppRequest_MessageType_tPollRejected;
   static const MessageType tRegistration = AppRequest_MessageType_tRegistration;
   static const MessageType tLogin = AppRequest_MessageType_tLogin;
   static const MessageType tLogout = AppRequest_MessageType_tLogout;
+  static const MessageType tCreateRoom = AppRequest_MessageType_tCreateRoom;
+  static const MessageType tCreatePost = AppRequest_MessageType_tCreatePost;
   static inline bool MessageType_IsValid(int value) {
     return AppRequest_MessageType_IsValid(value);
   }
@@ -1764,14 +1795,38 @@ class AppReply : public ::google::protobuf::Message {
   typedef AppReply_CreateRoomReply CreateRoomReply;
   typedef AppReply_CreateEventUUID CreateEventUUID;
 
+  typedef AppReply_ResponseType ResponseType;
+  static const ResponseType tSuccess = AppReply_ResponseType_tSuccess;
+  static const ResponseType tMissingInput = AppReply_ResponseType_tMissingInput;
+  static inline bool ResponseType_IsValid(int value) {
+    return AppReply_ResponseType_IsValid(value);
+  }
+  static const ResponseType ResponseType_MIN =
+    AppReply_ResponseType_ResponseType_MIN;
+  static const ResponseType ResponseType_MAX =
+    AppReply_ResponseType_ResponseType_MAX;
+  static const int ResponseType_ARRAYSIZE =
+    AppReply_ResponseType_ResponseType_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ResponseType_descriptor() {
+    return AppReply_ResponseType_descriptor();
+  }
+  static inline const ::std::string& ResponseType_Name(ResponseType value) {
+    return AppReply_ResponseType_Name(value);
+  }
+  static inline bool ResponseType_Parse(const ::std::string& name,
+      ResponseType* value) {
+    return AppReply_ResponseType_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
-  // required bool success = 1;
-  inline bool has_success() const;
-  inline void clear_success();
-  static const int kSuccessFieldNumber = 1;
-  inline bool success() const;
-  inline void set_success(bool value);
+  // required .netmsg.AppReply.ResponseType response_type = 1;
+  inline bool has_response_type() const;
+  inline void clear_response_type();
+  static const int kResponseTypeFieldNumber = 1;
+  inline ::netmsg::AppReply_ResponseType response_type() const;
+  inline void set_response_type(::netmsg::AppReply_ResponseType value);
 
   // optional .netmsg.AppReply.CreateRoomReply create_reply = 2;
   inline bool has_create_reply() const;
@@ -1784,8 +1839,8 @@ class AppReply : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:netmsg.AppReply)
  private:
-  inline void set_has_success();
-  inline void clear_has_success();
+  inline void set_has_response_type();
+  inline void clear_has_response_type();
   inline void set_has_create_reply();
   inline void clear_has_create_reply();
 
@@ -1794,7 +1849,7 @@ class AppReply : public ::google::protobuf::Message {
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::netmsg::AppReply_CreateRoomReply* create_reply_;
-  bool success_;
+  int response_type_;
   friend void  protobuf_AddDesc_social_2eproto();
   friend void protobuf_AssignDesc_social_2eproto();
   friend void protobuf_ShutdownFile_social_2eproto();
@@ -4108,28 +4163,29 @@ inline void AppReply_CreateEventUUID::set_allocated_event_uuid1(::std::string* e
 
 // AppReply
 
-// required bool success = 1;
-inline bool AppReply::has_success() const {
+// required .netmsg.AppReply.ResponseType response_type = 1;
+inline bool AppReply::has_response_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void AppReply::set_has_success() {
+inline void AppReply::set_has_response_type() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void AppReply::clear_has_success() {
+inline void AppReply::clear_has_response_type() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void AppReply::clear_success() {
-  success_ = false;
-  clear_has_success();
+inline void AppReply::clear_response_type() {
+  response_type_ = 1;
+  clear_has_response_type();
 }
-inline bool AppReply::success() const {
-  // @@protoc_insertion_point(field_get:netmsg.AppReply.success)
-  return success_;
+inline ::netmsg::AppReply_ResponseType AppReply::response_type() const {
+  // @@protoc_insertion_point(field_get:netmsg.AppReply.response_type)
+  return static_cast< ::netmsg::AppReply_ResponseType >(response_type_);
 }
-inline void AppReply::set_success(bool value) {
-  set_has_success();
-  success_ = value;
-  // @@protoc_insertion_point(field_set:netmsg.AppReply.success)
+inline void AppReply::set_response_type(::netmsg::AppReply_ResponseType value) {
+  assert(::netmsg::AppReply_ResponseType_IsValid(value));
+  set_has_response_type();
+  response_type_ = value;
+  // @@protoc_insertion_point(field_set:netmsg.AppReply.response_type)
 }
 
 // optional .netmsg.AppReply.CreateRoomReply create_reply = 2;
@@ -4191,6 +4247,11 @@ template <> struct is_proto_enum< ::netmsg::AppRequest_RoomType> : ::google::pro
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::netmsg::AppRequest_RoomType>() {
   return ::netmsg::AppRequest_RoomType_descriptor();
+}
+template <> struct is_proto_enum< ::netmsg::AppReply_ResponseType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::netmsg::AppReply_ResponseType>() {
+  return ::netmsg::AppReply_ResponseType_descriptor();
 }
 
 }  // namespace google
