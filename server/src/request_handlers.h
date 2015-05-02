@@ -16,10 +16,10 @@ void HandleRequestLogin(CassSession* session,
 void HandleRequestRegistration(CassSession* session,
                               netmsg::AppRequest* msg);
 
-void handleRequestCreateEvent(CassSession* session,
+void HandleRequestCreateEvent(CassSession* session,
                               netmsg::AppRequest* msg);
 
-void handleRequestStatusUpdate(CassSession* session, 
+void HandleRequestStatusUpdate(CassSession* session, 
                                netmsg::AppRequest* msg);
 #endif
 

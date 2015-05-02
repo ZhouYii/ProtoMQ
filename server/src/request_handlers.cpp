@@ -42,7 +42,7 @@ void HandleRequestRegistration(CassSession* session,
 }
 
 // Request handler for event creation
-void handleRequestCreateEvent(CassSession* session, 
+void HandleRequestCreateEvent(CassSession* session, 
                               netmsg::AppRequest* msg) {
     netmsg::AppRequest_CreateEvent create_event = msg->create_event();
     CassError casserr;
@@ -79,7 +79,7 @@ void handleRequestCreateEvent(CassSession* session,
     }
 }
 
-void handleRequestStatusUpdate(CassSession* session, 
+void HandleRequestStatusUpdate(CassSession* session, 
                                netmsg::AppRequest* msg)
 {
     netmsg::AppRequest_StatusUpdate status_msg = msg->status_updates();

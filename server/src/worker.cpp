@@ -1,12 +1,7 @@
 #ifndef _WORKER_CPP
 #define _WORKER_CPP
 
-#include "includes/zhelpers.hpp"
-#include "request_handlers.cpp"
-#include <cassandra.h>
-
-#include <iostream>
-#include <fstream>
+#include "worker.h"
 
 void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
     // Routing Logic
@@ -15,7 +10,7 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
     {
         case netmsg::AppRequest_MessageType_tStatusUpdate :
             if (rcv_msg->has_status_updates())
-                handleRequestStatusUpdate(rcv_msg);
+                HandleRequestStatusUpdate(session, rcv_msg);
             break;
 
         case netmsg::AppRequest_MessageType_tCreateEvent :
@@ -56,12 +51,12 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
 
         case netmsg::AppRequest_MessageType_tRegistration :
             if (rcv_msg->has_reg_msg())
-                HandleRequestRegistration(rcv_msg);
+                HandleRequestRegistration(session, rcv_msg);
             break;
 
         case netmsg::AppRequest_MessageType_tLogin :
             if (rcv_msg->has_login_msg())
-                HandleRequestLogin(rcv_msg);
+                HandleRequestLogin(session, rcv_msg);
             break;
 
         case netmsg::AppRequest_MessageType_tLogout :
