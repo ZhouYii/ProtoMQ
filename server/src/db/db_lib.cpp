@@ -2,6 +2,7 @@
 #define _DB_LIB_C
 
 #include <cassandra.h>
+#include <ctime>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -12,6 +13,47 @@
 
 #include "query_structs.h"
 #include "db_utils.cpp"
+
+CassError DbCreateNewEvent(CassSession* session,
+                              const int64_t host_id,
+                              const int64_t time,
+                              const std::string title,
+                              const std::string location)
+{
+    CassError rc = CASS_OK;
+    CassStatement* statement = NULL;
+    CassFuture* future = NULL;
+
+    CassCollection* collection = NULL;
+    collection = cass_collection_new(CASS_COLLECTION_TYPE_SET, 1);
+    cass_collection_append_int64(collection, host_id);
+
+    CassUuid uuid1;
+    GenerateV1Uuid(&uuid1);
+
+    const char* query = "INSERT INTO social.events (event_id, title, location, \
+                         begin_time, attending_userids) VALUES (?, ?, ?, ?, ?)";
+    statement = cass_statement_new(query, 5);
+    cass_statement_bind_uuid(statement, 0, uuid1);
+    cass_statement_bind_string(statement, 1, title.c_str());
+    cass_statement_bind_string(statement, 2, location.c_str());
+    cass_statement_bind_int64(statement, 3, time);
+    cass_statement_bind_collection(statement, 4, collection);
+
+    future = cass_session_execute(session, statement);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) {
+        print_error(future);
+    }
+
+    // Free alloc'd mem.
+    cass_future_free(future);
+    cass_statement_free(statement);
+    cass_collection_free(collection);
+    return rc;
+}
 
 CassError db_create_new_user(CassSession* session,
                              const int64_t phone_id,

@@ -56,8 +56,8 @@ enum AppRequest_MessageType {
   AppRequest_MessageType_tEventInvite = 4,
   AppRequest_MessageType_tEventAccept = 5,
   AppRequest_MessageType_tEventReject = 6,
-  AppRequest_MessageType_tPollAccepted = 7,
-  AppRequest_MessageType_tPollRejected = 8,
+  AppRequest_MessageType_tPollInvited = 7,
+  AppRequest_MessageType_tPollAccepted = 8,
   AppRequest_MessageType_tRegistration = 9,
   AppRequest_MessageType_tLogin = 10,
   AppRequest_MessageType_tLogout = 11,
@@ -1340,8 +1340,8 @@ class AppRequest : public ::google::protobuf::Message {
   static const MessageType tEventInvite = AppRequest_MessageType_tEventInvite;
   static const MessageType tEventAccept = AppRequest_MessageType_tEventAccept;
   static const MessageType tEventReject = AppRequest_MessageType_tEventReject;
+  static const MessageType tPollInvited = AppRequest_MessageType_tPollInvited;
   static const MessageType tPollAccepted = AppRequest_MessageType_tPollAccepted;
-  static const MessageType tPollRejected = AppRequest_MessageType_tPollRejected;
   static const MessageType tRegistration = AppRequest_MessageType_tRegistration;
   static const MessageType tLogin = AppRequest_MessageType_tLogin;
   static const MessageType tLogout = AppRequest_MessageType_tLogout;

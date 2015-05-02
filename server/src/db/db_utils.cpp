@@ -3,6 +3,8 @@
 
 #include <cassandra.h>
 #include <stdio.h>
+#include <ctime>
+#include <stdint.h>
 
 void print_error(CassFuture* future) {
   const char* message;
@@ -41,5 +43,10 @@ CassError connect_session(CassSession* session, const CassCluster* cluster) {
   cass_future_free(future);
 
   return rc;
+}
+
+void GenerateV1Uuid(CassUuid* cass_uuid) {
+    cass_uint64_t cass_time = std::time(NULL);
+    cass_uuid_min_from_time(cass_time, cass_uuid);
 }
 #endif

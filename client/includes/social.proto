@@ -12,8 +12,8 @@ message AppRequest {
     tEventInvite=4;
     tEventAccept=5;
     tEventReject=6;
-    tPollAccepted=7;
-    tPollRejected=8;
+    tPollInvited=7;
+    tPollAccepted=8;
     tRegistration=9;
     tLogin=10;
     tLogout=11;

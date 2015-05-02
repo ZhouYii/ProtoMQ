@@ -3,64 +3,65 @@
 
 #include "includes/zhelpers.hpp"
 #include "request_handlers.cpp"
+#include <cassandra.h>
 
 #include <iostream>
 #include <fstream>
 
-void doRouting(netmsg::AppRequest& rcv_msg) {
+void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
     // Routing Logic
-    netmsg::AppRequest_MessageType type = rcv_msg.msg_type();
+    netmsg::AppRequest_MessageType type = rcv_msg->msg_type();
     switch (type)
     {
         case netmsg::AppRequest_MessageType_tStatusUpdate :
-            if (rcv_msg.has_status_updates())
-                handleRequestStatusUpdate(&rcv_msg);
+            if (rcv_msg->has_status_updates())
+                handleRequestStatusUpdate(rcv_msg);
             break;
 
         case netmsg::AppRequest_MessageType_tCreateEvent :
-            if (rcv_msg.has_create_event()) {
+            if (rcv_msg->has_create_event()) {
                 break; // Handle logic
             }
             break;
 
         case netmsg::AppRequest_MessageType_tEventAccept :
-            if (rcv_msg.has_accept_event()) {
+            if (rcv_msg->has_accept_event()) {
                 break;
             }
             break;
 
         case netmsg::AppRequest_MessageType_tEventReject :
-            if (rcv_msg.has_reject_event()) {
+            if (rcv_msg->has_reject_event()) {
                 break;
             }
             break;
 
         case netmsg::AppRequest_MessageType_tEventInvite :
-            if (rcv_msg.has_invite_event()) {
+            if (rcv_msg->has_invite_event()) {
                 break;
             }
             break;
 
         case netmsg::AppRequest_MessageType_tPollAccepted :
-            if (rcv_msg.has_poll_accepted()) {
+            if (rcv_msg->has_poll_accepted()) {
                 break;
             }
             break;
 
         case netmsg::AppRequest_MessageType_tPollInvited :
-            if (rcv_msg.has_poll_invited()) {
+            if (rcv_msg->has_poll_invited()) {
                 break;
             }
             break;
 
         case netmsg::AppRequest_MessageType_tRegistration :
-            if (rcv_msg.has_reg_msg())
-                handleRequestRegistration(&rcv_msg);
+            if (rcv_msg->has_reg_msg())
+                HandleRequestRegistration(rcv_msg);
             break;
 
         case netmsg::AppRequest_MessageType_tLogin :
-            if (rcv_msg.has_login_msg())
-                handleRequestLogin(&rcv_msg);
+            if (rcv_msg->has_login_msg())
+                HandleRequestLogin(rcv_msg);
             break;
 
         case netmsg::AppRequest_MessageType_tLogout :
@@ -73,6 +74,10 @@ void doRouting(netmsg::AppRequest& rcv_msg) {
 
 int main (int argc, char *argv[])
 {
+    // get connection
+    CassCluster* cluster = create_cluster();
+    CassSession* session = cass_session_new();
+    
     zmq::context_t context(1);
     zmq::socket_t responder(context, ZMQ_REP);
     responder.connect("tcp://localhost:5560");
@@ -87,7 +92,7 @@ int main (int argc, char *argv[])
         rcv_msg.ParseFromArray(reply.data(), reply.size());
 
         std::cout << rcv_msg.msg_type() << std::endl;
-        doRouting(&rcv_msg);
+        doRouting(session, &rcv_msg);
 
         // std::cout << "Received request: " << string << std::endl;
         // Do some 'work'

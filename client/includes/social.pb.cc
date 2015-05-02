@@ -425,7 +425,7 @@ void protobuf_AddDesc_social_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014social.proto\022\006netmsg\"\257\r\n\nAppRequest\022\020\n"
+    "\n\014social.proto\022\006netmsg\"\256\r\n\nAppRequest\022\020\n"
     "\010phone_id\030\001 \002(\003\0220\n\010msg_type\030\002 \002(\0162\036.netm"
     "sg.AppRequest.MessageType\0223\n\007reg_msg\030\003 \001"
     "(\0132\".netmsg.AppRequest.RegisterMessage\0222"
@@ -461,20 +461,20 @@ void protobuf_AddDesc_social_2eproto() {
     "\004name\030\001 \002(\t\022)\n\004type\030\002 \002(\0162\033.netmsg.AppRe"
     "quest.RoomType\022\027\n\017uuid_suggestion\030\003 \001(\014\032"
     "B\n\017RoomPostMessage\022\021\n\troom_uuid\030\001 \002(\014\022\014\n"
-    "\004body\030\002 \002(\t\022\016\n\006photos\030\003 \003(\014\"\334\001\n\013MessageT"
+    "\004body\030\002 \002(\t\022\016\n\006photos\030\003 \003(\014\"\333\001\n\013MessageT"
     "ype\022\021\n\rtStatusUpdate\020\001\022\020\n\014tCreateEvent\020\002"
     "\022\020\n\014tEventInvite\020\004\022\020\n\014tEventAccept\020\005\022\020\n\014"
-    "tEventReject\020\006\022\021\n\rtPollAccepted\020\007\022\021\n\rtPo"
-    "llRejected\020\010\022\021\n\rtRegistration\020\t\022\n\n\006tLogi"
-    "n\020\n\022\013\n\007tLogout\020\013\022\017\n\013tCreateRoom\020\014\022\017\n\013tCr"
-    "eatePost\020\r\",\n\010RoomType\022\t\n\005Event\020\001\022\013\n\007Pro"
-    "file\020\002\022\010\n\004Page\020\003\"\372\001\n\010AppReply\0224\n\rrespons"
-    "e_type\030\001 \002(\0162\035.netmsg.AppReply.ResponseT"
-    "ype\0226\n\014create_reply\030\002 \001(\0132 .netmsg.AppRe"
-    "ply.CreateRoomReply\032\'\n\017CreateRoomReply\022\024"
-    "\n\014success_uuid\030\001 \001(\014\032&\n\017CreateEventUUID\022"
-    "\023\n\013event_uuid1\030\001 \002(\014\"/\n\014ResponseType\022\014\n\010"
-    "tSuccess\020\001\022\021\n\rtMissingInput\020\002", 1989);
+    "tEventReject\020\006\022\020\n\014tPollInvited\020\007\022\021\n\rtPol"
+    "lAccepted\020\010\022\021\n\rtRegistration\020\t\022\n\n\006tLogin"
+    "\020\n\022\013\n\007tLogout\020\013\022\017\n\013tCreateRoom\020\014\022\017\n\013tCre"
+    "atePost\020\r\",\n\010RoomType\022\t\n\005Event\020\001\022\013\n\007Prof"
+    "ile\020\002\022\010\n\004Page\020\003\"\372\001\n\010AppReply\0224\n\rresponse"
+    "_type\030\001 \002(\0162\035.netmsg.AppReply.ResponseTy"
+    "pe\0226\n\014create_reply\030\002 \001(\0132 .netmsg.AppRep"
+    "ly.CreateRoomReply\032\'\n\017CreateRoomReply\022\024\n"
+    "\014success_uuid\030\001 \001(\014\032&\n\017CreateEventUUID\022\023"
+    "\n\013event_uuid1\030\001 \002(\014\"/\n\014ResponseType\022\014\n\010t"
+    "Success\020\001\022\021\n\rtMissingInput\020\002", 1988);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "social.proto", &protobuf_RegisterTypes);
   AppRequest::default_instance_ = new AppRequest();
@@ -549,8 +549,8 @@ const AppRequest_MessageType AppRequest::tCreateEvent;
 const AppRequest_MessageType AppRequest::tEventInvite;
 const AppRequest_MessageType AppRequest::tEventAccept;
 const AppRequest_MessageType AppRequest::tEventReject;
+const AppRequest_MessageType AppRequest::tPollInvited;
 const AppRequest_MessageType AppRequest::tPollAccepted;
-const AppRequest_MessageType AppRequest::tPollRejected;
 const AppRequest_MessageType AppRequest::tRegistration;
 const AppRequest_MessageType AppRequest::tLogin;
 const AppRequest_MessageType AppRequest::tLogout;

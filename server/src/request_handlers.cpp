@@ -6,10 +6,11 @@
 
 #include <iostream>
 #include <fstream>
+#include <cassandra.h>
 
 // Request handlers are responsible for unpacking message contents
 
-void handleRequestLogin(netmsg::AppRequest* msg) 
+void HandleRequestLogin(netmsg::AppRequest* msg) 
 {
     netmsg::AppRequest_LoginMessage login_msg = msg->login_msg();
     if (login_msg.has_secured_password()) 
@@ -34,7 +35,7 @@ void handleRequestLogin(netmsg::AppRequest* msg)
     }
 }
 
-void handleRequestRegistration(netmsg::AppRequest* msg)
+void HandleRequestRegistration(netmsg::AppRequest* msg)
 {
     netmsg::AppRequest_RegisterMessage reg_msg = msg->reg_msg();
     std::cout << reg_msg.username() << "  " <<
@@ -46,29 +47,39 @@ void handleRequestRegistration(netmsg::AppRequest* msg)
 }
 
 // Request handler for event creation
-void handleRequestCreateEvent(netmsg::AppRequest* msg) {
+void handleRequestCreateEvent(CassSession* session, netmsg::AppRequest* msg) {
     netmsg::AppRequest_CreateEvent create_event = msg->create_event();
+    CassError casserr;
+    int64_t host_id;
+    int64_t posix_time;
+    int64_t user_id;
+    std::string title;
+    std::string location;
+    int num_invited_users;
 
     // Validate message
-    if (create_event.has_host_id && create_event.has_title() &&
+    if (create_event.has_host_id() && create_event.has_title() &&
             create_event.has_location() && create_event.has_time()) 
     {
-        int64_t host_id = create_event.host_id();
-        int64_t posix_time = create_event.time();
-        std::string title = create_event.title();
-        std::string location = create_event.location();
+        host_id = create_event.host_id();
+        posix_time = create_event.time();
+        title = create_event.title();
+        location = create_event.location();
+        casserr = DbCreateNewEvent(session, host_id, posix_time, title, location);
+        // TODO:Logging
 
-        int num_invited_users = create_event.invited_users_size();
+        /*
+        num_invited_users = create_event.invited_users_size();
         if (num_invited_users > 0) {
             for (int user_idx = 0; user_idx < num_invited_users; user_idx += 1) {
-                int64_t user_id = create_event.invited_users(user_idx);
+                user_id = create_event.invited_users(user_idx);
             }
         }
+        */
     } else {
+        std::cout << "Ill formed new event query" << std::endl;
         // Input were not correct
-
         // Send error response
-
     }
 }
 
