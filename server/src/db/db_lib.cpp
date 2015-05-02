@@ -278,7 +278,7 @@ CassError prepare_select_from_basic(CassSession* session, const CassPrepared** p
 /*
  * Query abstractions for database
  */
-
+/*
 int main() {
 
     // get connection
@@ -325,5 +325,5 @@ int main() {
 
     return 0;
 }
-
+*/
 #endif

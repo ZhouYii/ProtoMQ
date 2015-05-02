@@ -4,7 +4,7 @@
 // Request handlers are responsible for unpacking message contents
 //
 #include "includes/zhelpers.hpp"
-#include "includes/social.pb.cc"
+#include "includes/social.pb.h"
 
 #include <iostream>
 #include <fstream>

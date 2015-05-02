@@ -12,7 +12,7 @@
 #include <assert.h>
 
 #include "query_structs.h"
-#include "db_utils.cpp"
+#include "db_utils.h"
 
 /*
  * Create new event 
