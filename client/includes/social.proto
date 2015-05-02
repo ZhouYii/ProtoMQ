@@ -47,6 +47,49 @@ message AppRequest {
     Page=3; // Non-affiliation. Can remove this
   }
 
+  message CreateEvent {
+    required int64 host_id = 1;
+    required string title = 2;
+    required string location = 3;
+    required int64 time = 4; // POSIX time
+    repeated int64 invited_users = 5;
+  }
+  optional CreateEvent create_event = 6;
+
+  // Separating messages for event accept,rejc,invt in anticipation of future diversification.
+  // If there is contention for 1-16 ids, we can combine these message types.
+  message EventAccept {
+    required int64 user_id = 1;
+    required bytes event_uuid1 = 2;
+  }
+  optional EventAccept accept_event = 7;
+
+  message EventReject {
+    required int64 user_id = 1;
+    required bytes event_uuid1 = 2;
+  }
+  optional EventReject reject_event = 8;
+
+  message EventInvite {
+    required int64 user_id = 1;
+    required bytes event_uuid1 = 2;
+  }
+  optional EventInvite invite_event = 9;
+
+  message PollInvited {
+    required int64 user_id = 1;
+    optional int64 offset = 2;
+    optional int64 amount = 3;
+  }
+  optional PollInvited poll_invited = 10;
+
+  message PollAccepted {
+    required int64 user_id = 1;
+    optional int64 offset = 2;
+    optional int64 amount = 3;
+  }
+  optional PollAccepted poll_accepted = 11;
+
   // Rooms represent anything with a "wall". User profiles, events, etc.
   message CreateRoom {
     required string name = 1;
@@ -65,7 +108,6 @@ message AppRequest {
   optional bool logout_request = 15;
 }
 
-// Plan to not use this.
 message AppReply {
   // fail -> error, error reason in message
   required bool success = 1;
@@ -74,5 +116,9 @@ message AppReply {
     optional bytes success_uuid = 1;
   }
   optional CreateRoomReply create_reply=2;
+
+  message CreateEventUUID {
+    required bytes event_uuid1 = 1;
+  }
 
 }
