@@ -1,10 +1,7 @@
 #ifndef _DB_UTIL_CPP
 #define _DB_UTIL_CPP
 
-#include <cassandra.h>
-#include <stdio.h>
-#include <ctime>
-#include <stdint.h>
+#include "db_utils.h"
 
 void print_error(CassFuture* future) {
   const char* message;

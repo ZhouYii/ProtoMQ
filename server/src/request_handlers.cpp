@@ -1,16 +1,10 @@
 #ifndef _REQ_H_CPP
 #define _REQ_H_CPP
+#include "request_handlers.h"
+#include "db/db_lib.h"
 
-#include "includes/zhelpers.hpp"
-#include "includes/social.pb.cc"
-
-#include <iostream>
-#include <fstream>
-#include <cassandra.h>
-
-// Request handlers are responsible for unpacking message contents
-
-void HandleRequestLogin(netmsg::AppRequest* msg) 
+void HandleRequestLogin(CassSession* session, 
+                        netmsg::AppRequest* msg) 
 {
     netmsg::AppRequest_LoginMessage login_msg = msg->login_msg();
     if (login_msg.has_secured_password()) 
@@ -35,7 +29,8 @@ void HandleRequestLogin(netmsg::AppRequest* msg)
     }
 }
 
-void HandleRequestRegistration(netmsg::AppRequest* msg)
+void HandleRequestRegistration(CassSession* session,
+                               netmsg::AppRequest* msg)
 {
     netmsg::AppRequest_RegisterMessage reg_msg = msg->reg_msg();
     std::cout << reg_msg.username() << "  " <<
@@ -47,7 +42,8 @@ void HandleRequestRegistration(netmsg::AppRequest* msg)
 }
 
 // Request handler for event creation
-void handleRequestCreateEvent(CassSession* session, netmsg::AppRequest* msg) {
+void handleRequestCreateEvent(CassSession* session, 
+                              netmsg::AppRequest* msg) {
     netmsg::AppRequest_CreateEvent create_event = msg->create_event();
     CassError casserr;
     int64_t host_id;
@@ -83,7 +79,8 @@ void handleRequestCreateEvent(CassSession* session, netmsg::AppRequest* msg) {
     }
 }
 
-void handleRequestStatusUpdate(netmsg::AppRequest* msg)
+void handleRequestStatusUpdate(CassSession* session, 
+                               netmsg::AppRequest* msg)
 {
     netmsg::AppRequest_StatusUpdate status_msg = msg->status_updates();
     if (status_msg.has_body()) 

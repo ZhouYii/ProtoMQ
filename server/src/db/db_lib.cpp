@@ -1,18 +1,7 @@
 #ifndef _DB_LIB_C
 #define _DB_LIB_C
 
-#include <cassandra.h>
-#include <ctime>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <iostream>
-#include <vector>
-
-#include <assert.h>
-
-#include "query_structs.h"
-#include "db_utils.cpp"
+#include "db_lib.h"
 
 CassError DbCreateNewEvent(CassSession* session,
                               const int64_t host_id,
@@ -198,9 +187,9 @@ CassError select_from_user_by_phone(CassSession* session,
 }
 
 
-CassCluster* create_cluster() {
+CassCluster* create_cluster(const char* host_address) {
     CassCluster* cluster = cass_cluster_new();
-    cass_cluster_set_contact_points(cluster, "127.0.0.1");
+    cass_cluster_set_contact_points(cluster, host_address);
     return cluster;
 }
 
