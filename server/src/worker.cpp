@@ -75,7 +75,7 @@ int main (int argc, char *argv[])
     // get connection
     std::cout << "cassandra connection" << std::endl;
     //CassCluster* cluster = create_cluster("localhost");
-    CassCluster* cluster = create_cluster("54.69.204.42");
+    CassCluster* cluster = create_cluster("ec2-54-69-204-42.us-west-2.compute.amazonaws.com");
     CassSession* session = cass_session_new();
     CassFuture* close_future = NULL;
 
@@ -94,8 +94,10 @@ int main (int argc, char *argv[])
     while(1)
     {
         //  Wait for next message from broker
+        std::cout << "about to die?" << std::endl;
         zmq::message_t reply;
         responder.recv (&reply);
+        std::cout << "no" << std::endl;
 
         netmsg::AppRequest rcv_msg;
         rcv_msg.ParseFromArray(reply.data(), reply.size());
