@@ -6,8 +6,8 @@
 CassError DbCreateNewEvent(CassSession* session,
                               const int64_t host_id,
                               const int64_t time,
-                              const std::string title,
-                              const std::string location)
+                              const char* title,
+                              const char* location)
 {
     CassError rc = CASS_OK;
     CassStatement* statement = NULL;
@@ -26,11 +26,11 @@ CassError DbCreateNewEvent(CassSession* session,
                          begin_time, attending_userids) VALUES (?, ?, ?, ?, ?)";
     statement = cass_statement_new(query, 5);
     std::cout << cass_statement_bind_uuid(statement, 0, uuid1) << std::endl;
-    std::cout << cass_statement_bind_string(statement, 1, title.c_str()) << std::endl;
-    std::cout << cass_statement_bind_string(statement, 2, location.c_str()) << std::endl;
+    std::cout << cass_statement_bind_string(statement, 1, title) << std::endl;
+    std::cout << cass_statement_bind_string(statement, 2, location) << std::endl;
     std::cout << cass_statement_bind_int64(statement, 3, time) << std::endl;
     std::cout << cass_statement_bind_collection(statement, 4, collection) << std::endl;
-
+    cass_collection_free(collection);
 
     std::cout << "###binding done" << std::endl;
 
@@ -49,7 +49,6 @@ CassError DbCreateNewEvent(CassSession* session,
     // Free alloc'd mem.
     cass_future_free(future);
     cass_statement_free(statement);
-    cass_collection_free(collection);
     std::cout << "###free successful" << std::endl;
     return rc;
 }

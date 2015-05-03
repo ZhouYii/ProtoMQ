@@ -49,8 +49,8 @@ void HandleRequestCreateEvent(CassSession* session,
     int64_t host_id;
     int64_t posix_time;
     int64_t user_id;
-    std::string title;
-    std::string location;
+    const char* title;
+    const char* location;
     int num_invited_users;
 
     // Validate message
@@ -59,8 +59,8 @@ void HandleRequestCreateEvent(CassSession* session,
     {
         host_id = create_event.host_id();
         posix_time = create_event.time();
-        title = create_event.title();
-        location = create_event.location();
+        title = create_event.title().c_str();
+        location = create_event.location().c_str();
         std::cout<< "message created:" << host_id << ' ' << posix_time << ' ' << title << ' ' << location << std::endl;
         casserr = DbCreateNewEvent(session, host_id, posix_time, title, location);
         std::cout << "db creation returned : " << casserr << std::endl;

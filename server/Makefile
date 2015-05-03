@@ -2,7 +2,7 @@ cc=g++
 BIN_PATH=bin/
 SRC_PATH=src/
 OBJECTS= social.pb.o  db_utils.o db_lib.o request_handlers.o worker.o 
-OPT=-std=c++11
+OPT=-std=c++11 -g
 
 clean :
 	rm bin/*

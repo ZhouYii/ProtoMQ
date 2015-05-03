@@ -27,8 +27,8 @@
 CassError DbCreateNewEvent(CassSession* session,
                               const int64_t host_id,
                               const int64_t time,
-                              const std::string title,
-                              const std::string location);
+                              const char* title,
+                              const char* location);
 
 CassError db_create_new_user(CassSession* session,
                              const int64_t phone_id,

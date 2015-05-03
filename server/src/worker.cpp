@@ -74,7 +74,8 @@ int main (int argc, char *argv[])
 {
     // get connection
     std::cout << "cassandra connection" << std::endl;
-    CassCluster* cluster = create_cluster("localhost");
+    //CassCluster* cluster = create_cluster("localhost");
+    CassCluster* cluster = create_cluster("54.69.204.42");
     if (cluster == NULL) {
         std::cout << "cluster creation failed" << std::endl;
     }
