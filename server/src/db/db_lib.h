@@ -49,6 +49,18 @@ CassError select_from_user_by_phone(CassSession* session,
                                     const int64_t phone_id,
                                     UserQueryByPhone* response);
 
+/* Generate connection to Cassandra Cluster
+ */
+CassError connect_session(CassSession* session, const CassCluster* cluster);
+
+/* Create cluster object with seed node host address hints
+ *
+ * Input :
+ *  host_address = comma-separated list of host address values which are the seed hosts
+ *                  for cassandra connection
+ * Output : 
+ *  Pointer to allocated cassandra cluster object
+ */
 CassCluster* create_cluster(const char* host_address = "127.0.0.1");
 
 CassError prepare_query(CassSession* session,

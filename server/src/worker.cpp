@@ -76,12 +76,17 @@ int main (int argc, char *argv[])
     std::cout << "cassandra connection" << std::endl;
     //CassCluster* cluster = create_cluster("localhost");
     CassCluster* cluster = create_cluster("54.69.204.42");
-    if (cluster == NULL) {
-        std::cout << "cluster creation failed" << std::endl;
-    }
     CassSession* session = cass_session_new();
+    CassFuture* close_future = NULL;
+
+    if (cluster == NULL || connect_session(session, cluster) != CASS_OK) {
+        cass_cluster_free(cluster);
+        cass_session_free(session);
+        return -1;
+    }
+
     std::cout << "connection made" << std::endl;
-    
+
     zmq::context_t context(1);
     zmq::socket_t responder(context, ZMQ_REP);
     responder.connect("tcp://localhost:5560");

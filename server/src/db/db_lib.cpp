@@ -15,7 +15,7 @@ CassError DbCreateNewEvent(CassSession* session,
 
     CassCollection* collection = NULL;
     collection = cass_collection_new(CASS_COLLECTION_TYPE_SET, 1);
-    cass_collection_append_int64(collection, host_id);
+    std::cout << cass_collection_append_int64(collection, host_id) << std::endl;
 
     std::cout << "###collection creation done" << std::endl;
 
@@ -194,7 +194,17 @@ CassError select_from_user_by_phone(CassSession* session,
 
   return rc;
 }
+CassError connect_session(CassSession* session, const CassCluster* cluster) {
+    CassError rc = CASS_OK;
+    CassFuture* future = cass_session_connect(session, cluster);
+    cass_future_wait(future);
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK)
+        print_error(future);
+    cass_future_free(future);
 
+    return rc;
+}
 
 CassCluster* create_cluster(const char* host_address) {
     CassCluster* cluster = cass_cluster_new();
