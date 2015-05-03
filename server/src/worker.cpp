@@ -107,6 +107,7 @@ int main (int argc, char *argv[])
         doRouting(session, &rcv_msg);
         std::cout << "Done Routing" << std::endl;
 
+        s_send (responder, "World");
         // std::cout << "Received request: " << string << std::endl;
         // Do some 'work'
         // sleep (1);

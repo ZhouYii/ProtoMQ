@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
     netmsg::AppRequest msg;
     CreateMessageEventCreation(&msg,
                                6505758649,
-                               "mylocation",
+                               "mylocation1213",
                                "event_title",
                                currtime);
 
