@@ -18,6 +18,7 @@ CassError DbCreateNewEvent(CassSession* session,
     std::cout << cass_collection_append_int64(collection, host_id) << std::endl;
 
     std::cout << "###collection creation done" << std::endl;
+    std::cout << "args : " << host_id << " " << time << " " << title << " " << location << std::endl;
 
     CassUuid uuid1;
     GenerateV1Uuid(&uuid1);
