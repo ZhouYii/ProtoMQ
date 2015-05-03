@@ -17,23 +17,32 @@ CassError DbCreateNewEvent(CassSession* session,
     collection = cass_collection_new(CASS_COLLECTION_TYPE_SET, 1);
     cass_collection_append_int64(collection, host_id);
 
+    std::cout << "###collection creation done" << std::endl;
+
     CassUuid uuid1;
     GenerateV1Uuid(&uuid1);
 
     const char* query = "INSERT INTO social.events (event_id, title, location, \
                          begin_time, attending_userids) VALUES (?, ?, ?, ?, ?)";
     statement = cass_statement_new(query, 5);
-    cass_statement_bind_uuid(statement, 0, uuid1);
-    cass_statement_bind_string(statement, 1, title.c_str());
-    cass_statement_bind_string(statement, 2, location.c_str());
-    cass_statement_bind_int64(statement, 3, time);
-    cass_statement_bind_collection(statement, 4, collection);
+    std::cout << cass_statement_bind_uuid(statement, 0, uuid1) << std::endl;
+    std::cout << cass_statement_bind_string(statement, 1, title.c_str()) << std::endl;
+    std::cout << cass_statement_bind_string(statement, 2, location.c_str()) << std::endl;
+    std::cout << cass_statement_bind_int64(statement, 3, time) << std::endl;
+    std::cout << cass_statement_bind_collection(statement, 4, collection) << std::endl;
+
+
+    std::cout << "###binding done" << std::endl;
 
     future = cass_session_execute(session, statement);
+
+    std::cout << "###exec done" << std::endl;
     cass_future_wait(future);
+    std::cout << "###future done" << std::endl;
 
     rc = cass_future_error_code(future);
     if (rc != CASS_OK) {
+        std::cout << "###error cassandnra" << std::endl;
         print_error(future);
     }
 
@@ -41,6 +50,7 @@ CassError DbCreateNewEvent(CassSession* session,
     cass_future_free(future);
     cass_statement_free(statement);
     cass_collection_free(collection);
+    std::cout << "###free successful" << std::endl;
     return rc;
 }
 
@@ -189,7 +199,10 @@ CassError select_from_user_by_phone(CassSession* session,
 
 CassCluster* create_cluster(const char* host_address) {
     CassCluster* cluster = cass_cluster_new();
-    cass_cluster_set_contact_points(cluster, host_address);
+    CassError result = cass_cluster_set_contact_points(cluster, host_address);
+    if (result != CASS_OK) {
+        cluster = NULL;
+    }
     return cluster;
 }
 

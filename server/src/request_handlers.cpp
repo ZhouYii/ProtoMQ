@@ -61,7 +61,9 @@ void HandleRequestCreateEvent(CassSession* session,
         posix_time = create_event.time();
         title = create_event.title();
         location = create_event.location();
+        std::cout<< "message created:" << host_id << ' ' << posix_time << ' ' << title << ' ' << location << std::endl;
         casserr = DbCreateNewEvent(session, host_id, posix_time, title, location);
+        std::cout << "db creation returned : " << casserr << std::endl;
         // TODO:Logging
 
         /*
@@ -74,7 +76,7 @@ void HandleRequestCreateEvent(CassSession* session,
         */
     } else {
         std::cout << "Ill formed new event query" << std::endl;
-        // Input were not correct
+        // Input were not corret
         // Send error response
     }
 }

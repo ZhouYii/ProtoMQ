@@ -11,7 +11,7 @@ all : broker.cpp worker.cpp
 	g++ worker.cpp -o $(BIN_PATH)worker -lzmq -lprotobuf
 
 broker :
-	g++ $(SRC_PATH)/broker.cpp -o $(BIN_PATH)broker
+	g++ $(SRC_PATH)/broker.cpp -o $(BIN_PATH)broker  -lzmq -lprotobuf
 
 db_lib.o : $(SRC_PATH)/db/db_lib.cpp $(SRC_PATH)/db/db_utils.h
 	g++ -c $(SRC_PATH)db/db_lib.cpp

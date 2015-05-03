@@ -1,110 +1,13 @@
 #include <iostream>
 #include <inttypes.h>
+#include <ctime>
 #include <fstream>
 #include <vector>
 
 #include "includes/zhelpers.hpp"
 #include "includes/social.pb.h"
 
-void attachPhotoToMessage(netmsg::AppRequest_StatusUpdate* msg,
-                          std::string* file_path)
-{
-    char* buf;
-    std::ifstream file (*(file_path),
-                            std::ios::in | std::ios::binary | std::ios::ate);
-    if (file.is_open())
-    {
-        unsigned long long size = file.tellg();
-        buf = new char [size];
-        file.seekg(0, std::ios::beg);
-        file.read(buf, size);
-        file.close();
-
-        msg->add_photos(buf,size);
-        delete[] buf;
-        std::cout << "Client: Attached 1 photo" << std::endl;
-        std::cout << "Photo Size " << std::to_string(size) << std::endl;
-    }
-    else
-    {
-        return;
-    }
-}
-
-void createStatusMessage(netmsg::AppRequest* msg,
-                               int64_t phone_num,
-                               std::string body,
-                               std::string** photos,
-                               int num_photos)
-{
-    // Set message key
-    msg->set_phone_id(phone_num);
-
-    // Set type
-    netmsg::AppRequest_MessageType type =
-        netmsg::AppRequest_MessageType_tStatusUpdate;
-    msg->set_msg_type(type);
-
-    // Set text payload
-    netmsg::AppRequest_StatusUpdate* r_msg =
-        new netmsg::AppRequest_StatusUpdate();
-    r_msg->set_body(body);
-
-
-    // Set photo payload
-    for (int path_idx = 0; path_idx < num_photos; path_idx += 1)
-        attachPhotoToMessage(r_msg, *(photos+path_idx));
-
-    // Attach message
-    msg->set_allocated_status_updates(r_msg);
-    std::cout << "Client: Attached " << r_msg->photos_size() << std::endl;
-}
-
-void createLoginMessage(netmsg::AppRequest* msg,
-                           int64_t phone_num,
-                           std::string password,
-                           std::string email) 
-{
-    // Set message key
-    msg->set_phone_id(phone_num);
-
-    // Set type
-    netmsg::AppRequest_MessageType type =
-        netmsg::AppRequest_MessageType_tLogin;
-    msg->set_msg_type(type);
-
-    // Set payload
-    netmsg::AppRequest_LoginMessage* l_msg =
-        new netmsg::AppRequest_LoginMessage();
-    l_msg->set_secured_password(password);
-    l_msg->set_email(email);
-    msg->set_allocated_login_msg(l_msg);
-}
-
-void createRegistrationMessage(netmsg::AppRequest* msg,
-                               int64_t phone_num,
-                               std::string username,
-                               std::string password,
-                               std::string email) 
-{
-    // Set message key
-    msg->set_phone_id(phone_num);
-
-    // Set type
-    netmsg::AppRequest_MessageType type =
-        netmsg::AppRequest_MessageType_tRegistration;
-    msg->set_msg_type(type);
-
-    // Set payload
-    netmsg::AppRequest_RegisterMessage* r_msg =
-        new netmsg::AppRequest_RegisterMessage();
-    r_msg->set_username(username);
-    r_msg->set_secured_password(password);
-    r_msg->set_email(email);
-    msg->set_allocated_reg_msg(r_msg);
-}
-
-void sendMessage(netmsg::AppRequest* msg, zmq::socket_t* requester)
+void SendMessage(netmsg::AppRequest* msg, zmq::socket_t* requester)
 {
     std::string req_serialized;
     msg->SerializeToString(&req_serialized);
@@ -116,6 +19,33 @@ void sendMessage(netmsg::AppRequest* msg, zmq::socket_t* requester)
     requester->send(msg_req);
 }
 
+void CreateMessageEventCreation(netmsg::AppRequest* msg,
+                               int64_t host_phone_number,
+                               std::string location,
+                               std::string title,
+                               int64_t time)
+{
+    // Set message key
+    msg->set_phone_id(host_phone_number);
+
+    // Set type
+    netmsg::AppRequest_MessageType type =
+        netmsg::AppRequest_MessageType_tCreateEvent;
+    msg->set_msg_type(type);
+
+    // Set payload
+    netmsg::AppRequest_CreateEvent* r_msg =
+        new netmsg::AppRequest_CreateEvent();
+    r_msg->set_host_id(host_phone_number);
+    r_msg->set_title(title);
+    r_msg->set_location(location);
+    r_msg->set_time(time);
+    // Remove... host phone number is not required
+    r_msg->add_invited_users(host_phone_number);
+
+    msg->set_allocated_create_event(r_msg);
+}
+
 int main (int argc, char *argv[])
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -123,56 +53,19 @@ int main (int argc, char *argv[])
     zmq::socket_t requester(context, ZMQ_REQ);
     requester.connect("tcp://localhost:5559");
 
+    std::cout << "Connection made" << std::endl;
+
     // Build a registration message
+    int64_t currtime = std::time(NULL);
     netmsg::AppRequest msg;
-    createRegistrationMessage(&msg,
-                                6505758649,
-                                "zhouyi",
-                                "password",
-                                "yi@email.com");
+    CreateMessageEventCreation(&msg,
+                               6505758649,
+                               "mylocation",
+                               "event_title",
+                               currtime);
 
-    netmsg::AppRequest msg2;
-    createRegistrationMessage(&msg2,
-                                6505758648,
-                                "zhou yi2",
-                                "password",
-                                "yi@email.com");
-
-    std::string* photo_paths[3];
-    std::string path1 = "img.jpeg";
-    std::string path2 = "img2.jpeg";
-    std::string path3 = "large.jpeg";
-    photo_paths[0] = &path1;
-    photo_paths[1] = &path2;
-    photo_paths[2] = &path3;
-    netmsg::AppRequest msg3;
-    createStatusMessage(&msg3,
-                            6505758649,
-                            "New status message here.",
-                            photo_paths,
-                            3);
-
-    netmsg::AppRequest msg4;
-    createLoginMessage(&msg4,
-                        6505758648,
-                        "password",
-                        "yi@email.com");
-
-    //s_send (requester, "Hello");
-    sendMessage(&msg, &requester);
+    SendMessage(&msg, &requester);
     std::string str = s_recv (requester);
-    std::cout << "Received reply [" << str << "]" << std::endl;
-
-    sendMessage(&msg2, &requester);
-    str = s_recv (requester);
-    std::cout << "Received reply [" << str << "]" << std::endl;
-
-    sendMessage(&msg3, &requester);
-    str = s_recv (requester);
-    std::cout << "Received reply [" << str << "]" << std::endl;
-
-    sendMessage(&msg4, &requester);
-    str = s_recv (requester);
     std::cout << "Received reply [" << str << "]" << std::endl;
 
     // Cleanup

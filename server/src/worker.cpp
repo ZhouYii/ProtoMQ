@@ -6,6 +6,8 @@
 void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
     // Routing Logic
     netmsg::AppRequest_MessageType type = rcv_msg->msg_type();
+    std::cout << "message type " << type << " " << rcv_msg->has_create_event() << std::endl;
+    std::cout << "seek message type " << netmsg::AppRequest_MessageType_tCreateEvent << std::endl;
     switch (type)
     {
         case netmsg::AppRequest_MessageType_tStatusUpdate :
@@ -15,7 +17,8 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
 
         case netmsg::AppRequest_MessageType_tCreateEvent :
             if (rcv_msg->has_create_event()) {
-                break; // Handle logic
+                std::cout << "correct branching" << std::endl;
+                HandleRequestCreateEvent(session, rcv_msg);
             }
             break;
 
@@ -70,8 +73,13 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
 int main (int argc, char *argv[])
 {
     // get connection
-    CassCluster* cluster = create_cluster();
+    std::cout << "cassandra connection" << std::endl;
+    CassCluster* cluster = create_cluster("54.69.204.42");
+    if (cluster == NULL) {
+        std::cout << "cluster creation failed" << std::endl;
+    }
     CassSession* session = cass_session_new();
+    std::cout << "connection made" << std::endl;
     
     zmq::context_t context(1);
     zmq::socket_t responder(context, ZMQ_REP);
@@ -87,7 +95,9 @@ int main (int argc, char *argv[])
         rcv_msg.ParseFromArray(reply.data(), reply.size());
 
         std::cout << rcv_msg.msg_type() << std::endl;
+        std::cout << "Routing" << std::endl;
         doRouting(session, &rcv_msg);
+        std::cout << "Done Routing" << std::endl;
 
         // std::cout << "Received request: " << string << std::endl;
         // Do some 'work'
