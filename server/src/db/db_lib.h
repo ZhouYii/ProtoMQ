@@ -14,6 +14,20 @@
 #include "query_structs.h"
 #include "db_utils.h"
 
+/* DB abstraction for sending event invitations to multiple users.
+ *
+ * Input :
+ *  session - Cassandra database session
+ *  uuid - uuid string representing the event
+ *  invited_arr - pointer to allocated contiguous region of memory containing
+ *                user_id elements (phone numbers)
+ *  num_invited - number of users invited in this batch
+ */
+CassError DbBatchInviteUsers(CassSession* session,
+                             const CassUuid* uuid,
+                             int64_t* invited_arr,
+                             int num_invited);
+
 /*
  * Create new event 
  * Input : 
@@ -24,7 +38,7 @@
  * Output :
  *      CassError
  */
-CassError DbCreateNewEvent(CassSession* session,
+CassUuid DbCreateNewEvent(CassSession* session,
                               const int64_t host_id,
                               const int64_t time,
                               const char* title,

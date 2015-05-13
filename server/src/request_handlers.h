@@ -21,6 +21,9 @@ void HandleRequestCreateEvent(CassSession* session,
 
 void HandleRequestStatusUpdate(CassSession* session, 
                                netmsg::AppRequest* msg);
+
+void HandleRequestEventInvite(CassSession* session,
+                               netmsg::AppRequest* msg);
 #endif
 
 

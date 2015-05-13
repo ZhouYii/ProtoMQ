@@ -3,7 +3,64 @@
 
 #include "db_lib.h"
 
-CassError DbCreateNewEvent(CassSession* session,
+/* DB abstraction for sending event invitations to multiple users.
+ *
+ * Input :
+ *  session - Cassandra database session
+ *  uuid - uuid string representing the event
+ *  invited_arr - pointer to allocated contiguous region of memory containing
+ *                user_id elements (phone numbers)
+ *  num_invited - number of users invited in this batch
+ */
+// TODO : input is message, no need for array
+CassError DbBatchInviteUsers(CassSession* session,
+                             const CassUuid* uuid,
+                             int64_t* invited_arr,
+                             int num_invited)
+{
+    CassError rc = CASS_OK;
+    CassStatement* statement = NULL;
+    CassFuture* future = NULL;
+    CassCollection* collection = NULL;
+
+    if (num_invited == 0 || invited_arr == NULL)
+        return CASS_OK;
+    
+    const char* query = "UPDATE social.events SET attending_userids = attending_userids + (?) \
+                         WHERE event_id = (?);";
+    statement = cass_statement_new(query, 2);
+
+    // Prepare collection
+    collection = cass_collection_new(CASS_COLLECTION_TYPE_SET, num_invited);
+    for (int usr_idx = 0; usr_idx < num_invited; usr_idx += 1) {
+        cass_collection_append_int64(collection, invited_arr[usr_idx]);
+    }
+
+    // Prepare UUID
+    // TODO : Check error?
+
+    std::cout << "bind 0 :" << cass_statement_bind_collection(statement, 0, collection) << std::endl;
+    std::cout << "bind 1 :" << cass_statement_bind_uuid(statement, 1, *(uuid)) << std::endl;
+
+    // Pipeline memory free
+    future = cass_session_execute(session, statement);
+    cass_collection_free(collection);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) {
+        std::cout << "###error cassandnra" << rc <<  std::endl;
+        print_error(future);
+    }
+
+    // Free alloc'd mem.
+    cass_future_free(future);
+    cass_statement_free(statement);
+    return rc;
+}
+
+
+CassUuid DbCreateNewEvent(CassSession* session,
                               const int64_t host_id,
                               const int64_t time,
                               const char* title,
@@ -17,41 +74,31 @@ CassError DbCreateNewEvent(CassSession* session,
     collection = cass_collection_new(CASS_COLLECTION_TYPE_SET, 1);
     std::cout << cass_collection_append_int64(collection, host_id) << std::endl;
 
-    std::cout << "###collection creation done" << std::endl;
-    std::cout << "args : " << host_id << " " << time << " " << title << " " << location << std::endl;
-
     CassUuid uuid1;
     GenerateV1Uuid(&uuid1);
 
     const char* query = "INSERT INTO social.events (event_id, title, location, \
                          begin_time, attending_userids) VALUES (?, ?, ?, ?, ?)";
     statement = cass_statement_new(query, 5);
-    std::cout << cass_statement_bind_uuid(statement, 0, uuid1) << std::endl;
-    std::cout << cass_statement_bind_string(statement, 1, title) << std::endl;
-    std::cout << cass_statement_bind_string(statement, 2, location) << std::endl;
-    std::cout << cass_statement_bind_int64(statement, 3, time) << std::endl;
-    std::cout << cass_statement_bind_collection(statement, 4, collection) << std::endl;
-    cass_collection_free(collection);
-
-    std::cout << "###binding done" << std::endl;
+    cass_statement_bind_uuid(statement, 0, uuid1);
+    cass_statement_bind_string(statement, 1, title);
+    cass_statement_bind_string(statement, 2, location);
+    cass_statement_bind_int64(statement, 3, time);
+    cass_statement_bind_collection(statement, 4, collection);
 
     future = cass_session_execute(session, statement);
-
-    std::cout << "###exec done" << std::endl;
+    cass_collection_free(collection);
     cass_future_wait(future);
-    std::cout << "###future done" << std::endl;
 
     rc = cass_future_error_code(future);
     if (rc != CASS_OK) {
-        std::cout << "###error cassandnra" << std::endl;
         print_error(future);
     }
 
     // Free alloc'd mem.
     cass_future_free(future);
     cass_statement_free(statement);
-    std::cout << "###free successful" << std::endl;
-    return rc;
+    return uuid1;
 }
 
 CassError db_create_new_user(CassSession* session,

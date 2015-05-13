@@ -5,113 +5,124 @@ message AppRequest {
   required int64 phone_id = 1;
 
   // This is a guarantee a message of a certain type will exist.
-  // At time of writing, no situations will send concurrent messagse
+  // TODO : This can be a bitmap
   enum MessageType {
-    tStatusUpdate=1;
-    tCreateEvent=2;
-    tEventInvite=4;
-    tEventAccept=5;
-    tEventReject=6;
-    tPollInvited=7;
-    tPollAccepted=8;
+    tFriendRequest=1;
+
+    // Does not have message - uses phone id
+    tGetFriendRequests=2;
+    // Does not have message - uses phone id
+    tGetFriends=3;  //
+    // Does not have message - uses phone id
+    tPollNotifications=14;
+
+    tAcceptFriendRequest=4; //
+    tEventCreate=5; //
+    tEventInvite=6; //
+    tEventAccept=7; //
+    tEventReject=8; //
     tRegistration=9;
-    tLogin=10;
-    tLogout=11;
-    tCreateRoom=12;
-    tCreatePost=13;
+    tLogin=10; //
+    tUpdateProfile=11;
+    tPollAcceptedEvents=12; //
+    tPollInvitedEvents=13; //
+    tUserInfoRequest=15;
   }
   required MessageType msg_type = 2;
 
+  /* Login, Register */
   // Implementation done
   message RegisterMessage {
     // Already have phone_id
-    required string secured_password = 1;
-    required string username = 2;
-    optional string email = 3;
+    required string password_hash = 1;
+    required string nickname = 2;
+    required bool is_male=3;
   }
   optional RegisterMessage reg_msg = 3;
 
   message LoginMessage {
-    // Priority over phone login
-    optional string email = 1;
     // Server-side only compare hashes
-    required string secured_password = 2;
+    required string password_hash = 1;
   }
   optional LoginMessage login_msg = 4;
 
-  // Message definitions for status updating
-  message StatusUpdate {
-    required string body = 1;
-    // Repeated 0 or more times
-    repeated bytes photos = 2;
-  }
-  optional StatusUpdate status_updates = 5;
-
-  enum RoomType {
-    Event=1; // Activity, group
-    Profile=2; // User profile, contains wall
-    Page=3; // Non-affiliation. Can remove this
-  }
-
+  /* Events */
   message CreateEvent {
-    required int64 host_id = 1;
-    required string title = 2;
-    required string location = 3;
-    required int64 time = 4; // POSIX time
-    repeated int64 invited_users = 5;
+    required string title = 1;
+    required string location = 2;
+    required int64 time = 3; // POSIX time
+    required bool is_public = 4;
+    required bytes event_uuid1 = 5;
+    repeated int64 invited_users = 6;
   }
-  optional CreateEvent create_event = 6;
+  optional CreateEvent create_event = 5;
 
   // Separating messages for event accept,rejc,invt in anticipation of future diversification.
   // If there is contention for 1-16 ids, we can combine these message types.
   message EventAccept {
-    required int64 user_id = 1;
-    required bytes event_uuid1 = 2;
+    required bytes event_uuid1 = 1;
   }
-  optional EventAccept accept_event = 7;
+  optional EventAccept accept_event = 6;
 
   message EventReject {
-    required int64 user_id = 1;
-    required bytes event_uuid1 = 2;
+    required bytes event_uuid1 = 1;
   }
-  optional EventReject reject_event = 8;
+  optional EventReject reject_event = 7;
 
   message EventInvite {
-    required int64 user_id = 1;
-    required bytes event_uuid1 = 2;
+    required bytes event_uuid1 = 1;
+    repeated int64 invited_users = 2;
   }
-  optional EventInvite invite_event = 9;
+  optional EventInvite invite_event = 8;
 
-  message PollInvited {
-    required int64 user_id = 1;
-    optional int64 offset = 2;
-    optional int64 amount = 3;
+  message PollInvitedEvents {
+    optional int64 offset = 1;
+    optional int64 amount = 2;
   }
-  optional PollInvited poll_invited = 10;
+  optional PollInvitedEvents poll_invited = 9;
 
-  message PollAccepted {
-    required int64 user_id = 1;
-    optional int64 offset = 2;
-    optional int64 amount = 3;
+  message PollAcceptedEvents {
+    optional int64 offset = 1;
+    optional int64 amount = 2;
   }
-  optional PollAccepted poll_accepted = 11;
+  optional PollAcceptedEvents poll_accepted = 10;
 
-  // Rooms represent anything with a "wall". User profiles, events, etc.
-  message CreateRoom {
-    required string name = 1;
-    required RoomType type = 2;
-    optional bytes uuid_suggestion = 3;
+
+  /* Friend */
+  message FriendRequest {
+    required int64 destination_user = 1;
+    required string message = 2;
   }
-  optional CreateRoom create_room_msg = 13;
+  optional FriendRequest friend_request = 11;
 
-  message RoomPostMessage {
-    required bytes room_uuid = 1;
-    required string body = 2;
-    repeated bytes photos = 3;
+  message AcceptFriendRequest {
+    required int64 requesting_user_id = 1;
   }
-  optional RoomPostMessage room_post_msg = 14;
+  optional AcceptFriendRequest accept_friend_request = 12;
 
-  optional bool logout_request = 15;
+  message AlbumPhoto {
+    required bytes photo = 1;
+    optional string description = 2;
+  }
+  message PhotoAlbum {
+    repeated AlbumPhoto photos = 1;
+    optional string AlbumDescription = 2;
+  }
+  message UpdateProfile {
+    optional string email = 1;
+    optional string description = 2;
+    optional string location = 3;
+    optional string nickname = 4;
+    optional string password = 5;
+    optional bytes profile_photo = 6;
+    repeated PhotoAlbum new_albums = 7;
+  }
+  optional UpdateProfile update_profile = 13;
+
+  message UserInfoRequest {
+    repeated int64 requested_user_id = 1;
+  }
+  optional UserInfoRequest user_info_request = 14;
 }
 
 message AppReply {
@@ -126,13 +137,43 @@ message AppReply {
   }
   required ResponseType response_type = 1;
 
-  message CreateRoomReply {
-    optional bytes success_uuid = 1;
-  }
-  optional CreateRoomReply create_reply=2;
-
-  message CreateEventUUID {
+  // Create event returns uuid of created event
+  message EventUUID {
     required bytes event_uuid1 = 1;
   }
+  optional EventUUID event_uuid = 2;
+
+  // Polling friends needs to get multiple user objects
+  message User {
+    required int64 phone_number = 1;
+    required string nickname = 2;
+    required bool is_male = 3;
+    optional bytes profile_photo = 4;
+    optional string email = 5;
+    optional string description = 6;
+    optional string location = 7;
+  }
+  repeated User users = 3;
+
+  // Polling friend requests needs to get multiple friend requests objects
+  message FriendRequest {
+    required int64 request_origin_user_id = 1;
+    // This has a default value when request is added to database.
+    required string request_message = 2;
+  }
+  repeated FriendRequest friend_requests = 4;
+
+  // Polling accepted invited events will return multiple event objects
+  message EventInfo {
+    required string title = 1;
+    required string location = 2;
+    required int64 time = 3;
+    required bytes event_uuid = 4;
+    required bool is_public = 5;
+    repeated int64 accepted_users = 6;
+  }
+  repeated EventInfo event_info = 5;
+
+  // Polling notificatiion wiill return multiple notification objects
 
 }

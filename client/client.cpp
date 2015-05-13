@@ -42,6 +42,8 @@ void CreateMessageEventCreation(netmsg::AppRequest* msg,
     r_msg->set_time(time);
     // Remove... host phone number is not required
     r_msg->add_invited_users(host_phone_number);
+    r_msg->add_invited_users(8888888888);
+    r_msg->add_invited_users(9999999999);
 
     msg->set_allocated_create_event(r_msg);
 }

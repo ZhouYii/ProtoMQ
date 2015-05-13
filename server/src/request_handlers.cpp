@@ -29,6 +29,28 @@ void HandleRequestLogin(CassSession* session,
     }
 }
 
+
+void HandleRequestEventInvite(CassSession* session,
+                               netmsg::AppRequest* msg)
+{
+    netmsg::AppRequest_EventInvite invite_req = msg->invite_event();
+    int num_invited = invite_req.invited_users_size();
+    CassUuid cass_uuid;
+
+    if (invite_req.has_event_uuid1() && num_invited > 0) {
+        const std::string& uuid1 = invite_req.event_uuid1();
+        cass_uuid_from_string(uuid1.c_str(), &cass_uuid);
+
+        // Initialize array of invited ids
+        int64_t invited_ids[num_invited];
+        for (int usr_idx = 0; usr_idx < num_invited; usr_idx += 1) {
+            invited_ids[usr_idx] = invite_req.invited_users(usr_idx);
+        }
+        DbBatchInviteUsers(session, &cass_uuid, invited_ids, num_invited);
+    } // TODO failed case prepare message to send back?
+}
+
+
 void HandleRequestRegistration(CassSession* session,
                                netmsg::AppRequest* msg)
 {
@@ -45,7 +67,7 @@ void HandleRequestRegistration(CassSession* session,
 void HandleRequestCreateEvent(CassSession* session, 
                               netmsg::AppRequest* msg) {
     netmsg::AppRequest_CreateEvent create_event = msg->create_event();
-    CassError casserr;
+    CassUuid cass_uuid;
     int64_t host_id;
     int64_t posix_time;
     int64_t user_id;
@@ -61,19 +83,16 @@ void HandleRequestCreateEvent(CassSession* session,
         posix_time = create_event.time();
         title = create_event.title().c_str();
         location = create_event.location().c_str();
-        std::cout<< "message created:" << host_id << ' ' << posix_time << ' ' << title << ' ' << location << std::endl;
-        casserr = DbCreateNewEvent(session, host_id, posix_time, title, location);
-        std::cout << "db creation returned : " << casserr << std::endl;
-        // TODO:Logging
+        cass_uuid = DbCreateNewEvent(session, host_id, posix_time, title, location);
+        // TODO:Logging ?
 
-        /*
         num_invited_users = create_event.invited_users_size();
         if (num_invited_users > 0) {
-            for (int user_idx = 0; user_idx < num_invited_users; user_idx += 1) {
-                user_id = create_event.invited_users(user_idx);
-            }
+            int64_t invited_ids[num_invited_users];
+            for (int user_idx = 0; user_idx < num_invited_users; user_idx += 1)
+                invited_ids[user_idx] = create_event.invited_users(user_idx);
+            DbBatchInviteUsers(session, &cass_uuid, invited_ids, num_invited_users);
         }
-        */
     } else {
         std::cout << "Ill formed new event query" << std::endl;
         // Input were not corret
