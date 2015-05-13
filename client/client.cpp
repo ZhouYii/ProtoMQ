@@ -30,20 +30,21 @@ void CreateMessageEventCreation(netmsg::AppRequest* msg,
 
     // Set type
     netmsg::AppRequest_MessageType type =
-        netmsg::AppRequest_MessageType_tCreateEvent;
+        netmsg::AppRequest_MessageType_tEventCreate;
     msg->set_msg_type(type);
 
     // Set payload
     netmsg::AppRequest_CreateEvent* r_msg =
         new netmsg::AppRequest_CreateEvent();
-    r_msg->set_host_id(host_phone_number);
     r_msg->set_title(title);
+    r_msg->set_event_uuid1("5552b80b-0000-1000-8080-808080808081");
     r_msg->set_location(location);
     r_msg->set_time(time);
     // Remove... host phone number is not required
     r_msg->add_invited_users(host_phone_number);
     r_msg->add_invited_users(8888888888);
     r_msg->add_invited_users(9999999999);
+    r_msg->set_is_public(true);
 
     msg->set_allocated_create_event(r_msg);
 }
@@ -62,8 +63,8 @@ int main (int argc, char *argv[])
     netmsg::AppRequest msg;
     CreateMessageEventCreation(&msg,
                                6505758649,
-                               "mylocation1213",
-                               "event_title",
+                               "adfa;sdfjkalsdjfmylocation1213",
+                               "event_titleasdfjasdfsdkfl",
                                currtime);
 
     SendMessage(&msg, &requester);

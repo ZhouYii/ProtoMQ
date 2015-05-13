@@ -19,6 +19,17 @@
  * Input :
  *  session - Cassandra database session
  *  uuid - uuid string representing the event
+ *  invited_user - user phone number who is accepting event
+ */
+CassError DbSingleUserAttendingEvent(CassSession* session,
+                                     const CassUuid* uuid,
+                                     int64_t invited_user);
+
+/* DB abstraction for sending event invitations to multiple users.
+ *
+ * Input :
+ *  session - Cassandra database session
+ *  uuid - uuid string representing the event
  *  invited_arr - pointer to allocated contiguous region of memory containing
  *                user_id elements (phone numbers)
  *  num_invited - number of users invited in this batch
@@ -42,7 +53,8 @@ CassUuid DbCreateNewEvent(CassSession* session,
                               const int64_t host_id,
                               const int64_t time,
                               const char* title,
-                              const char* location);
+                              const char* location,
+                              const char* uuid1);
 
 CassError db_create_new_user(CassSession* session,
                              const int64_t phone_id,

@@ -3,6 +3,40 @@
 
 #include "db_lib.h"
 
+CassError DbSingleUserAttendingEvent(CassSession* session,
+                                     const CassUuid* uuid,
+                                     int64_t invited_user)
+{
+    CassError rc = CASS_OK;
+    CassStatement* statement = NULL;
+    CassFuture* future = NULL;
+
+    if (invited_user == 0)
+        return CASS_OK;
+    
+    const std::string userid_string = std::to_string(invited_user);
+    const std::string query = "UPDATE social.events SET attending_userids = attending_userids + { " + userid_string + "  } \
+                               WHERE event_id = ?;";
+    statement = cass_statement_new(query.c_str(), 1);
+
+    // Prepare UUID
+    std::cout << "bind 0 :" << cass_statement_bind_uuid(statement, 0, *(uuid)) << std::endl;
+
+    future = cass_session_execute(session, statement);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) {
+        std::cout << "###error cassandnra" << rc <<  std::endl;
+        print_error(future);
+    }
+
+    // Free alloc'd mem.
+    cass_future_free(future);
+    cass_statement_free(statement);
+    return rc;
+}
+
 /* DB abstraction for sending event invitations to multiple users.
  *
  * Input :
@@ -64,7 +98,8 @@ CassUuid DbCreateNewEvent(CassSession* session,
                               const int64_t host_id,
                               const int64_t time,
                               const char* title,
-                              const char* location)
+                              const char* location,
+                              const char* uuid)
 {
     CassError rc = CASS_OK;
     CassStatement* statement = NULL;
@@ -74,17 +109,18 @@ CassUuid DbCreateNewEvent(CassSession* session,
     collection = cass_collection_new(CASS_COLLECTION_TYPE_SET, 1);
     std::cout << cass_collection_append_int64(collection, host_id) << std::endl;
 
-    CassUuid uuid1;
-    GenerateV1Uuid(&uuid1);
+    CassUuid cass_uuid1;
+    cass_uuid_from_string(uuid, &cass_uuid1);
 
     const char* query = "INSERT INTO social.events (event_id, title, location, \
-                         begin_time, attending_userids) VALUES (?, ?, ?, ?, ?)";
-    statement = cass_statement_new(query, 5);
-    cass_statement_bind_uuid(statement, 0, uuid1);
+                         begin_time, attending_userids, public) VALUES (?, ?, ?, ?, ?)";
+    statement = cass_statement_new(query, 6);
+    cass_statement_bind_uuid(statement, 0, cass_uuid1);
     cass_statement_bind_string(statement, 1, title);
     cass_statement_bind_string(statement, 2, location);
     cass_statement_bind_int64(statement, 3, time);
     cass_statement_bind_collection(statement, 4, collection);
+    cass_statement_bind_bool(statement, 5, cass_true);
 
     future = cass_session_execute(session, statement);
     cass_collection_free(collection);
@@ -98,7 +134,7 @@ CassUuid DbCreateNewEvent(CassSession* session,
     // Free alloc'd mem.
     cass_future_free(future);
     cass_statement_free(statement);
-    return uuid1;
+    return cass_uuid1;
 }
 
 CassError db_create_new_user(CassSession* session,

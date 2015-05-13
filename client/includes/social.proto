@@ -53,7 +53,8 @@ message AppRequest {
     required int64 time = 3; // POSIX time
     required bool is_public = 4;
     required bytes event_uuid1 = 5;
-    repeated int64 invited_users = 6;
+    required string description = 6;
+    repeated int64 invited_users = 7;
   }
   optional CreateEvent create_event = 5;
 
@@ -119,10 +120,8 @@ message AppRequest {
   }
   optional UpdateProfile update_profile = 13;
 
-  message UserInfoRequest {
-    repeated int64 requested_user_id = 1;
-  }
-  optional UserInfoRequest user_info_request = 14;
+  // User info request
+  repeated int64 request_user_info = 14;
 }
 
 message AppReply {
@@ -170,10 +169,11 @@ message AppReply {
     required int64 time = 3;
     required bytes event_uuid = 4;
     required bool is_public = 5;
-    repeated int64 accepted_users = 6;
+    required string description = 6;
+    repeated int64 accepted_users = 7;
   }
   repeated EventInfo event_info = 5;
 
-  // Polling notificatiion wiill return multiple notification objects
-
+  // Polling accepted friends notifications will return list of user id
+  repeated int64 accepted_friends = 6;
 }

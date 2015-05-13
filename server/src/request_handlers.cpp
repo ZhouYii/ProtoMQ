@@ -7,22 +7,13 @@ void HandleRequestLogin(CassSession* session,
                         netmsg::AppRequest* msg) 
 {
     netmsg::AppRequest_LoginMessage login_msg = msg->login_msg();
-    if (login_msg.has_secured_password()) 
+    if (login_msg.has_password_hash()) 
     {
-        std::string password = login_msg.secured_password();
-        if (login_msg.has_email()) 
-        {
-            std::string email = login_msg.email();
-            // Login with email
-            std::cout << "Login Email:" << email ;
-            std::cout << " Pass:" << password << std::endl;
-        } else {
-            int64_t phone_id = msg->phone_id();
-            // Login with phone id. Currently only way.
-            std::cout << "Login Phone:" << phone_id ;
-            std::cout << " Pass:" << password << std::endl;
-        }
-
+        std::string password = login_msg.password_hash();
+        int64_t phone_id = msg->phone_id();
+        // Login with phone id. Currently only way.
+        std::cout << "Login Phone:" << phone_id ;
+        std::cout << " Pass:" << password << std::endl;
     } else {
         // Login failure
         return;
@@ -42,11 +33,13 @@ void HandleRequestEventInvite(CassSession* session,
         cass_uuid_from_string(uuid1.c_str(), &cass_uuid);
 
         // Initialize array of invited ids
-        int64_t invited_ids[num_invited];
+        int64_t invited_id;
         for (int usr_idx = 0; usr_idx < num_invited; usr_idx += 1) {
-            invited_ids[usr_idx] = invite_req.invited_users(usr_idx);
+            invited_id = invite_req.invited_users(usr_idx);
+            std::cout << "invite id" << invited_id << std::endl;
+            DbSingleUserAttendingEvent(session, &cass_uuid, invited_id);
+            std::cout << "here" << std::endl;
         }
-        DbBatchInviteUsers(session, &cass_uuid, invited_ids, num_invited);
     } // TODO failed case prepare message to send back?
 }
 
@@ -55,9 +48,8 @@ void HandleRequestRegistration(CassSession* session,
                                netmsg::AppRequest* msg)
 {
     netmsg::AppRequest_RegisterMessage reg_msg = msg->reg_msg();
-    std::cout << reg_msg.username() << "  " <<
-                 reg_msg.email() << "  " <<
-                 reg_msg.secured_password() << std::endl;
+    std::cout << reg_msg.password_hash() << "  " <<
+                 reg_msg.nickname() << std::endl;
 
     // Validate email or something + check if it's zero-length string.
 
@@ -65,33 +57,44 @@ void HandleRequestRegistration(CassSession* session,
 
 // Request handler for event creation
 void HandleRequestCreateEvent(CassSession* session, 
-                              netmsg::AppRequest* msg) {
+                              netmsg::AppRequest* msg,
+                              int64_t host_id) {
+    std::cout << "entered" << std::endl;
     netmsg::AppRequest_CreateEvent create_event = msg->create_event();
     CassUuid cass_uuid;
-    int64_t host_id;
     int64_t posix_time;
     int64_t user_id;
     const char* title;
+    const char* uuid1;
     const char* location;
+    char uuid_holder[CASS_UUID_STRING_LENGTH];
     int num_invited_users;
 
+    std::cout << "entered" << std::endl;
     // Validate message
-    if (create_event.has_host_id() && create_event.has_title() &&
+    if (create_event.has_title() &&
             create_event.has_location() && create_event.has_time()) 
     {
-        host_id = create_event.host_id();
+        std::cout << "entered2" << std::endl;
         posix_time = create_event.time();
         title = create_event.title().c_str();
         location = create_event.location().c_str();
-        cass_uuid = DbCreateNewEvent(session, host_id, posix_time, title, location);
+        uuid1 = create_event.event_uuid1().c_str();
+        cass_uuid = DbCreateNewEvent(session, host_id, posix_time, 
+                                     title, location, uuid1);
         // TODO:Logging ?
 
+        // TODO : this is actually an error, the collection is updated when the event request is accepted
+        std::cout << "cass uuid " << uuid1 << std::endl;
         num_invited_users = create_event.invited_users_size();
         if (num_invited_users > 0) {
-            int64_t invited_ids[num_invited_users];
-            for (int user_idx = 0; user_idx < num_invited_users; user_idx += 1)
-                invited_ids[user_idx] = create_event.invited_users(user_idx);
-            DbBatchInviteUsers(session, &cass_uuid, invited_ids, num_invited_users);
+            int64_t invited_id;
+            for (int user_idx = 0; user_idx < num_invited_users; user_idx += 1) {
+                invited_id = create_event.invited_users(user_idx);
+                std::cout << "invite id" << invited_id << std::endl;
+                DbSingleUserAttendingEvent(session, &cass_uuid, invited_id);
+                std::cout << "invite id" << invited_id << std::endl;
+            }
         }
     } else {
         std::cout << "Ill formed new event query" << std::endl;
@@ -100,6 +103,7 @@ void HandleRequestCreateEvent(CassSession* session,
     }
 }
 
+/*
 void HandleRequestStatusUpdate(CassSession* session, 
                                netmsg::AppRequest* msg)
 {
@@ -122,6 +126,6 @@ void HandleRequestStatusUpdate(CassSession* session,
         return;
     }
 }
-
+*/
 
 #endif

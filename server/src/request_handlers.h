@@ -17,7 +17,8 @@ void HandleRequestRegistration(CassSession* session,
                               netmsg::AppRequest* msg);
 
 void HandleRequestCreateEvent(CassSession* session,
-                              netmsg::AppRequest* msg);
+                              netmsg::AppRequest* msg,
+                              int64_t host_id);
 
 void HandleRequestStatusUpdate(CassSession* session, 
                                netmsg::AppRequest* msg);

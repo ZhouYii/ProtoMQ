@@ -48,7 +48,6 @@ class AppRequest_AcceptFriendRequest;
 class AppRequest_AlbumPhoto;
 class AppRequest_PhotoAlbum;
 class AppRequest_UpdateProfile;
-class AppRequest_UserInfoRequest;
 class AppReply;
 class AppReply_EventUUID;
 class AppReply_User;
@@ -404,10 +403,22 @@ class AppRequest_CreateEvent : public ::google::protobuf::Message {
   inline ::std::string* release_event_uuid1();
   inline void set_allocated_event_uuid1(::std::string* event_uuid1);
 
-  // repeated int64 invited_users = 6;
+  // required string description = 6;
+  inline bool has_description() const;
+  inline void clear_description();
+  static const int kDescriptionFieldNumber = 6;
+  inline const ::std::string& description() const;
+  inline void set_description(const ::std::string& value);
+  inline void set_description(const char* value);
+  inline void set_description(const char* value, size_t size);
+  inline ::std::string* mutable_description();
+  inline ::std::string* release_description();
+  inline void set_allocated_description(::std::string* description);
+
+  // repeated int64 invited_users = 7;
   inline int invited_users_size() const;
   inline void clear_invited_users();
-  static const int kInvitedUsersFieldNumber = 6;
+  static const int kInvitedUsersFieldNumber = 7;
   inline ::google::protobuf::int64 invited_users(int index) const;
   inline void set_invited_users(int index, ::google::protobuf::int64 value);
   inline void add_invited_users(::google::protobuf::int64 value);
@@ -428,6 +439,8 @@ class AppRequest_CreateEvent : public ::google::protobuf::Message {
   inline void clear_has_is_public();
   inline void set_has_event_uuid1();
   inline void clear_has_event_uuid1();
+  inline void set_has_description();
+  inline void clear_has_description();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -437,6 +450,7 @@ class AppRequest_CreateEvent : public ::google::protobuf::Message {
   ::std::string* location_;
   ::google::protobuf::int64 time_;
   ::std::string* event_uuid1_;
+  ::std::string* description_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int64 > invited_users_;
   bool is_public_;
   friend void  protobuf_AddDesc_social_2eproto();
@@ -1432,88 +1446,6 @@ class AppRequest_UpdateProfile : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class AppRequest_UserInfoRequest : public ::google::protobuf::Message {
- public:
-  AppRequest_UserInfoRequest();
-  virtual ~AppRequest_UserInfoRequest();
-
-  AppRequest_UserInfoRequest(const AppRequest_UserInfoRequest& from);
-
-  inline AppRequest_UserInfoRequest& operator=(const AppRequest_UserInfoRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const AppRequest_UserInfoRequest& default_instance();
-
-  void Swap(AppRequest_UserInfoRequest* other);
-
-  // implements Message ----------------------------------------------
-
-  AppRequest_UserInfoRequest* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const AppRequest_UserInfoRequest& from);
-  void MergeFrom(const AppRequest_UserInfoRequest& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // repeated int64 requested_user_id = 1;
-  inline int requested_user_id_size() const;
-  inline void clear_requested_user_id();
-  static const int kRequestedUserIdFieldNumber = 1;
-  inline ::google::protobuf::int64 requested_user_id(int index) const;
-  inline void set_requested_user_id(int index, ::google::protobuf::int64 value);
-  inline void add_requested_user_id(::google::protobuf::int64 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
-      requested_user_id() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
-      mutable_requested_user_id();
-
-  // @@protoc_insertion_point(class_scope:netmsg.AppRequest.UserInfoRequest)
- private:
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > requested_user_id_;
-  friend void  protobuf_AddDesc_social_2eproto();
-  friend void protobuf_AssignDesc_social_2eproto();
-  friend void protobuf_ShutdownFile_social_2eproto();
-
-  void InitAsDefaultInstance();
-  static AppRequest_UserInfoRequest* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class AppRequest : public ::google::protobuf::Message {
  public:
   AppRequest();
@@ -1578,7 +1510,6 @@ class AppRequest : public ::google::protobuf::Message {
   typedef AppRequest_AlbumPhoto AlbumPhoto;
   typedef AppRequest_PhotoAlbum PhotoAlbum;
   typedef AppRequest_UpdateProfile UpdateProfile;
-  typedef AppRequest_UserInfoRequest UserInfoRequest;
 
   typedef AppRequest_MessageType MessageType;
   static const MessageType tFriendRequest = AppRequest_MessageType_tFriendRequest;
@@ -1732,14 +1663,17 @@ class AppRequest : public ::google::protobuf::Message {
   inline ::netmsg::AppRequest_UpdateProfile* release_update_profile();
   inline void set_allocated_update_profile(::netmsg::AppRequest_UpdateProfile* update_profile);
 
-  // optional .netmsg.AppRequest.UserInfoRequest user_info_request = 14;
-  inline bool has_user_info_request() const;
-  inline void clear_user_info_request();
-  static const int kUserInfoRequestFieldNumber = 14;
-  inline const ::netmsg::AppRequest_UserInfoRequest& user_info_request() const;
-  inline ::netmsg::AppRequest_UserInfoRequest* mutable_user_info_request();
-  inline ::netmsg::AppRequest_UserInfoRequest* release_user_info_request();
-  inline void set_allocated_user_info_request(::netmsg::AppRequest_UserInfoRequest* user_info_request);
+  // repeated int64 request_user_info = 14;
+  inline int request_user_info_size() const;
+  inline void clear_request_user_info();
+  static const int kRequestUserInfoFieldNumber = 14;
+  inline ::google::protobuf::int64 request_user_info(int index) const;
+  inline void set_request_user_info(int index, ::google::protobuf::int64 value);
+  inline void add_request_user_info(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      request_user_info() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_request_user_info();
 
   // @@protoc_insertion_point(class_scope:netmsg.AppRequest)
  private:
@@ -1769,8 +1703,6 @@ class AppRequest : public ::google::protobuf::Message {
   inline void clear_has_accept_friend_request();
   inline void set_has_update_profile();
   inline void clear_has_update_profile();
-  inline void set_has_user_info_request();
-  inline void clear_has_user_info_request();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1788,7 +1720,7 @@ class AppRequest : public ::google::protobuf::Message {
   ::netmsg::AppRequest_FriendRequest* friend_request_;
   ::netmsg::AppRequest_AcceptFriendRequest* accept_friend_request_;
   ::netmsg::AppRequest_UpdateProfile* update_profile_;
-  ::netmsg::AppRequest_UserInfoRequest* user_info_request_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > request_user_info_;
   int msg_type_;
   friend void  protobuf_AddDesc_social_2eproto();
   friend void protobuf_AssignDesc_social_2eproto();
@@ -2244,10 +2176,22 @@ class AppReply_EventInfo : public ::google::protobuf::Message {
   inline bool is_public() const;
   inline void set_is_public(bool value);
 
-  // repeated int64 accepted_users = 6;
+  // required string description = 6;
+  inline bool has_description() const;
+  inline void clear_description();
+  static const int kDescriptionFieldNumber = 6;
+  inline const ::std::string& description() const;
+  inline void set_description(const ::std::string& value);
+  inline void set_description(const char* value);
+  inline void set_description(const char* value, size_t size);
+  inline ::std::string* mutable_description();
+  inline ::std::string* release_description();
+  inline void set_allocated_description(::std::string* description);
+
+  // repeated int64 accepted_users = 7;
   inline int accepted_users_size() const;
   inline void clear_accepted_users();
-  static const int kAcceptedUsersFieldNumber = 6;
+  static const int kAcceptedUsersFieldNumber = 7;
   inline ::google::protobuf::int64 accepted_users(int index) const;
   inline void set_accepted_users(int index, ::google::protobuf::int64 value);
   inline void add_accepted_users(::google::protobuf::int64 value);
@@ -2268,6 +2212,8 @@ class AppReply_EventInfo : public ::google::protobuf::Message {
   inline void clear_has_event_uuid();
   inline void set_has_is_public();
   inline void clear_has_is_public();
+  inline void set_has_description();
+  inline void clear_has_description();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -2277,6 +2223,7 @@ class AppReply_EventInfo : public ::google::protobuf::Message {
   ::std::string* location_;
   ::google::protobuf::int64 time_;
   ::std::string* event_uuid_;
+  ::std::string* description_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int64 > accepted_users_;
   bool is_public_;
   friend void  protobuf_AddDesc_social_2eproto();
@@ -2422,6 +2369,18 @@ class AppReply : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::netmsg::AppReply_EventInfo >*
       mutable_event_info();
 
+  // repeated int64 accepted_friends = 6;
+  inline int accepted_friends_size() const;
+  inline void clear_accepted_friends();
+  static const int kAcceptedFriendsFieldNumber = 6;
+  inline ::google::protobuf::int64 accepted_friends(int index) const;
+  inline void set_accepted_friends(int index, ::google::protobuf::int64 value);
+  inline void add_accepted_friends(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      accepted_friends() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_accepted_friends();
+
   // @@protoc_insertion_point(class_scope:netmsg.AppReply)
  private:
   inline void set_has_response_type();
@@ -2437,6 +2396,7 @@ class AppReply : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::netmsg::AppReply_User > users_;
   ::google::protobuf::RepeatedPtrField< ::netmsg::AppReply_FriendRequest > friend_requests_;
   ::google::protobuf::RepeatedPtrField< ::netmsg::AppReply_EventInfo > event_info_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > accepted_friends_;
   int response_type_;
   friend void  protobuf_AddDesc_social_2eproto();
   friend void protobuf_AssignDesc_social_2eproto();
@@ -2988,7 +2948,83 @@ inline void AppRequest_CreateEvent::set_allocated_event_uuid1(::std::string* eve
   // @@protoc_insertion_point(field_set_allocated:netmsg.AppRequest.CreateEvent.event_uuid1)
 }
 
-// repeated int64 invited_users = 6;
+// required string description = 6;
+inline bool AppRequest_CreateEvent::has_description() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void AppRequest_CreateEvent::set_has_description() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void AppRequest_CreateEvent::clear_has_description() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void AppRequest_CreateEvent::clear_description() {
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_->clear();
+  }
+  clear_has_description();
+}
+inline const ::std::string& AppRequest_CreateEvent::description() const {
+  // @@protoc_insertion_point(field_get:netmsg.AppRequest.CreateEvent.description)
+  return *description_;
+}
+inline void AppRequest_CreateEvent::set_description(const ::std::string& value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+  // @@protoc_insertion_point(field_set:netmsg.AppRequest.CreateEvent.description)
+}
+inline void AppRequest_CreateEvent::set_description(const char* value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+  // @@protoc_insertion_point(field_set_char:netmsg.AppRequest.CreateEvent.description)
+}
+inline void AppRequest_CreateEvent::set_description(const char* value, size_t size) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:netmsg.AppRequest.CreateEvent.description)
+}
+inline ::std::string* AppRequest_CreateEvent::mutable_description() {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:netmsg.AppRequest.CreateEvent.description)
+  return description_;
+}
+inline ::std::string* AppRequest_CreateEvent::release_description() {
+  clear_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = description_;
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AppRequest_CreateEvent::set_allocated_description(::std::string* description) {
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete description_;
+  }
+  if (description) {
+    set_has_description();
+    description_ = description;
+  } else {
+    clear_has_description();
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:netmsg.AppRequest.CreateEvent.description)
+}
+
+// repeated int64 invited_users = 7;
 inline int AppRequest_CreateEvent::invited_users_size() const {
   return invited_users_.size();
 }
@@ -4282,40 +4318,6 @@ AppRequest_UpdateProfile::mutable_new_albums() {
 
 // -------------------------------------------------------------------
 
-// AppRequest_UserInfoRequest
-
-// repeated int64 requested_user_id = 1;
-inline int AppRequest_UserInfoRequest::requested_user_id_size() const {
-  return requested_user_id_.size();
-}
-inline void AppRequest_UserInfoRequest::clear_requested_user_id() {
-  requested_user_id_.Clear();
-}
-inline ::google::protobuf::int64 AppRequest_UserInfoRequest::requested_user_id(int index) const {
-  // @@protoc_insertion_point(field_get:netmsg.AppRequest.UserInfoRequest.requested_user_id)
-  return requested_user_id_.Get(index);
-}
-inline void AppRequest_UserInfoRequest::set_requested_user_id(int index, ::google::protobuf::int64 value) {
-  requested_user_id_.Set(index, value);
-  // @@protoc_insertion_point(field_set:netmsg.AppRequest.UserInfoRequest.requested_user_id)
-}
-inline void AppRequest_UserInfoRequest::add_requested_user_id(::google::protobuf::int64 value) {
-  requested_user_id_.Add(value);
-  // @@protoc_insertion_point(field_add:netmsg.AppRequest.UserInfoRequest.requested_user_id)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
-AppRequest_UserInfoRequest::requested_user_id() const {
-  // @@protoc_insertion_point(field_list:netmsg.AppRequest.UserInfoRequest.requested_user_id)
-  return requested_user_id_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
-AppRequest_UserInfoRequest::mutable_requested_user_id() {
-  // @@protoc_insertion_point(field_mutable_list:netmsg.AppRequest.UserInfoRequest.requested_user_id)
-  return &requested_user_id_;
-}
-
-// -------------------------------------------------------------------
-
 // AppRequest
 
 // required int64 phone_id = 1;
@@ -4818,45 +4820,34 @@ inline void AppRequest::set_allocated_update_profile(::netmsg::AppRequest_Update
   // @@protoc_insertion_point(field_set_allocated:netmsg.AppRequest.update_profile)
 }
 
-// optional .netmsg.AppRequest.UserInfoRequest user_info_request = 14;
-inline bool AppRequest::has_user_info_request() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+// repeated int64 request_user_info = 14;
+inline int AppRequest::request_user_info_size() const {
+  return request_user_info_.size();
 }
-inline void AppRequest::set_has_user_info_request() {
-  _has_bits_[0] |= 0x00002000u;
+inline void AppRequest::clear_request_user_info() {
+  request_user_info_.Clear();
 }
-inline void AppRequest::clear_has_user_info_request() {
-  _has_bits_[0] &= ~0x00002000u;
+inline ::google::protobuf::int64 AppRequest::request_user_info(int index) const {
+  // @@protoc_insertion_point(field_get:netmsg.AppRequest.request_user_info)
+  return request_user_info_.Get(index);
 }
-inline void AppRequest::clear_user_info_request() {
-  if (user_info_request_ != NULL) user_info_request_->::netmsg::AppRequest_UserInfoRequest::Clear();
-  clear_has_user_info_request();
+inline void AppRequest::set_request_user_info(int index, ::google::protobuf::int64 value) {
+  request_user_info_.Set(index, value);
+  // @@protoc_insertion_point(field_set:netmsg.AppRequest.request_user_info)
 }
-inline const ::netmsg::AppRequest_UserInfoRequest& AppRequest::user_info_request() const {
-  // @@protoc_insertion_point(field_get:netmsg.AppRequest.user_info_request)
-  return user_info_request_ != NULL ? *user_info_request_ : *default_instance_->user_info_request_;
+inline void AppRequest::add_request_user_info(::google::protobuf::int64 value) {
+  request_user_info_.Add(value);
+  // @@protoc_insertion_point(field_add:netmsg.AppRequest.request_user_info)
 }
-inline ::netmsg::AppRequest_UserInfoRequest* AppRequest::mutable_user_info_request() {
-  set_has_user_info_request();
-  if (user_info_request_ == NULL) user_info_request_ = new ::netmsg::AppRequest_UserInfoRequest;
-  // @@protoc_insertion_point(field_mutable:netmsg.AppRequest.user_info_request)
-  return user_info_request_;
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+AppRequest::request_user_info() const {
+  // @@protoc_insertion_point(field_list:netmsg.AppRequest.request_user_info)
+  return request_user_info_;
 }
-inline ::netmsg::AppRequest_UserInfoRequest* AppRequest::release_user_info_request() {
-  clear_has_user_info_request();
-  ::netmsg::AppRequest_UserInfoRequest* temp = user_info_request_;
-  user_info_request_ = NULL;
-  return temp;
-}
-inline void AppRequest::set_allocated_user_info_request(::netmsg::AppRequest_UserInfoRequest* user_info_request) {
-  delete user_info_request_;
-  user_info_request_ = user_info_request;
-  if (user_info_request) {
-    set_has_user_info_request();
-  } else {
-    clear_has_user_info_request();
-  }
-  // @@protoc_insertion_point(field_set_allocated:netmsg.AppRequest.user_info_request)
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+AppRequest::mutable_request_user_info() {
+  // @@protoc_insertion_point(field_mutable_list:netmsg.AppRequest.request_user_info)
+  return &request_user_info_;
 }
 
 // -------------------------------------------------------------------
@@ -5755,7 +5746,83 @@ inline void AppReply_EventInfo::set_is_public(bool value) {
   // @@protoc_insertion_point(field_set:netmsg.AppReply.EventInfo.is_public)
 }
 
-// repeated int64 accepted_users = 6;
+// required string description = 6;
+inline bool AppReply_EventInfo::has_description() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void AppReply_EventInfo::set_has_description() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void AppReply_EventInfo::clear_has_description() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void AppReply_EventInfo::clear_description() {
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_->clear();
+  }
+  clear_has_description();
+}
+inline const ::std::string& AppReply_EventInfo::description() const {
+  // @@protoc_insertion_point(field_get:netmsg.AppReply.EventInfo.description)
+  return *description_;
+}
+inline void AppReply_EventInfo::set_description(const ::std::string& value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+  // @@protoc_insertion_point(field_set:netmsg.AppReply.EventInfo.description)
+}
+inline void AppReply_EventInfo::set_description(const char* value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+  // @@protoc_insertion_point(field_set_char:netmsg.AppReply.EventInfo.description)
+}
+inline void AppReply_EventInfo::set_description(const char* value, size_t size) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:netmsg.AppReply.EventInfo.description)
+}
+inline ::std::string* AppReply_EventInfo::mutable_description() {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:netmsg.AppReply.EventInfo.description)
+  return description_;
+}
+inline ::std::string* AppReply_EventInfo::release_description() {
+  clear_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = description_;
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AppReply_EventInfo::set_allocated_description(::std::string* description) {
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete description_;
+  }
+  if (description) {
+    set_has_description();
+    description_ = description;
+  } else {
+    clear_has_description();
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:netmsg.AppReply.EventInfo.description)
+}
+
+// repeated int64 accepted_users = 7;
 inline int AppReply_EventInfo::accepted_users_size() const {
   return accepted_users_.size();
 }
@@ -5943,6 +6010,36 @@ inline ::google::protobuf::RepeatedPtrField< ::netmsg::AppReply_EventInfo >*
 AppReply::mutable_event_info() {
   // @@protoc_insertion_point(field_mutable_list:netmsg.AppReply.event_info)
   return &event_info_;
+}
+
+// repeated int64 accepted_friends = 6;
+inline int AppReply::accepted_friends_size() const {
+  return accepted_friends_.size();
+}
+inline void AppReply::clear_accepted_friends() {
+  accepted_friends_.Clear();
+}
+inline ::google::protobuf::int64 AppReply::accepted_friends(int index) const {
+  // @@protoc_insertion_point(field_get:netmsg.AppReply.accepted_friends)
+  return accepted_friends_.Get(index);
+}
+inline void AppReply::set_accepted_friends(int index, ::google::protobuf::int64 value) {
+  accepted_friends_.Set(index, value);
+  // @@protoc_insertion_point(field_set:netmsg.AppReply.accepted_friends)
+}
+inline void AppReply::add_accepted_friends(::google::protobuf::int64 value) {
+  accepted_friends_.Add(value);
+  // @@protoc_insertion_point(field_add:netmsg.AppReply.accepted_friends)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+AppReply::accepted_friends() const {
+  // @@protoc_insertion_point(field_list:netmsg.AppReply.accepted_friends)
+  return accepted_friends_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+AppReply::mutable_accepted_friends() {
+  // @@protoc_insertion_point(field_mutable_list:netmsg.AppReply.accepted_friends)
+  return &accepted_friends_;
 }
 
 

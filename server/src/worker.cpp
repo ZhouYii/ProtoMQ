@@ -5,20 +5,22 @@
 
 void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
     // Routing Logic
+    int64_t origin_phone_id;
     netmsg::AppRequest_MessageType type = rcv_msg->msg_type();
     std::cout << "message type " << type << " " << rcv_msg->has_create_event() << std::endl;
-    std::cout << "seek message type " << netmsg::AppRequest_MessageType_tCreateEvent << std::endl;
+    std::cout << "update routing" << std::endl;
+    // Ignore the invalid query
+    if (!rcv_msg->has_phone_id()) {
+        return;
+    }
+    origin_phone_id  = rcv_msg->phone_id();
+
     switch (type)
     {
-        case netmsg::AppRequest_MessageType_tStatusUpdate :
-            if (rcv_msg->has_status_updates())
-                HandleRequestStatusUpdate(session, rcv_msg);
-            break;
-
-        case netmsg::AppRequest_MessageType_tCreateEvent :
+        case netmsg::AppRequest_MessageType_tEventCreate :
             if (rcv_msg->has_create_event()) {
                 std::cout << "correct branching" << std::endl;
-                HandleRequestCreateEvent(session, rcv_msg);
+                HandleRequestCreateEvent(session, rcv_msg, origin_phone_id);
             }
             break;
 
@@ -40,13 +42,13 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
             }
             break;
 
-        case netmsg::AppRequest_MessageType_tPollAccepted :
+        case netmsg::AppRequest_MessageType_tPollAcceptedEvents :
             if (rcv_msg->has_poll_accepted()) {
                 break;
             }
             break;
 
-        case netmsg::AppRequest_MessageType_tPollInvited :
+        case netmsg::AppRequest_MessageType_tPollInvitedEvents :
             if (rcv_msg->has_poll_invited()) {
                 break;
             }
@@ -62,9 +64,6 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
                 HandleRequestLogin(session, rcv_msg);
             break;
 
-        case netmsg::AppRequest_MessageType_tLogout :
-            break;
-
         default :
             break;
     }
@@ -73,6 +72,7 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
 int main (int argc, char *argv[])
 {
     // get connection
+    std::cout << "update main" << std::endl;
     std::cout << "cassandra connection" << std::endl;
     //CassCluster* cluster = create_cluster("localhost");
     CassCluster* cluster = create_cluster("ec2-54-69-204-42.us-west-2.compute.amazonaws.com");
