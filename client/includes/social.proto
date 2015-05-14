@@ -145,7 +145,7 @@ message AppReply {
   // Polling friends needs to get multiple user objects
   message User {
     required int64 phone_number = 1;
-    required string nickname = 2;
+    optional string nickname = 2;
     required bool is_male = 3;
     optional bytes profile_photo = 4;
     optional string email = 5;

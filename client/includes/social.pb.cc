@@ -588,7 +588,7 @@ void protobuf_AddDesc_social_2eproto() {
     " \003(\0132\032.netmsg.AppReply.EventInfo\022\030\n\020acce"
     "pted_friends\030\006 \003(\003\032 \n\tEventUUID\022\023\n\013event"
     "_uuid1\030\001 \002(\014\032\214\001\n\004User\022\024\n\014phone_number\030\001 "
-    "\002(\003\022\020\n\010nickname\030\002 \002(\t\022\017\n\007is_male\030\003 \002(\010\022\025"
+    "\002(\003\022\020\n\010nickname\030\002 \001(\t\022\017\n\007is_male\030\003 \002(\010\022\025"
     "\n\rprofile_photo\030\004 \001(\014\022\r\n\005email\030\005 \001(\t\022\023\n\013"
     "description\030\006 \001(\t\022\020\n\010location\030\007 \001(\t\032H\n\rF"
     "riendRequest\022\036\n\026request_origin_user_id\030\001"
@@ -5985,7 +5985,7 @@ bool AppReply_User::MergePartialFromCodedStream(
         break;
       }
 
-      // required string nickname = 2;
+      // optional string nickname = 2;
       case 2: {
         if (tag == 18) {
          parse_nickname:
@@ -6111,7 +6111,7 @@ void AppReply_User::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->phone_number(), output);
   }
 
-  // required string nickname = 2;
+  // optional string nickname = 2;
   if (has_nickname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->nickname().data(), this->nickname().length(),
@@ -6177,7 +6177,7 @@ void AppReply_User::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->phone_number(), target);
   }
 
-  // required string nickname = 2;
+  // optional string nickname = 2;
   if (has_nickname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->nickname().data(), this->nickname().length(),
@@ -6252,7 +6252,7 @@ int AppReply_User::ByteSize() const {
           this->phone_number());
     }
 
-    // required string nickname = 2;
+    // optional string nickname = 2;
     if (has_nickname()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -6357,7 +6357,7 @@ void AppReply_User::CopyFrom(const AppReply_User& from) {
 }
 
 bool AppReply_User::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
 
   return true;
 }

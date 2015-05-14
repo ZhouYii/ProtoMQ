@@ -1875,7 +1875,7 @@ class AppReply_User : public ::google::protobuf::Message {
   inline ::google::protobuf::int64 phone_number() const;
   inline void set_phone_number(::google::protobuf::int64 value);
 
-  // required string nickname = 2;
+  // optional string nickname = 2;
   inline bool has_nickname() const;
   inline void clear_nickname();
   static const int kNicknameFieldNumber = 2;
@@ -4958,7 +4958,7 @@ inline void AppReply_User::set_phone_number(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:netmsg.AppReply.User.phone_number)
 }
 
-// required string nickname = 2;
+// optional string nickname = 2;
 inline bool AppReply_User::has_nickname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }

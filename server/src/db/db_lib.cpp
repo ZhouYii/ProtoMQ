@@ -9,12 +9,15 @@ const char* db_user_cf_get_string(const char* column_family_name,
 {
     const char* ret;
     size_t ret_len;
-    cass_value_get_string(cass_row_get_column_by_name(row, column_family_name),
-                          &ret,
-                          &ret_len);
-    *(db_value_not_null) = valid_string_size_check(ret_len,
-                                            (void*) ret,
-                                            sizeof(char));
+    CassError err = cass_value_get_string(cass_row_get_column_by_name(row, column_family_name),
+                                          &ret,
+                                          &ret_len);
+    if (err == CASS_OK) {
+        *(db_value_not_null) = true;
+    } else {
+        *(db_value_not_null) = false;
+        std::cout << "err " << err << " " << CASS_OK << " cf name " << column_family_name << std::endl;
+    }
     return ret;
 }
 
@@ -23,6 +26,7 @@ bool db_populate_reply_user_object(CassSession* session,
                                 netmsg::AppReply_User* user)
 {
     CassError rc = CASS_OK;
+    CassError err;
     CassStatement* statement = NULL;
     CassFuture* future = NULL;
     bool return_val = true;
@@ -31,6 +35,7 @@ bool db_populate_reply_user_object(CassSession* session,
     const char* query = "SELECT * FROM social.user WHERE phone_number = ?";
     statement = cass_statement_new(query, 1);
     cass_statement_bind_int64(statement, 0, phone_id);
+    std::cout << "phone : " << phone_id << std::endl;
 
     future = cass_session_execute(session, statement);
     cass_future_wait(future);
@@ -84,13 +89,15 @@ bool db_populate_reply_user_object(CassSession* session,
 
             const cass_byte_t* profile_photo;
             size_t photo_num_bytes;
-            cass_value_get_bytes(cass_row_get_column_by_name (row, "profile_pic"),
-                                 &profile_photo,
-                                 &photo_num_bytes);
-            size_t expected_elems = (sizeof(profile_photo) / sizeof(cass_byte_t));
-            bool has_profile_photo = valid_string_size_check(photo_num_bytes,
-                                                             (void*) profile_photo,
-                                                             sizeof(cass_byte_t));
+            bool has_profile_photo;
+            err = cass_value_get_bytes(cass_row_get_column_by_name (row, "profile_pic"),
+                                      &profile_photo,
+                                      &photo_num_bytes);
+            if (err == CASS_OK) {
+                has_profile_photo = true;
+            } else {
+                has_profile_photo = false;
+            }
 
             user->set_phone_number(phone_num);
             if (has_nick)

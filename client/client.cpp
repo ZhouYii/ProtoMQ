@@ -117,7 +117,9 @@ int main (int argc, char *argv[])
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     zmq::context_t context(1);
     zmq::socket_t requester(context, ZMQ_REQ);
-    requester.connect("tcp://ec2-54-69-204-42.us-west-2.compute.amazonaws.com:5559");
+    ///requester.connect("tcp://ec2-54-69-204-42.us-west-2.compute.amazonaws.com:5559");
+
+    requester.connect("tcp://localhost:5559");
 
     std::cout << "Connection made" << std::endl;
 
@@ -167,12 +169,14 @@ int main (int argc, char *argv[])
     std::cout << "has_loc: " << usr.has_location() << std::endl;
     std::cout << "has_loc: " << usr.location() << std::endl;
     
+    /*
     std::string output_filename = "tmp/retrieved_profile_pic.jpeg";
     std::string photo_bytestr = usr.profile_photo();
     std::ofstream out_file;
     out_file.open(output_filename, std::ios::out | std::ios::binary);
     out_file.write(photo_bytestr.c_str(), photo_bytestr.size());
     out_file.close();
+    */
 
     // Cleanup
     google::protobuf::ShutdownProtobufLibrary();
