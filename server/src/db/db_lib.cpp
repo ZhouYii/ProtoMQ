@@ -3,6 +3,21 @@
 
 #include "db_lib.h"
 
+const char* db_user_cf_get_string(const char* column_family_name,
+                                  const CassRow* row,
+                                  bool* db_value_not_null)
+{
+    const char* ret;
+    size_t ret_len;
+    cass_value_get_string(cass_row_get_column_by_name(row, column_family_name),
+                          &ret,
+                          &ret_len);
+    *(db_value_not_null) = valid_string_size_check(ret_len,
+                                            (void*) ret,
+                                            sizeof(char));
+    return ret;
+}
+
 bool db_populate_reply_user_object(CassSession* session,
                                 const int64_t phone_id,
                                 netmsg::AppReply_User* user)
@@ -33,19 +48,18 @@ bool db_populate_reply_user_object(CassSession* session,
             cass_value_get_int64(cass_row_get_column_by_name(row, "phone_number"), 
                                  &phone_num);
 
-            //std::string email;
             const char* email;
-            size_t email_len;
-            cass_value_get_string(cass_row_get_column_by_name (row, "email"),
-                                  &email,
-                                  &email_len);
-
+            bool has_email;
+            email = db_user_cf_get_string("email",
+                                          row,
+                                          &has_email);
             const char* introduction;
-            size_t introduction_len;
-            cass_value_get_string(cass_row_get_column_by_name (row, "introduction"),
-                                  &introduction,
-                                  &introduction_len);
+            bool has_intro;
+            introduction = db_user_cf_get_string("introduction",
+                                          row,
+                                          &has_intro);
 
+            // Always exists from registration
             cass_bool_t cass_is_male;
             cass_value_get_bool(cass_row_get_column_by_name (row, "is_male"), 
                                 &cass_is_male);
@@ -56,32 +70,41 @@ bool db_populate_reply_user_object(CassSession* session,
 
             // Location
             const char* location;
-            size_t location_len;
-            cass_value_get_string(cass_row_get_column_by_name (row, "location"),
-                                  &location,
-                                  &location_len);
+            bool has_location;
+            location = db_user_cf_get_string("location",
+                                              row,
+                                              &has_intro);
+
             // Nickname
             const char* nick;
-            size_t nick_len;
-            cass_value_get_string(cass_row_get_column_by_name (row, "nickname"),
-                                  &nick,
-                                  &nick_len);
+            bool has_nick;
+            location = db_user_cf_get_string("nickname",
+                                              row,
+                                              &has_intro);
 
             const cass_byte_t* profile_photo;
             size_t photo_num_bytes;
             cass_value_get_bytes(cass_row_get_column_by_name (row, "profile_pic"),
                                  &profile_photo,
                                  &photo_num_bytes);
-            std::cout << "read photo len " << photo_num_bytes << std::endl;
-            
+            size_t expected_elems = (sizeof(profile_photo) / sizeof(cass_byte_t));
+            bool has_profile_photo = valid_string_size_check(photo_num_bytes,
+                                                             (void*) profile_photo,
+                                                             sizeof(cass_byte_t));
+
             user->set_phone_number(phone_num);
-            user->set_nickname(nick);
+            if (has_nick)
+                user->set_nickname(nick);
             user->set_is_male(is_male);
-            user->set_profile_photo((const void*)profile_photo, 
-                                    photo_num_bytes*sizeof(cass_byte_t));
-            user->set_email(email);
-            user->set_description(introduction);
-            user->set_location(location);
+            if (has_profile_photo)
+                user->set_profile_photo((const void*)profile_photo, 
+                                        photo_num_bytes*sizeof(cass_byte_t));
+            if (has_email)
+                user->set_email(email);
+            if (has_intro)
+                user->set_description(introduction);
+            if (has_location)
+                user->set_location(location);
         }
 
     }

@@ -50,6 +50,7 @@ void CreateGetUserInfoMessage(netmsg::AppRequest* msg,
     // Set message key
     msg->set_phone_id(host_phone_number);
     msg->add_request_user_info(host_phone_number);
+    msg->add_request_user_info(6505758650);
 
     // Set type
     netmsg::AppRequest_MessageType type =

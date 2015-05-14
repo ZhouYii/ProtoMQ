@@ -22,4 +22,12 @@ CassError connect_session(CassSession* session,
  *  Initializes contents of cass_uuid structure to be a V1 timestamp
  */
 void GenerateV1Uuid(CassUuid* cass_uuid);
+
+
+/* check to see if the input size is truly correct
+ * expected size should be sizeof(str-like)/size(str-unit)
+ */
+bool valid_string_size_check(size_t expected_size,
+                             void* str_like,
+                             size_t unit_size);
 #endif

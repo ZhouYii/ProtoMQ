@@ -54,4 +54,13 @@ void GenerateV1Uuid(CassUuid* cass_uuid);
     cass_uint64_t cass_time = std::time(NULL);
     cass_uuid_min_from_time(cass_time, cass_uuid);
 }
+
+/* check to see if the input size is truly correct
+ */
+bool valid_string_size_check(size_t expected_size,
+                             void* str_like,
+                             size_t unit_size)
+{
+    return expected_size == (int)(sizeof(str_like) / unit_size);
+}
 #endif

@@ -15,7 +15,19 @@
 #include "db_utils.h"
 #include "../includes/social.pb.h"
 
+/*  Extracts a string-type column value from the user table and
+ *  verifies the value is not null
+ *  
+ *  int+out : db_value_not_null
+ *      allocated by caller
+ */
+const char* db_user_cf_get_string(const char* column_family_name,
+                                  const CassRow* row,
+                                  bool* db_value_not_null);
 
+/*
+ * Populates a User-type response message from the database
+ */
 bool db_populate_reply_user_object(CassSession* session,
                                 const int64_t phone_id,
                                 netmsg::AppReply_User* user);
