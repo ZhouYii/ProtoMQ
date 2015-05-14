@@ -12,7 +12,7 @@ CassError DbSingleUserAttendingEvent(CassSession* session,
     CassFuture* future = NULL;
 
     if (invited_user == 0)
-        return CASS_OK;
+         return CASS_OK;
     
     const std::string userid_string = std::to_string(invited_user);
     const std::string query = "UPDATE social.events SET attending_userids = attending_userids + { " + userid_string + "  } \
@@ -135,6 +135,37 @@ CassUuid DbCreateNewEvent(CassSession* session,
     cass_future_free(future);
     cass_statement_free(statement);
     return cass_uuid1;
+}
+
+CassError db_update_profile_pic(CassSession* session,
+                                const int64_t phone_id,
+                                const char* profile_pic_bytes,
+                                size_t num_bytes)
+{
+    CassError rc = CASS_OK;
+    const cass_byte_t* cass_bytes_string;
+    CassStatement* statement = NULL;
+    CassFuture* future = NULL;
+    const char* query = """UPDATE social.user SET profile_pic = ? \
+            WHERE phone_number = ?""";
+
+    cass_bytes_string = (cass_byte_t*) profile_pic_bytes;
+    statement = cass_statement_new(query, 2);
+    cass_statement_bind_bytes(statement, 0, cass_bytes_string, num_bytes);
+    cass_statement_bind_int64(statement, 1, phone_id);
+
+    future = cass_session_execute(session, statement);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) {
+        print_error(future);
+    }
+
+    cass_future_free(future);
+    cass_statement_free(statement);
+
+    return rc;
 }
 
 CassError db_create_new_user(CassSession* session,

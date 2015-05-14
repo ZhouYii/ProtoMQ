@@ -55,6 +55,23 @@ void HandleRequestRegistration(CassSession* session,
 
 }
 
+
+// Request handler for event creation
+void HandleRequestUpdateProfile(CassSession* session, 
+                               netmsg::AppRequest* msg,
+                               int64_t host_id) 
+{
+    netmsg::AppRequest_UpdateProfile prof_msg = msg->update_profile();
+    std::cout << "update profile handler" << std::endl;
+    // Update profile picture
+    if (prof_msg.has_profile_photo()) {
+        std::string bytestr = prof_msg.profile_photo();
+        size_t num_char = bytestr.length();
+        db_update_profile_pic(session, host_id, bytestr.c_str(), num_char);
+    }
+
+}
+
 // Request handler for event creation
 void HandleRequestCreateEvent(CassSession* session, 
                               netmsg::AppRequest* msg,

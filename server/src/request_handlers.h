@@ -20,6 +20,10 @@ void HandleRequestCreateEvent(CassSession* session,
                               netmsg::AppRequest* msg,
                               int64_t host_id);
 
+void HandleRequestUpdateProfile(CassSession* session,
+                              netmsg::AppRequest* msg,
+                              int64_t host_id);
+
 void HandleRequestStatusUpdate(CassSession* session, 
                                netmsg::AppRequest* msg);
 

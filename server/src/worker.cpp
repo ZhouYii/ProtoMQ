@@ -17,6 +17,11 @@ void doRouting(CassSession* session, netmsg::AppRequest* rcv_msg) {
 
     switch (type)
     {
+        case netmsg::AppRequest_MessageType_tUpdateProfile :
+            if (rcv_msg->has_update_profile()) {
+                HandleRequestUpdateProfile(session, rcv_msg, origin_phone_id);
+            }
+            break;
         case netmsg::AppRequest_MessageType_tEventCreate :
             if (rcv_msg->has_create_event()) {
                 std::cout << "correct branching" << std::endl;

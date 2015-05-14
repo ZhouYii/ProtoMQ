@@ -17,6 +17,16 @@
 /* DB abstraction for sending event invitations to multiple users.
  *
  * Input :
+ *  profile_pic - bytestring for new profile pic
+ */
+CassError db_update_profile_pic(CassSession* session,
+                                const int64_t phone_id,
+                                const char* profile_pic,
+                                size_t num_bytes);
+
+/* DB abstraction for sending event invitations to multiple users.
+ *
+ * Input :
  *  session - Cassandra database session
  *  uuid - uuid string representing the event
  *  invited_user - user phone number who is accepting event
