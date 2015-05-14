@@ -55,6 +55,27 @@ void HandleRequestRegistration(CassSession* session,
 
 }
 
+netmsg::AppReply* HandleRequestGetUserInfo(CassSession* session,
+                               netmsg::AppRequest* msg,
+                               int64_t host_id,
+                               zmq::socket_t* responder)
+{
+    netmsg::AppReply* reply = new netmsg::AppReply;
+    reply->set_response_type(netmsg::AppReply_ResponseType_tSuccess);
+    for (int user_idx = 0;
+         user_idx < msg->request_user_info_size();
+         user_idx += 1)
+    {
+        int64_t phone_id = msg->request_user_info(user_idx);
+        netmsg::AppReply_User* new_user = reply->add_users();
+        bool success = db_populate_reply_user_object(session, phone_id, new_user);
+        if (!success) {
+            new_user->set_phone_number(-1);
+        }
+    }
+
+    return reply;
+}
 
 // Request handler for event creation
 void HandleRequestUpdateProfile(CassSession* session, 

@@ -29,6 +29,11 @@ void HandleRequestStatusUpdate(CassSession* session,
 
 void HandleRequestEventInvite(CassSession* session,
                                netmsg::AppRequest* msg);
+
+netmsg::AppReply* HandleRequestGetUserInfo(CassSession* session,
+                               netmsg::AppRequest* msg,
+                               int64_t host_id,
+                               zmq::socket_t* responder);
 #endif
 
 

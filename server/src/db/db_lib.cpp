@@ -3,6 +3,95 @@
 
 #include "db_lib.h"
 
+bool db_populate_reply_user_object(CassSession* session,
+                                const int64_t phone_id,
+                                netmsg::AppReply_User* user)
+{
+    CassError rc = CASS_OK;
+    CassStatement* statement = NULL;
+    CassFuture* future = NULL;
+    bool return_val = true;
+    bool is_male;
+
+    const char* query = "SELECT * FROM social.user WHERE phone_number = ?";
+    statement = cass_statement_new(query, 1);
+    cass_statement_bind_int64(statement, 0, phone_id);
+
+    future = cass_session_execute(session, statement);
+    cass_future_wait(future);
+
+    rc = cass_future_error_code(future);
+    if (rc != CASS_OK) {
+        return_val = false;
+    } else {
+        const CassResult* result = cass_future_get_result(future);
+        CassIterator* iterator = cass_iterator_from_result(result);
+
+        if (cass_iterator_next(iterator)) {
+            const CassRow* row = cass_iterator_get_row(iterator);
+            int64_t phone_num;
+            cass_value_get_int64(cass_row_get_column_by_name(row, "phone_number"), 
+                                 &phone_num);
+
+            //std::string email;
+            const char* email;
+            size_t email_len;
+            cass_value_get_string(cass_row_get_column_by_name (row, "email"),
+                                  &email,
+                                  &email_len);
+
+            const char* introduction;
+            size_t introduction_len;
+            cass_value_get_string(cass_row_get_column_by_name (row, "introduction"),
+                                  &introduction,
+                                  &introduction_len);
+
+            cass_bool_t cass_is_male;
+            cass_value_get_bool(cass_row_get_column_by_name (row, "is_male"), 
+                                &cass_is_male);
+            if (cass_is_male == cass_false)
+                is_male = false;
+            else
+                is_male = true;
+
+            // Location
+            const char* location;
+            size_t location_len;
+            cass_value_get_string(cass_row_get_column_by_name (row, "location"),
+                                  &location,
+                                  &location_len);
+            // Nickname
+            const char* nick;
+            size_t nick_len;
+            cass_value_get_string(cass_row_get_column_by_name (row, "nickname"),
+                                  &nick,
+                                  &nick_len);
+
+            const cass_byte_t* profile_photo;
+            size_t photo_num_bytes;
+            cass_value_get_bytes(cass_row_get_column_by_name (row, "profile_pic"),
+                                 &profile_photo,
+                                 &photo_num_bytes);
+            std::cout << "read photo len " << photo_num_bytes << std::endl;
+            
+            user->set_phone_number(phone_num);
+            user->set_nickname(nick);
+            user->set_is_male(is_male);
+            user->set_profile_photo((const void*)profile_photo, 
+                                    photo_num_bytes*sizeof(cass_byte_t));
+            user->set_email(email);
+            user->set_description(introduction);
+            user->set_location(location);
+        }
+
+    }
+
+    // Free alloc'd mem.
+    cass_future_free(future);
+    cass_statement_free(statement);
+    return return_val;
+}
+
 CassError DbSingleUserAttendingEvent(CassSession* session,
                                      const CassUuid* uuid,
                                      int64_t invited_user)

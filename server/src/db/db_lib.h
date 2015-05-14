@@ -13,6 +13,12 @@
 
 #include "query_structs.h"
 #include "db_utils.h"
+#include "../includes/social.pb.h"
+
+
+bool db_populate_reply_user_object(CassSession* session,
+                                const int64_t phone_id,
+                                netmsg::AppReply_User* user);
 
 /* DB abstraction for sending event invitations to multiple users.
  *
