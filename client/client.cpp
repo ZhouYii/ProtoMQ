@@ -117,9 +117,9 @@ int main (int argc, char *argv[])
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     zmq::context_t context(1);
     zmq::socket_t requester(context, ZMQ_REQ);
-    ///requester.connect("tcp://ec2-54-69-204-42.us-west-2.compute.amazonaws.com:5559");
+    requester.connect("tcp://ec2-54-69-204-42.us-west-2.compute.amazonaws.com:5559");
 
-    requester.connect("tcp://localhost:5559");
+    //requester.connect("tcp://localhost:5559");
 
     std::cout << "Connection made" << std::endl;
 

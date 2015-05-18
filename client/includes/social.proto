@@ -13,19 +13,27 @@ message AppRequest {
     tGetFriendRequests=2;
     // Does not have message - uses phone id
     tGetFriends=3;  //
-    // Does not have message - uses phone id
-    tPollNotifications=14;
 
     tAcceptFriendRequest=4; //
-    tEventCreate=5; //
-    tEventInvite=6; //
+
+    tCreatePublicEvent = 5;
+    tCreatePrivateEvent = 6;
+
+    // tEventInvite=6; //
     tEventAccept=7; //
-    tEventReject=8; //
+
     tRegistration=9;
     tLogin=10; //
     tUpdateProfile=11;
+
+    // Does not have message - uses phone id
+    // Invited private events
+    tPollNotifications=14;
+    // Visible (friend-of-friend) public events
+    tPollNewsfeed=13; //
+    // Accepted private events
     tPollAcceptedEvents=12; //
-    tPollInvitedEvents=13; //
+
     tUserInfoRequest=15;
   }
   required MessageType msg_type = 2;
@@ -47,24 +55,34 @@ message AppRequest {
   optional LoginMessage login_msg = 4;
 
   /* Events */
-  message CreateEvent {
+  message CreatePrivateEvent {
     required string title = 1;
     required string location = 2;
-    required int64 time = 3; // POSIX time
-    required bool is_public = 4;
+    required int64 start_time = 3; // POSIX time
+    required bytes event_uuid1 = 4;
+    required string description = 5;
+    repeated int64 invited_users = 6;
+  }
+  optional CreatePrivateEvent create_private_event = 5;
+
+  message CreatePublicEvent {
+    required string title = 1;
+    required string location = 2;
+    required int64 start_time = 3; // POSIX time
+    required int64 end_time = 4; // POSIX time
     required bytes event_uuid1 = 5;
     required string description = 6;
-    repeated int64 invited_users = 7;
   }
-  optional CreateEvent create_event = 5;
+  optional CreatePublicEvent create_public_event = 6;
 
   // Separating messages for event accept,rejc,invt in anticipation of future diversification.
   // If there is contention for 1-16 ids, we can combine these message types.
   message EventAccept {
     required bytes event_uuid1 = 1;
   }
-  optional EventAccept accept_event = 6;
+  optional EventAccept accept_event = 7;
 
+  /*
   message EventReject {
     required bytes event_uuid1 = 1;
   }
@@ -75,18 +93,16 @@ message AppRequest {
     repeated int64 invited_users = 2;
   }
   optional EventInvite invite_event = 8;
+  */
 
-  message PollInvitedEvents {
+  /*
+    These parameters are used in poll-type queries
+  */
+  message PollingParameters {
     optional int64 offset = 1;
     optional int64 amount = 2;
   }
-  optional PollInvitedEvents poll_invited = 9;
-
-  message PollAcceptedEvents {
-    optional int64 offset = 1;
-    optional int64 amount = 2;
-  }
-  optional PollAcceptedEvents poll_accepted = 10;
+  optional PollingParameters poll_params = 10;
 
 
   /* Friend */

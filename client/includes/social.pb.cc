@@ -29,24 +29,18 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* AppRequest_LoginMessage_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   AppRequest_LoginMessage_reflection_ = NULL;
-const ::google::protobuf::Descriptor* AppRequest_CreateEvent_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* AppRequest_CreatePrivateEvent_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  AppRequest_CreateEvent_reflection_ = NULL;
+  AppRequest_CreatePrivateEvent_reflection_ = NULL;
+const ::google::protobuf::Descriptor* AppRequest_CreatePublicEvent_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  AppRequest_CreatePublicEvent_reflection_ = NULL;
 const ::google::protobuf::Descriptor* AppRequest_EventAccept_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   AppRequest_EventAccept_reflection_ = NULL;
-const ::google::protobuf::Descriptor* AppRequest_EventReject_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* AppRequest_PollingParameters_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  AppRequest_EventReject_reflection_ = NULL;
-const ::google::protobuf::Descriptor* AppRequest_EventInvite_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  AppRequest_EventInvite_reflection_ = NULL;
-const ::google::protobuf::Descriptor* AppRequest_PollInvitedEvents_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  AppRequest_PollInvitedEvents_reflection_ = NULL;
-const ::google::protobuf::Descriptor* AppRequest_PollAcceptedEvents_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  AppRequest_PollAcceptedEvents_reflection_ = NULL;
+  AppRequest_PollingParameters_reflection_ = NULL;
 const ::google::protobuf::Descriptor* AppRequest_FriendRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   AppRequest_FriendRequest_reflection_ = NULL;
@@ -90,17 +84,15 @@ void protobuf_AssignDesc_social_2eproto() {
       "social.proto");
   GOOGLE_CHECK(file != NULL);
   AppRequest_descriptor_ = file->message_type(0);
-  static const int AppRequest_offsets_[14] = {
+  static const int AppRequest_offsets_[12] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, phone_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, msg_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, reg_msg_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, login_msg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, create_event_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, create_private_event_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, create_public_event_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, accept_event_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, reject_event_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, invite_event_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, poll_invited_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, poll_accepted_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, poll_params_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, friend_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, accept_friend_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest, update_profile_),
@@ -149,28 +141,47 @@ void protobuf_AssignDesc_social_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AppRequest_LoginMessage));
-  AppRequest_CreateEvent_descriptor_ = AppRequest_descriptor_->nested_type(2);
-  static const int AppRequest_CreateEvent_offsets_[7] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, title_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, location_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, time_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, is_public_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, event_uuid1_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, description_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, invited_users_),
+  AppRequest_CreatePrivateEvent_descriptor_ = AppRequest_descriptor_->nested_type(2);
+  static const int AppRequest_CreatePrivateEvent_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, title_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, location_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, start_time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, event_uuid1_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, description_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, invited_users_),
   };
-  AppRequest_CreateEvent_reflection_ =
+  AppRequest_CreatePrivateEvent_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      AppRequest_CreateEvent_descriptor_,
-      AppRequest_CreateEvent::default_instance_,
-      AppRequest_CreateEvent_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreateEvent, _unknown_fields_),
+      AppRequest_CreatePrivateEvent_descriptor_,
+      AppRequest_CreatePrivateEvent::default_instance_,
+      AppRequest_CreatePrivateEvent_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePrivateEvent, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(AppRequest_CreateEvent));
-  AppRequest_EventAccept_descriptor_ = AppRequest_descriptor_->nested_type(3);
+      sizeof(AppRequest_CreatePrivateEvent));
+  AppRequest_CreatePublicEvent_descriptor_ = AppRequest_descriptor_->nested_type(3);
+  static const int AppRequest_CreatePublicEvent_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, title_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, location_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, start_time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, end_time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, event_uuid1_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, description_),
+  };
+  AppRequest_CreatePublicEvent_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      AppRequest_CreatePublicEvent_descriptor_,
+      AppRequest_CreatePublicEvent::default_instance_,
+      AppRequest_CreatePublicEvent_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_CreatePublicEvent, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(AppRequest_CreatePublicEvent));
+  AppRequest_EventAccept_descriptor_ = AppRequest_descriptor_->nested_type(4);
   static const int AppRequest_EventAccept_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventAccept, event_uuid1_),
   };
@@ -185,70 +196,23 @@ void protobuf_AssignDesc_social_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AppRequest_EventAccept));
-  AppRequest_EventReject_descriptor_ = AppRequest_descriptor_->nested_type(4);
-  static const int AppRequest_EventReject_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventReject, event_uuid1_),
+  AppRequest_PollingParameters_descriptor_ = AppRequest_descriptor_->nested_type(5);
+  static const int AppRequest_PollingParameters_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollingParameters, offset_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollingParameters, amount_),
   };
-  AppRequest_EventReject_reflection_ =
+  AppRequest_PollingParameters_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      AppRequest_EventReject_descriptor_,
-      AppRequest_EventReject::default_instance_,
-      AppRequest_EventReject_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventReject, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventReject, _unknown_fields_),
+      AppRequest_PollingParameters_descriptor_,
+      AppRequest_PollingParameters::default_instance_,
+      AppRequest_PollingParameters_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollingParameters, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollingParameters, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(AppRequest_EventReject));
-  AppRequest_EventInvite_descriptor_ = AppRequest_descriptor_->nested_type(5);
-  static const int AppRequest_EventInvite_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventInvite, event_uuid1_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventInvite, invited_users_),
-  };
-  AppRequest_EventInvite_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      AppRequest_EventInvite_descriptor_,
-      AppRequest_EventInvite::default_instance_,
-      AppRequest_EventInvite_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventInvite, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_EventInvite, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(AppRequest_EventInvite));
-  AppRequest_PollInvitedEvents_descriptor_ = AppRequest_descriptor_->nested_type(6);
-  static const int AppRequest_PollInvitedEvents_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollInvitedEvents, offset_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollInvitedEvents, amount_),
-  };
-  AppRequest_PollInvitedEvents_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      AppRequest_PollInvitedEvents_descriptor_,
-      AppRequest_PollInvitedEvents::default_instance_,
-      AppRequest_PollInvitedEvents_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollInvitedEvents, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollInvitedEvents, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(AppRequest_PollInvitedEvents));
-  AppRequest_PollAcceptedEvents_descriptor_ = AppRequest_descriptor_->nested_type(7);
-  static const int AppRequest_PollAcceptedEvents_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollAcceptedEvents, offset_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollAcceptedEvents, amount_),
-  };
-  AppRequest_PollAcceptedEvents_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      AppRequest_PollAcceptedEvents_descriptor_,
-      AppRequest_PollAcceptedEvents::default_instance_,
-      AppRequest_PollAcceptedEvents_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollAcceptedEvents, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PollAcceptedEvents, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(AppRequest_PollAcceptedEvents));
-  AppRequest_FriendRequest_descriptor_ = AppRequest_descriptor_->nested_type(8);
+      sizeof(AppRequest_PollingParameters));
+  AppRequest_FriendRequest_descriptor_ = AppRequest_descriptor_->nested_type(6);
   static const int AppRequest_FriendRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_FriendRequest, destination_user_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_FriendRequest, message_),
@@ -264,7 +228,7 @@ void protobuf_AssignDesc_social_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AppRequest_FriendRequest));
-  AppRequest_AcceptFriendRequest_descriptor_ = AppRequest_descriptor_->nested_type(9);
+  AppRequest_AcceptFriendRequest_descriptor_ = AppRequest_descriptor_->nested_type(7);
   static const int AppRequest_AcceptFriendRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_AcceptFriendRequest, requesting_user_id_),
   };
@@ -279,7 +243,7 @@ void protobuf_AssignDesc_social_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AppRequest_AcceptFriendRequest));
-  AppRequest_AlbumPhoto_descriptor_ = AppRequest_descriptor_->nested_type(10);
+  AppRequest_AlbumPhoto_descriptor_ = AppRequest_descriptor_->nested_type(8);
   static const int AppRequest_AlbumPhoto_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_AlbumPhoto, photo_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_AlbumPhoto, description_),
@@ -295,7 +259,7 @@ void protobuf_AssignDesc_social_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AppRequest_AlbumPhoto));
-  AppRequest_PhotoAlbum_descriptor_ = AppRequest_descriptor_->nested_type(11);
+  AppRequest_PhotoAlbum_descriptor_ = AppRequest_descriptor_->nested_type(9);
   static const int AppRequest_PhotoAlbum_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PhotoAlbum, photos_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_PhotoAlbum, albumdescription_),
@@ -311,7 +275,7 @@ void protobuf_AssignDesc_social_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AppRequest_PhotoAlbum));
-  AppRequest_UpdateProfile_descriptor_ = AppRequest_descriptor_->nested_type(12);
+  AppRequest_UpdateProfile_descriptor_ = AppRequest_descriptor_->nested_type(10);
   static const int AppRequest_UpdateProfile_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_UpdateProfile, email_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AppRequest_UpdateProfile, description_),
@@ -446,17 +410,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     AppRequest_LoginMessage_descriptor_, &AppRequest_LoginMessage::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    AppRequest_CreateEvent_descriptor_, &AppRequest_CreateEvent::default_instance());
+    AppRequest_CreatePrivateEvent_descriptor_, &AppRequest_CreatePrivateEvent::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    AppRequest_CreatePublicEvent_descriptor_, &AppRequest_CreatePublicEvent::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     AppRequest_EventAccept_descriptor_, &AppRequest_EventAccept::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    AppRequest_EventReject_descriptor_, &AppRequest_EventReject::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    AppRequest_EventInvite_descriptor_, &AppRequest_EventInvite::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    AppRequest_PollInvitedEvents_descriptor_, &AppRequest_PollInvitedEvents::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    AppRequest_PollAcceptedEvents_descriptor_, &AppRequest_PollAcceptedEvents::default_instance());
+    AppRequest_PollingParameters_descriptor_, &AppRequest_PollingParameters::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     AppRequest_FriendRequest_descriptor_, &AppRequest_FriendRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -488,18 +448,14 @@ void protobuf_ShutdownFile_social_2eproto() {
   delete AppRequest_RegisterMessage_reflection_;
   delete AppRequest_LoginMessage::default_instance_;
   delete AppRequest_LoginMessage_reflection_;
-  delete AppRequest_CreateEvent::default_instance_;
-  delete AppRequest_CreateEvent_reflection_;
+  delete AppRequest_CreatePrivateEvent::default_instance_;
+  delete AppRequest_CreatePrivateEvent_reflection_;
+  delete AppRequest_CreatePublicEvent::default_instance_;
+  delete AppRequest_CreatePublicEvent_reflection_;
   delete AppRequest_EventAccept::default_instance_;
   delete AppRequest_EventAccept_reflection_;
-  delete AppRequest_EventReject::default_instance_;
-  delete AppRequest_EventReject_reflection_;
-  delete AppRequest_EventInvite::default_instance_;
-  delete AppRequest_EventInvite_reflection_;
-  delete AppRequest_PollInvitedEvents::default_instance_;
-  delete AppRequest_PollInvitedEvents_reflection_;
-  delete AppRequest_PollAcceptedEvents::default_instance_;
-  delete AppRequest_PollAcceptedEvents_reflection_;
+  delete AppRequest_PollingParameters::default_instance_;
+  delete AppRequest_PollingParameters_reflection_;
   delete AppRequest_FriendRequest::default_instance_;
   delete AppRequest_FriendRequest_reflection_;
   delete AppRequest_AcceptFriendRequest::default_instance_;
@@ -529,86 +485,81 @@ void protobuf_AddDesc_social_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014social.proto\022\006netmsg\"\305\017\n\nAppRequest\022\020\n"
+    "\n\014social.proto\022\006netmsg\"\316\016\n\nAppRequest\022\020\n"
     "\010phone_id\030\001 \002(\003\0220\n\010msg_type\030\002 \002(\0162\036.netm"
     "sg.AppRequest.MessageType\0223\n\007reg_msg\030\003 \001"
     "(\0132\".netmsg.AppRequest.RegisterMessage\0222"
     "\n\tlogin_msg\030\004 \001(\0132\037.netmsg.AppRequest.Lo"
-    "ginMessage\0224\n\014create_event\030\005 \001(\0132\036.netms"
-    "g.AppRequest.CreateEvent\0224\n\014accept_event"
-    "\030\006 \001(\0132\036.netmsg.AppRequest.EventAccept\0224"
-    "\n\014reject_event\030\007 \001(\0132\036.netmsg.AppRequest"
-    ".EventReject\0224\n\014invite_event\030\010 \001(\0132\036.net"
-    "msg.AppRequest.EventInvite\022:\n\014poll_invit"
-    "ed\030\t \001(\0132$.netmsg.AppRequest.PollInvited"
-    "Events\022<\n\rpoll_accepted\030\n \001(\0132%.netmsg.A"
-    "ppRequest.PollAcceptedEvents\0228\n\016friend_r"
-    "equest\030\013 \001(\0132 .netmsg.AppRequest.FriendR"
-    "equest\022E\n\025accept_friend_request\030\014 \001(\0132&."
-    "netmsg.AppRequest.AcceptFriendRequest\0228\n"
-    "\016update_profile\030\r \001(\0132 .netmsg.AppReques"
-    "t.UpdateProfile\022\031\n\021request_user_info\030\016 \003"
-    "(\003\032K\n\017RegisterMessage\022\025\n\rpassword_hash\030\001"
-    " \002(\t\022\020\n\010nickname\030\002 \002(\t\022\017\n\007is_male\030\003 \002(\010\032"
-    "%\n\014LoginMessage\022\025\n\rpassword_hash\030\001 \002(\t\032\220"
-    "\001\n\013CreateEvent\022\r\n\005title\030\001 \002(\t\022\020\n\010locatio"
-    "n\030\002 \002(\t\022\014\n\004time\030\003 \002(\003\022\021\n\tis_public\030\004 \002(\010"
-    "\022\023\n\013event_uuid1\030\005 \002(\014\022\023\n\013description\030\006 \002"
-    "(\t\022\025\n\rinvited_users\030\007 \003(\003\032\"\n\013EventAccept"
-    "\022\023\n\013event_uuid1\030\001 \002(\014\032\"\n\013EventReject\022\023\n\013"
-    "event_uuid1\030\001 \002(\014\0329\n\013EventInvite\022\023\n\013even"
-    "t_uuid1\030\001 \002(\014\022\025\n\rinvited_users\030\002 \003(\003\0323\n\021"
-    "PollInvitedEvents\022\016\n\006offset\030\001 \001(\003\022\016\n\006amo"
-    "unt\030\002 \001(\003\0324\n\022PollAcceptedEvents\022\016\n\006offse"
-    "t\030\001 \001(\003\022\016\n\006amount\030\002 \001(\003\032:\n\rFriendRequest"
-    "\022\030\n\020destination_user\030\001 \002(\003\022\017\n\007message\030\002 "
-    "\002(\t\0321\n\023AcceptFriendRequest\022\032\n\022requesting"
-    "_user_id\030\001 \002(\003\0320\n\nAlbumPhoto\022\r\n\005photo\030\001 "
-    "\002(\014\022\023\n\013description\030\002 \001(\t\032U\n\nPhotoAlbum\022-"
-    "\n\006photos\030\001 \003(\0132\035.netmsg.AppRequest.Album"
-    "Photo\022\030\n\020AlbumDescription\030\002 \001(\t\032\263\001\n\rUpda"
-    "teProfile\022\r\n\005email\030\001 \001(\t\022\023\n\013description\030"
-    "\002 \001(\t\022\020\n\010location\030\003 \001(\t\022\020\n\010nickname\030\004 \001("
-    "\t\022\020\n\010password\030\005 \001(\t\022\025\n\rprofile_photo\030\006 \001"
-    "(\014\0221\n\nnew_albums\030\007 \003(\0132\035.netmsg.AppReque"
-    "st.PhotoAlbum\"\276\002\n\013MessageType\022\022\n\016tFriend"
-    "Request\020\001\022\026\n\022tGetFriendRequests\020\002\022\017\n\013tGe"
-    "tFriends\020\003\022\026\n\022tPollNotifications\020\016\022\030\n\024tA"
-    "cceptFriendRequest\020\004\022\020\n\014tEventCreate\020\005\022\020"
-    "\n\014tEventInvite\020\006\022\020\n\014tEventAccept\020\007\022\020\n\014tE"
-    "ventReject\020\010\022\021\n\rtRegistration\020\t\022\n\n\006tLogi"
-    "n\020\n\022\022\n\016tUpdateProfile\020\013\022\027\n\023tPollAccepted"
-    "Events\020\014\022\026\n\022tPollInvitedEvents\020\r\022\024\n\020tUse"
-    "rInfoRequest\020\017\"\326\005\n\010AppReply\0224\n\rresponse_"
-    "type\030\001 \002(\0162\035.netmsg.AppReply.ResponseTyp"
-    "e\022.\n\nevent_uuid\030\002 \001(\0132\032.netmsg.AppReply."
-    "EventUUID\022$\n\005users\030\003 \003(\0132\025.netmsg.AppRep"
-    "ly.User\0227\n\017friend_requests\030\004 \003(\0132\036.netms"
-    "g.AppReply.FriendRequest\022.\n\nevent_info\030\005"
-    " \003(\0132\032.netmsg.AppReply.EventInfo\022\030\n\020acce"
-    "pted_friends\030\006 \003(\003\032 \n\tEventUUID\022\023\n\013event"
-    "_uuid1\030\001 \002(\014\032\214\001\n\004User\022\024\n\014phone_number\030\001 "
-    "\002(\003\022\020\n\010nickname\030\002 \001(\t\022\017\n\007is_male\030\003 \002(\010\022\025"
-    "\n\rprofile_photo\030\004 \001(\014\022\r\n\005email\030\005 \001(\t\022\023\n\013"
-    "description\030\006 \001(\t\022\020\n\010location\030\007 \001(\t\032H\n\rF"
-    "riendRequest\022\036\n\026request_origin_user_id\030\001"
-    " \002(\003\022\027\n\017request_message\030\002 \002(\t\032\216\001\n\tEventI"
-    "nfo\022\r\n\005title\030\001 \002(\t\022\020\n\010location\030\002 \002(\t\022\014\n\004"
-    "time\030\003 \002(\003\022\022\n\nevent_uuid\030\004 \002(\014\022\021\n\tis_pub"
-    "lic\030\005 \002(\010\022\023\n\013description\030\006 \002(\t\022\026\n\016accept"
-    "ed_users\030\007 \003(\003\"/\n\014ResponseType\022\014\n\010tSucce"
-    "ss\020\001\022\021\n\rtMissingInput\020\002", 2743);
+    "ginMessage\022C\n\024create_private_event\030\005 \001(\013"
+    "2%.netmsg.AppRequest.CreatePrivateEvent\022"
+    "A\n\023create_public_event\030\006 \001(\0132$.netmsg.Ap"
+    "pRequest.CreatePublicEvent\0224\n\014accept_eve"
+    "nt\030\007 \001(\0132\036.netmsg.AppRequest.EventAccept"
+    "\0229\n\013poll_params\030\n \001(\0132$.netmsg.AppReques"
+    "t.PollingParameters\0228\n\016friend_request\030\013 "
+    "\001(\0132 .netmsg.AppRequest.FriendRequest\022E\n"
+    "\025accept_friend_request\030\014 \001(\0132&.netmsg.Ap"
+    "pRequest.AcceptFriendRequest\0228\n\016update_p"
+    "rofile\030\r \001(\0132 .netmsg.AppRequest.UpdateP"
+    "rofile\022\031\n\021request_user_info\030\016 \003(\003\032K\n\017Reg"
+    "isterMessage\022\025\n\rpassword_hash\030\001 \002(\t\022\020\n\010n"
+    "ickname\030\002 \002(\t\022\017\n\007is_male\030\003 \002(\010\032%\n\014LoginM"
+    "essage\022\025\n\rpassword_hash\030\001 \002(\t\032\212\001\n\022Create"
+    "PrivateEvent\022\r\n\005title\030\001 \002(\t\022\020\n\010location\030"
+    "\002 \002(\t\022\022\n\nstart_time\030\003 \002(\003\022\023\n\013event_uuid1"
+    "\030\004 \002(\014\022\023\n\013description\030\005 \002(\t\022\025\n\rinvited_u"
+    "sers\030\006 \003(\003\032\204\001\n\021CreatePublicEvent\022\r\n\005titl"
+    "e\030\001 \002(\t\022\020\n\010location\030\002 \002(\t\022\022\n\nstart_time\030"
+    "\003 \002(\003\022\020\n\010end_time\030\004 \002(\003\022\023\n\013event_uuid1\030\005"
+    " \002(\014\022\023\n\013description\030\006 \002(\t\032\"\n\013EventAccept"
+    "\022\023\n\013event_uuid1\030\001 \002(\014\0323\n\021PollingParamete"
+    "rs\022\016\n\006offset\030\001 \001(\003\022\016\n\006amount\030\002 \001(\003\032:\n\rFr"
+    "iendRequest\022\030\n\020destination_user\030\001 \002(\003\022\017\n"
+    "\007message\030\002 \002(\t\0321\n\023AcceptFriendRequest\022\032\n"
+    "\022requesting_user_id\030\001 \002(\003\0320\n\nAlbumPhoto\022"
+    "\r\n\005photo\030\001 \002(\014\022\023\n\013description\030\002 \001(\t\032U\n\nP"
+    "hotoAlbum\022-\n\006photos\030\001 \003(\0132\035.netmsg.AppRe"
+    "quest.AlbumPhoto\022\030\n\020AlbumDescription\030\002 \001"
+    "(\t\032\263\001\n\rUpdateProfile\022\r\n\005email\030\001 \001(\t\022\023\n\013d"
+    "escription\030\002 \001(\t\022\020\n\010location\030\003 \001(\t\022\020\n\010ni"
+    "ckname\030\004 \001(\t\022\020\n\010password\030\005 \001(\t\022\025\n\rprofil"
+    "e_photo\030\006 \001(\014\0221\n\nnew_albums\030\007 \003(\0132\035.netm"
+    "sg.AppRequest.PhotoAlbum\"\264\002\n\013MessageType"
+    "\022\022\n\016tFriendRequest\020\001\022\026\n\022tGetFriendReques"
+    "ts\020\002\022\017\n\013tGetFriends\020\003\022\030\n\024tAcceptFriendRe"
+    "quest\020\004\022\026\n\022tCreatePublicEvent\020\005\022\027\n\023tCrea"
+    "tePrivateEvent\020\006\022\020\n\014tEventAccept\020\007\022\021\n\rtR"
+    "egistration\020\t\022\n\n\006tLogin\020\n\022\022\n\016tUpdateProf"
+    "ile\020\013\022\026\n\022tPollNotifications\020\016\022\021\n\rtPollNe"
+    "wsfeed\020\r\022\027\n\023tPollAcceptedEvents\020\014\022\024\n\020tUs"
+    "erInfoRequest\020\017\"\326\005\n\010AppReply\0224\n\rresponse"
+    "_type\030\001 \002(\0162\035.netmsg.AppReply.ResponseTy"
+    "pe\022.\n\nevent_uuid\030\002 \001(\0132\032.netmsg.AppReply"
+    ".EventUUID\022$\n\005users\030\003 \003(\0132\025.netmsg.AppRe"
+    "ply.User\0227\n\017friend_requests\030\004 \003(\0132\036.netm"
+    "sg.AppReply.FriendRequest\022.\n\nevent_info\030"
+    "\005 \003(\0132\032.netmsg.AppReply.EventInfo\022\030\n\020acc"
+    "epted_friends\030\006 \003(\003\032 \n\tEventUUID\022\023\n\013even"
+    "t_uuid1\030\001 \002(\014\032\214\001\n\004User\022\024\n\014phone_number\030\001"
+    " \002(\003\022\020\n\010nickname\030\002 \001(\t\022\017\n\007is_male\030\003 \002(\010\022"
+    "\025\n\rprofile_photo\030\004 \001(\014\022\r\n\005email\030\005 \001(\t\022\023\n"
+    "\013description\030\006 \001(\t\022\020\n\010location\030\007 \001(\t\032H\n\r"
+    "FriendRequest\022\036\n\026request_origin_user_id\030"
+    "\001 \002(\003\022\027\n\017request_message\030\002 \002(\t\032\216\001\n\tEvent"
+    "Info\022\r\n\005title\030\001 \002(\t\022\020\n\010location\030\002 \002(\t\022\014\n"
+    "\004time\030\003 \002(\003\022\022\n\nevent_uuid\030\004 \002(\014\022\021\n\tis_pu"
+    "blic\030\005 \002(\010\022\023\n\013description\030\006 \002(\t\022\026\n\016accep"
+    "ted_users\030\007 \003(\003\"/\n\014ResponseType\022\014\n\010tSucc"
+    "ess\020\001\022\021\n\rtMissingInput\020\002", 2624);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "social.proto", &protobuf_RegisterTypes);
   AppRequest::default_instance_ = new AppRequest();
   AppRequest_RegisterMessage::default_instance_ = new AppRequest_RegisterMessage();
   AppRequest_LoginMessage::default_instance_ = new AppRequest_LoginMessage();
-  AppRequest_CreateEvent::default_instance_ = new AppRequest_CreateEvent();
+  AppRequest_CreatePrivateEvent::default_instance_ = new AppRequest_CreatePrivateEvent();
+  AppRequest_CreatePublicEvent::default_instance_ = new AppRequest_CreatePublicEvent();
   AppRequest_EventAccept::default_instance_ = new AppRequest_EventAccept();
-  AppRequest_EventReject::default_instance_ = new AppRequest_EventReject();
-  AppRequest_EventInvite::default_instance_ = new AppRequest_EventInvite();
-  AppRequest_PollInvitedEvents::default_instance_ = new AppRequest_PollInvitedEvents();
-  AppRequest_PollAcceptedEvents::default_instance_ = new AppRequest_PollAcceptedEvents();
+  AppRequest_PollingParameters::default_instance_ = new AppRequest_PollingParameters();
   AppRequest_FriendRequest::default_instance_ = new AppRequest_FriendRequest();
   AppRequest_AcceptFriendRequest::default_instance_ = new AppRequest_AcceptFriendRequest();
   AppRequest_AlbumPhoto::default_instance_ = new AppRequest_AlbumPhoto();
@@ -622,12 +573,10 @@ void protobuf_AddDesc_social_2eproto() {
   AppRequest::default_instance_->InitAsDefaultInstance();
   AppRequest_RegisterMessage::default_instance_->InitAsDefaultInstance();
   AppRequest_LoginMessage::default_instance_->InitAsDefaultInstance();
-  AppRequest_CreateEvent::default_instance_->InitAsDefaultInstance();
+  AppRequest_CreatePrivateEvent::default_instance_->InitAsDefaultInstance();
+  AppRequest_CreatePublicEvent::default_instance_->InitAsDefaultInstance();
   AppRequest_EventAccept::default_instance_->InitAsDefaultInstance();
-  AppRequest_EventReject::default_instance_->InitAsDefaultInstance();
-  AppRequest_EventInvite::default_instance_->InitAsDefaultInstance();
-  AppRequest_PollInvitedEvents::default_instance_->InitAsDefaultInstance();
-  AppRequest_PollAcceptedEvents::default_instance_->InitAsDefaultInstance();
+  AppRequest_PollingParameters::default_instance_->InitAsDefaultInstance();
   AppRequest_FriendRequest::default_instance_->InitAsDefaultInstance();
   AppRequest_AcceptFriendRequest::default_instance_->InitAsDefaultInstance();
   AppRequest_AlbumPhoto::default_instance_->InitAsDefaultInstance();
@@ -663,7 +612,6 @@ bool AppRequest_MessageType_IsValid(int value) {
     case 5:
     case 6:
     case 7:
-    case 8:
     case 9:
     case 10:
     case 11:
@@ -681,17 +629,16 @@ bool AppRequest_MessageType_IsValid(int value) {
 const AppRequest_MessageType AppRequest::tFriendRequest;
 const AppRequest_MessageType AppRequest::tGetFriendRequests;
 const AppRequest_MessageType AppRequest::tGetFriends;
-const AppRequest_MessageType AppRequest::tPollNotifications;
 const AppRequest_MessageType AppRequest::tAcceptFriendRequest;
-const AppRequest_MessageType AppRequest::tEventCreate;
-const AppRequest_MessageType AppRequest::tEventInvite;
+const AppRequest_MessageType AppRequest::tCreatePublicEvent;
+const AppRequest_MessageType AppRequest::tCreatePrivateEvent;
 const AppRequest_MessageType AppRequest::tEventAccept;
-const AppRequest_MessageType AppRequest::tEventReject;
 const AppRequest_MessageType AppRequest::tRegistration;
 const AppRequest_MessageType AppRequest::tLogin;
 const AppRequest_MessageType AppRequest::tUpdateProfile;
+const AppRequest_MessageType AppRequest::tPollNotifications;
+const AppRequest_MessageType AppRequest::tPollNewsfeed;
 const AppRequest_MessageType AppRequest::tPollAcceptedEvents;
-const AppRequest_MessageType AppRequest::tPollInvitedEvents;
 const AppRequest_MessageType AppRequest::tUserInfoRequest;
 const AppRequest_MessageType AppRequest::MessageType_MIN;
 const AppRequest_MessageType AppRequest::MessageType_MAX;
@@ -1284,49 +1231,47 @@ void AppRequest_LoginMessage::Swap(AppRequest_LoginMessage* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int AppRequest_CreateEvent::kTitleFieldNumber;
-const int AppRequest_CreateEvent::kLocationFieldNumber;
-const int AppRequest_CreateEvent::kTimeFieldNumber;
-const int AppRequest_CreateEvent::kIsPublicFieldNumber;
-const int AppRequest_CreateEvent::kEventUuid1FieldNumber;
-const int AppRequest_CreateEvent::kDescriptionFieldNumber;
-const int AppRequest_CreateEvent::kInvitedUsersFieldNumber;
+const int AppRequest_CreatePrivateEvent::kTitleFieldNumber;
+const int AppRequest_CreatePrivateEvent::kLocationFieldNumber;
+const int AppRequest_CreatePrivateEvent::kStartTimeFieldNumber;
+const int AppRequest_CreatePrivateEvent::kEventUuid1FieldNumber;
+const int AppRequest_CreatePrivateEvent::kDescriptionFieldNumber;
+const int AppRequest_CreatePrivateEvent::kInvitedUsersFieldNumber;
 #endif  // !_MSC_VER
 
-AppRequest_CreateEvent::AppRequest_CreateEvent()
+AppRequest_CreatePrivateEvent::AppRequest_CreatePrivateEvent()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(constructor:netmsg.AppRequest.CreatePrivateEvent)
 }
 
-void AppRequest_CreateEvent::InitAsDefaultInstance() {
+void AppRequest_CreatePrivateEvent::InitAsDefaultInstance() {
 }
 
-AppRequest_CreateEvent::AppRequest_CreateEvent(const AppRequest_CreateEvent& from)
+AppRequest_CreatePrivateEvent::AppRequest_CreatePrivateEvent(const AppRequest_CreatePrivateEvent& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.CreatePrivateEvent)
 }
 
-void AppRequest_CreateEvent::SharedCtor() {
+void AppRequest_CreatePrivateEvent::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   title_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  time_ = GOOGLE_LONGLONG(0);
-  is_public_ = false;
+  start_time_ = GOOGLE_LONGLONG(0);
   event_uuid1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-AppRequest_CreateEvent::~AppRequest_CreateEvent() {
-  // @@protoc_insertion_point(destructor:netmsg.AppRequest.CreateEvent)
+AppRequest_CreatePrivateEvent::~AppRequest_CreatePrivateEvent() {
+  // @@protoc_insertion_point(destructor:netmsg.AppRequest.CreatePrivateEvent)
   SharedDtor();
 }
 
-void AppRequest_CreateEvent::SharedDtor() {
+void AppRequest_CreatePrivateEvent::SharedDtor() {
   if (title_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete title_;
   }
@@ -1343,29 +1288,29 @@ void AppRequest_CreateEvent::SharedDtor() {
   }
 }
 
-void AppRequest_CreateEvent::SetCachedSize(int size) const {
+void AppRequest_CreatePrivateEvent::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* AppRequest_CreateEvent::descriptor() {
+const ::google::protobuf::Descriptor* AppRequest_CreatePrivateEvent::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return AppRequest_CreateEvent_descriptor_;
+  return AppRequest_CreatePrivateEvent_descriptor_;
 }
 
-const AppRequest_CreateEvent& AppRequest_CreateEvent::default_instance() {
+const AppRequest_CreatePrivateEvent& AppRequest_CreatePrivateEvent::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_social_2eproto();
   return *default_instance_;
 }
 
-AppRequest_CreateEvent* AppRequest_CreateEvent::default_instance_ = NULL;
+AppRequest_CreatePrivateEvent* AppRequest_CreatePrivateEvent::default_instance_ = NULL;
 
-AppRequest_CreateEvent* AppRequest_CreateEvent::New() const {
-  return new AppRequest_CreateEvent;
+AppRequest_CreatePrivateEvent* AppRequest_CreatePrivateEvent::New() const {
+  return new AppRequest_CreatePrivateEvent;
 }
 
-void AppRequest_CreateEvent::Clear() {
-  if (_has_bits_[0 / 32] & 63) {
+void AppRequest_CreatePrivateEvent::Clear() {
+  if (_has_bits_[0 / 32] & 31) {
     if (has_title()) {
       if (title_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         title_->clear();
@@ -1376,8 +1321,7 @@ void AppRequest_CreateEvent::Clear() {
         location_->clear();
       }
     }
-    time_ = GOOGLE_LONGLONG(0);
-    is_public_ = false;
+    start_time_ = GOOGLE_LONGLONG(0);
     if (has_event_uuid1()) {
       if (event_uuid1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         event_uuid1_->clear();
@@ -1394,11 +1338,11 @@ void AppRequest_CreateEvent::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool AppRequest_CreateEvent::MergePartialFromCodedStream(
+bool AppRequest_CreatePrivateEvent::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.CreatePrivateEvent)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1433,33 +1377,542 @@ bool AppRequest_CreateEvent::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_time;
+        if (input->ExpectTag(24)) goto parse_start_time;
         break;
       }
 
-      // required int64 time = 3;
+      // required int64 start_time = 3;
       case 3: {
         if (tag == 24) {
-         parse_time:
+         parse_start_time:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &time_)));
-          set_has_time();
+                 input, &start_time_)));
+          set_has_start_time();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_is_public;
+        if (input->ExpectTag(34)) goto parse_event_uuid1;
         break;
       }
 
-      // required bool is_public = 4;
+      // required bytes event_uuid1 = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_event_uuid1:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_event_uuid1()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_description;
+        break;
+      }
+
+      // required string description = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_description:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_description()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->description().data(), this->description().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "description");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_invited_users;
+        break;
+      }
+
+      // repeated int64 invited_users = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_invited_users:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 1, 48, input, this->mutable_invited_users())));
+        } else if (tag == 50) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, this->mutable_invited_users())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_invited_users;
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.CreatePrivateEvent)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.CreatePrivateEvent)
+  return false;
+#undef DO_
+}
+
+void AppRequest_CreatePrivateEvent::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.CreatePrivateEvent)
+  // required string title = 1;
+  if (has_title()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->title().data(), this->title().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "title");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->title(), output);
+  }
+
+  // required string location = 2;
+  if (has_location()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->location().data(), this->location().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "location");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->location(), output);
+  }
+
+  // required int64 start_time = 3;
+  if (has_start_time()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->start_time(), output);
+  }
+
+  // required bytes event_uuid1 = 4;
+  if (has_event_uuid1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      4, this->event_uuid1(), output);
+  }
+
+  // required string description = 5;
+  if (has_description()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->description().data(), this->description().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "description");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      5, this->description(), output);
+  }
+
+  // repeated int64 invited_users = 6;
+  for (int i = 0; i < this->invited_users_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(
+      6, this->invited_users(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.CreatePrivateEvent)
+}
+
+::google::protobuf::uint8* AppRequest_CreatePrivateEvent::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.CreatePrivateEvent)
+  // required string title = 1;
+  if (has_title()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->title().data(), this->title().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "title");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->title(), target);
+  }
+
+  // required string location = 2;
+  if (has_location()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->location().data(), this->location().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "location");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->location(), target);
+  }
+
+  // required int64 start_time = 3;
+  if (has_start_time()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->start_time(), target);
+  }
+
+  // required bytes event_uuid1 = 4;
+  if (has_event_uuid1()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        4, this->event_uuid1(), target);
+  }
+
+  // required string description = 5;
+  if (has_description()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->description().data(), this->description().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "description");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        5, this->description(), target);
+  }
+
+  // repeated int64 invited_users = 6;
+  for (int i = 0; i < this->invited_users_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteInt64ToArray(6, this->invited_users(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.CreatePrivateEvent)
+  return target;
+}
+
+int AppRequest_CreatePrivateEvent::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required string title = 1;
+    if (has_title()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->title());
+    }
+
+    // required string location = 2;
+    if (has_location()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->location());
+    }
+
+    // required int64 start_time = 3;
+    if (has_start_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->start_time());
+    }
+
+    // required bytes event_uuid1 = 4;
+    if (has_event_uuid1()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->event_uuid1());
+    }
+
+    // required string description = 5;
+    if (has_description()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->description());
+    }
+
+  }
+  // repeated int64 invited_users = 6;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->invited_users_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int64Size(this->invited_users(i));
+    }
+    total_size += 1 * this->invited_users_size() + data_size;
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void AppRequest_CreatePrivateEvent::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const AppRequest_CreatePrivateEvent* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_CreatePrivateEvent*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void AppRequest_CreatePrivateEvent::MergeFrom(const AppRequest_CreatePrivateEvent& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  invited_users_.MergeFrom(from.invited_users_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_title()) {
+      set_title(from.title());
+    }
+    if (from.has_location()) {
+      set_location(from.location());
+    }
+    if (from.has_start_time()) {
+      set_start_time(from.start_time());
+    }
+    if (from.has_event_uuid1()) {
+      set_event_uuid1(from.event_uuid1());
+    }
+    if (from.has_description()) {
+      set_description(from.description());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void AppRequest_CreatePrivateEvent::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void AppRequest_CreatePrivateEvent::CopyFrom(const AppRequest_CreatePrivateEvent& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AppRequest_CreatePrivateEvent::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
+
+  return true;
+}
+
+void AppRequest_CreatePrivateEvent::Swap(AppRequest_CreatePrivateEvent* other) {
+  if (other != this) {
+    std::swap(title_, other->title_);
+    std::swap(location_, other->location_);
+    std::swap(start_time_, other->start_time_);
+    std::swap(event_uuid1_, other->event_uuid1_);
+    std::swap(description_, other->description_);
+    invited_users_.Swap(&other->invited_users_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata AppRequest_CreatePrivateEvent::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = AppRequest_CreatePrivateEvent_descriptor_;
+  metadata.reflection = AppRequest_CreatePrivateEvent_reflection_;
+  return metadata;
+}
+
+
+// -------------------------------------------------------------------
+
+#ifndef _MSC_VER
+const int AppRequest_CreatePublicEvent::kTitleFieldNumber;
+const int AppRequest_CreatePublicEvent::kLocationFieldNumber;
+const int AppRequest_CreatePublicEvent::kStartTimeFieldNumber;
+const int AppRequest_CreatePublicEvent::kEndTimeFieldNumber;
+const int AppRequest_CreatePublicEvent::kEventUuid1FieldNumber;
+const int AppRequest_CreatePublicEvent::kDescriptionFieldNumber;
+#endif  // !_MSC_VER
+
+AppRequest_CreatePublicEvent::AppRequest_CreatePublicEvent()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:netmsg.AppRequest.CreatePublicEvent)
+}
+
+void AppRequest_CreatePublicEvent::InitAsDefaultInstance() {
+}
+
+AppRequest_CreatePublicEvent::AppRequest_CreatePublicEvent(const AppRequest_CreatePublicEvent& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.CreatePublicEvent)
+}
+
+void AppRequest_CreatePublicEvent::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  title_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  location_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  start_time_ = GOOGLE_LONGLONG(0);
+  end_time_ = GOOGLE_LONGLONG(0);
+  event_uuid1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+AppRequest_CreatePublicEvent::~AppRequest_CreatePublicEvent() {
+  // @@protoc_insertion_point(destructor:netmsg.AppRequest.CreatePublicEvent)
+  SharedDtor();
+}
+
+void AppRequest_CreatePublicEvent::SharedDtor() {
+  if (title_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete title_;
+  }
+  if (location_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete location_;
+  }
+  if (event_uuid1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete event_uuid1_;
+  }
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete description_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void AppRequest_CreatePublicEvent::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* AppRequest_CreatePublicEvent::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return AppRequest_CreatePublicEvent_descriptor_;
+}
+
+const AppRequest_CreatePublicEvent& AppRequest_CreatePublicEvent::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_social_2eproto();
+  return *default_instance_;
+}
+
+AppRequest_CreatePublicEvent* AppRequest_CreatePublicEvent::default_instance_ = NULL;
+
+AppRequest_CreatePublicEvent* AppRequest_CreatePublicEvent::New() const {
+  return new AppRequest_CreatePublicEvent;
+}
+
+void AppRequest_CreatePublicEvent::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<AppRequest_CreatePublicEvent*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 63) {
+    ZR_(start_time_, end_time_);
+    if (has_title()) {
+      if (title_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        title_->clear();
+      }
+    }
+    if (has_location()) {
+      if (location_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        location_->clear();
+      }
+    }
+    if (has_event_uuid1()) {
+      if (event_uuid1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        event_uuid1_->clear();
+      }
+    }
+    if (has_description()) {
+      if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        description_->clear();
+      }
+    }
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool AppRequest_CreatePublicEvent::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.CreatePublicEvent)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string title = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_title()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->title().data(), this->title().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "title");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_location;
+        break;
+      }
+
+      // required string location = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_location:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_location()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->location().data(), this->location().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "location");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_start_time;
+        break;
+      }
+
+      // required int64 start_time = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_start_time:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &start_time_)));
+          set_has_start_time();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_end_time;
+        break;
+      }
+
+      // required int64 end_time = 4;
       case 4: {
         if (tag == 32) {
-         parse_is_public:
+         parse_end_time:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &is_public_)));
-          set_has_is_public();
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &end_time_)));
+          set_has_end_time();
         } else {
           goto handle_unusual;
         }
@@ -1493,25 +1946,6 @@ bool AppRequest_CreateEvent::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_invited_users;
-        break;
-      }
-
-      // repeated int64 invited_users = 7;
-      case 7: {
-        if (tag == 56) {
-         parse_invited_users:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 1, 56, input, this->mutable_invited_users())));
-        } else if (tag == 58) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, this->mutable_invited_users())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(56)) goto parse_invited_users;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1530,17 +1964,17 @@ bool AppRequest_CreateEvent::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.CreatePublicEvent)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.CreatePublicEvent)
   return false;
 #undef DO_
 }
 
-void AppRequest_CreateEvent::SerializeWithCachedSizes(
+void AppRequest_CreatePublicEvent::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.CreatePublicEvent)
   // required string title = 1;
   if (has_title()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1561,14 +1995,14 @@ void AppRequest_CreateEvent::SerializeWithCachedSizes(
       2, this->location(), output);
   }
 
-  // required int64 time = 3;
-  if (has_time()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->time(), output);
+  // required int64 start_time = 3;
+  if (has_start_time()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->start_time(), output);
   }
 
-  // required bool is_public = 4;
-  if (has_is_public()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->is_public(), output);
+  // required int64 end_time = 4;
+  if (has_end_time()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->end_time(), output);
   }
 
   // required bytes event_uuid1 = 5;
@@ -1587,22 +2021,16 @@ void AppRequest_CreateEvent::SerializeWithCachedSizes(
       6, this->description(), output);
   }
 
-  // repeated int64 invited_users = 7;
-  for (int i = 0; i < this->invited_users_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(
-      7, this->invited_users(i), output);
-  }
-
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.CreatePublicEvent)
 }
 
-::google::protobuf::uint8* AppRequest_CreateEvent::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* AppRequest_CreatePublicEvent::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.CreatePublicEvent)
   // required string title = 1;
   if (has_title()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1625,14 +2053,14 @@ void AppRequest_CreateEvent::SerializeWithCachedSizes(
         2, this->location(), target);
   }
 
-  // required int64 time = 3;
-  if (has_time()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->time(), target);
+  // required int64 start_time = 3;
+  if (has_start_time()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->start_time(), target);
   }
 
-  // required bool is_public = 4;
-  if (has_is_public()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->is_public(), target);
+  // required int64 end_time = 4;
+  if (has_end_time()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->end_time(), target);
   }
 
   // required bytes event_uuid1 = 5;
@@ -1653,21 +2081,15 @@ void AppRequest_CreateEvent::SerializeWithCachedSizes(
         6, this->description(), target);
   }
 
-  // repeated int64 invited_users = 7;
-  for (int i = 0; i < this->invited_users_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteInt64ToArray(7, this->invited_users(i), target);
-  }
-
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.CreateEvent)
+  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.CreatePublicEvent)
   return target;
 }
 
-int AppRequest_CreateEvent::ByteSize() const {
+int AppRequest_CreatePublicEvent::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1685,16 +2107,18 @@ int AppRequest_CreateEvent::ByteSize() const {
           this->location());
     }
 
-    // required int64 time = 3;
-    if (has_time()) {
+    // required int64 start_time = 3;
+    if (has_start_time()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->time());
+          this->start_time());
     }
 
-    // required bool is_public = 4;
-    if (has_is_public()) {
-      total_size += 1 + 1;
+    // required int64 end_time = 4;
+    if (has_end_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->end_time());
     }
 
     // required bytes event_uuid1 = 5;
@@ -1712,16 +2136,6 @@ int AppRequest_CreateEvent::ByteSize() const {
     }
 
   }
-  // repeated int64 invited_users = 7;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->invited_users_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int64Size(this->invited_users(i));
-    }
-    total_size += 1 * this->invited_users_size() + data_size;
-  }
-
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -1733,10 +2147,10 @@ int AppRequest_CreateEvent::ByteSize() const {
   return total_size;
 }
 
-void AppRequest_CreateEvent::MergeFrom(const ::google::protobuf::Message& from) {
+void AppRequest_CreatePublicEvent::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const AppRequest_CreateEvent* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_CreateEvent*>(
+  const AppRequest_CreatePublicEvent* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_CreatePublicEvent*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1745,9 +2159,8 @@ void AppRequest_CreateEvent::MergeFrom(const ::google::protobuf::Message& from) 
   }
 }
 
-void AppRequest_CreateEvent::MergeFrom(const AppRequest_CreateEvent& from) {
+void AppRequest_CreatePublicEvent::MergeFrom(const AppRequest_CreatePublicEvent& from) {
   GOOGLE_CHECK_NE(&from, this);
-  invited_users_.MergeFrom(from.invited_users_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_title()) {
       set_title(from.title());
@@ -1755,11 +2168,11 @@ void AppRequest_CreateEvent::MergeFrom(const AppRequest_CreateEvent& from) {
     if (from.has_location()) {
       set_location(from.location());
     }
-    if (from.has_time()) {
-      set_time(from.time());
+    if (from.has_start_time()) {
+      set_start_time(from.start_time());
     }
-    if (from.has_is_public()) {
-      set_is_public(from.is_public());
+    if (from.has_end_time()) {
+      set_end_time(from.end_time());
     }
     if (from.has_event_uuid1()) {
       set_event_uuid1(from.event_uuid1());
@@ -1771,44 +2184,43 @@ void AppRequest_CreateEvent::MergeFrom(const AppRequest_CreateEvent& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void AppRequest_CreateEvent::CopyFrom(const ::google::protobuf::Message& from) {
+void AppRequest_CreatePublicEvent::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void AppRequest_CreateEvent::CopyFrom(const AppRequest_CreateEvent& from) {
+void AppRequest_CreatePublicEvent::CopyFrom(const AppRequest_CreatePublicEvent& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool AppRequest_CreateEvent::IsInitialized() const {
+bool AppRequest_CreatePublicEvent::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
 
   return true;
 }
 
-void AppRequest_CreateEvent::Swap(AppRequest_CreateEvent* other) {
+void AppRequest_CreatePublicEvent::Swap(AppRequest_CreatePublicEvent* other) {
   if (other != this) {
     std::swap(title_, other->title_);
     std::swap(location_, other->location_);
-    std::swap(time_, other->time_);
-    std::swap(is_public_, other->is_public_);
+    std::swap(start_time_, other->start_time_);
+    std::swap(end_time_, other->end_time_);
     std::swap(event_uuid1_, other->event_uuid1_);
     std::swap(description_, other->description_);
-    invited_users_.Swap(&other->invited_users_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata AppRequest_CreateEvent::GetMetadata() const {
+::google::protobuf::Metadata AppRequest_CreatePublicEvent::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = AppRequest_CreateEvent_descriptor_;
-  metadata.reflection = AppRequest_CreateEvent_reflection_;
+  metadata.descriptor = AppRequest_CreatePublicEvent_descriptor_;
+  metadata.reflection = AppRequest_CreatePublicEvent_reflection_;
   return metadata;
 }
 
@@ -2048,576 +2460,67 @@ void AppRequest_EventAccept::Swap(AppRequest_EventAccept* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int AppRequest_EventReject::kEventUuid1FieldNumber;
+const int AppRequest_PollingParameters::kOffsetFieldNumber;
+const int AppRequest_PollingParameters::kAmountFieldNumber;
 #endif  // !_MSC_VER
 
-AppRequest_EventReject::AppRequest_EventReject()
+AppRequest_PollingParameters::AppRequest_PollingParameters()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:netmsg.AppRequest.EventReject)
+  // @@protoc_insertion_point(constructor:netmsg.AppRequest.PollingParameters)
 }
 
-void AppRequest_EventReject::InitAsDefaultInstance() {
+void AppRequest_PollingParameters::InitAsDefaultInstance() {
 }
 
-AppRequest_EventReject::AppRequest_EventReject(const AppRequest_EventReject& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.EventReject)
-}
-
-void AppRequest_EventReject::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
-  _cached_size_ = 0;
-  event_uuid1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-AppRequest_EventReject::~AppRequest_EventReject() {
-  // @@protoc_insertion_point(destructor:netmsg.AppRequest.EventReject)
-  SharedDtor();
-}
-
-void AppRequest_EventReject::SharedDtor() {
-  if (event_uuid1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete event_uuid1_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void AppRequest_EventReject::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* AppRequest_EventReject::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return AppRequest_EventReject_descriptor_;
-}
-
-const AppRequest_EventReject& AppRequest_EventReject::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_social_2eproto();
-  return *default_instance_;
-}
-
-AppRequest_EventReject* AppRequest_EventReject::default_instance_ = NULL;
-
-AppRequest_EventReject* AppRequest_EventReject::New() const {
-  return new AppRequest_EventReject;
-}
-
-void AppRequest_EventReject::Clear() {
-  if (has_event_uuid1()) {
-    if (event_uuid1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-      event_uuid1_->clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool AppRequest_EventReject::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.EventReject)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required bytes event_uuid1 = 1;
-      case 1: {
-        if (tag == 10) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_event_uuid1()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.EventReject)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.EventReject)
-  return false;
-#undef DO_
-}
-
-void AppRequest_EventReject::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.EventReject)
-  // required bytes event_uuid1 = 1;
-  if (has_event_uuid1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->event_uuid1(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.EventReject)
-}
-
-::google::protobuf::uint8* AppRequest_EventReject::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.EventReject)
-  // required bytes event_uuid1 = 1;
-  if (has_event_uuid1()) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->event_uuid1(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.EventReject)
-  return target;
-}
-
-int AppRequest_EventReject::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required bytes event_uuid1 = 1;
-    if (has_event_uuid1()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->event_uuid1());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void AppRequest_EventReject::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const AppRequest_EventReject* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_EventReject*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void AppRequest_EventReject::MergeFrom(const AppRequest_EventReject& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_event_uuid1()) {
-      set_event_uuid1(from.event_uuid1());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void AppRequest_EventReject::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void AppRequest_EventReject::CopyFrom(const AppRequest_EventReject& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool AppRequest_EventReject::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-
-  return true;
-}
-
-void AppRequest_EventReject::Swap(AppRequest_EventReject* other) {
-  if (other != this) {
-    std::swap(event_uuid1_, other->event_uuid1_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata AppRequest_EventReject::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = AppRequest_EventReject_descriptor_;
-  metadata.reflection = AppRequest_EventReject_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
-const int AppRequest_EventInvite::kEventUuid1FieldNumber;
-const int AppRequest_EventInvite::kInvitedUsersFieldNumber;
-#endif  // !_MSC_VER
-
-AppRequest_EventInvite::AppRequest_EventInvite()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:netmsg.AppRequest.EventInvite)
-}
-
-void AppRequest_EventInvite::InitAsDefaultInstance() {
-}
-
-AppRequest_EventInvite::AppRequest_EventInvite(const AppRequest_EventInvite& from)
+AppRequest_PollingParameters::AppRequest_PollingParameters(const AppRequest_PollingParameters& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.EventInvite)
+  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.PollingParameters)
 }
 
-void AppRequest_EventInvite::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
-  _cached_size_ = 0;
-  event_uuid1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-AppRequest_EventInvite::~AppRequest_EventInvite() {
-  // @@protoc_insertion_point(destructor:netmsg.AppRequest.EventInvite)
-  SharedDtor();
-}
-
-void AppRequest_EventInvite::SharedDtor() {
-  if (event_uuid1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete event_uuid1_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void AppRequest_EventInvite::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* AppRequest_EventInvite::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return AppRequest_EventInvite_descriptor_;
-}
-
-const AppRequest_EventInvite& AppRequest_EventInvite::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_social_2eproto();
-  return *default_instance_;
-}
-
-AppRequest_EventInvite* AppRequest_EventInvite::default_instance_ = NULL;
-
-AppRequest_EventInvite* AppRequest_EventInvite::New() const {
-  return new AppRequest_EventInvite;
-}
-
-void AppRequest_EventInvite::Clear() {
-  if (has_event_uuid1()) {
-    if (event_uuid1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-      event_uuid1_->clear();
-    }
-  }
-  invited_users_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool AppRequest_EventInvite::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.EventInvite)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required bytes event_uuid1 = 1;
-      case 1: {
-        if (tag == 10) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_event_uuid1()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_invited_users;
-        break;
-      }
-
-      // repeated int64 invited_users = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_invited_users:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 1, 16, input, this->mutable_invited_users())));
-        } else if (tag == 18) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, this->mutable_invited_users())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_invited_users;
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.EventInvite)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.EventInvite)
-  return false;
-#undef DO_
-}
-
-void AppRequest_EventInvite::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.EventInvite)
-  // required bytes event_uuid1 = 1;
-  if (has_event_uuid1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->event_uuid1(), output);
-  }
-
-  // repeated int64 invited_users = 2;
-  for (int i = 0; i < this->invited_users_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(
-      2, this->invited_users(i), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.EventInvite)
-}
-
-::google::protobuf::uint8* AppRequest_EventInvite::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.EventInvite)
-  // required bytes event_uuid1 = 1;
-  if (has_event_uuid1()) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->event_uuid1(), target);
-  }
-
-  // repeated int64 invited_users = 2;
-  for (int i = 0; i < this->invited_users_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteInt64ToArray(2, this->invited_users(i), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.EventInvite)
-  return target;
-}
-
-int AppRequest_EventInvite::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required bytes event_uuid1 = 1;
-    if (has_event_uuid1()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->event_uuid1());
-    }
-
-  }
-  // repeated int64 invited_users = 2;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->invited_users_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int64Size(this->invited_users(i));
-    }
-    total_size += 1 * this->invited_users_size() + data_size;
-  }
-
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void AppRequest_EventInvite::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const AppRequest_EventInvite* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_EventInvite*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void AppRequest_EventInvite::MergeFrom(const AppRequest_EventInvite& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  invited_users_.MergeFrom(from.invited_users_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_event_uuid1()) {
-      set_event_uuid1(from.event_uuid1());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void AppRequest_EventInvite::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void AppRequest_EventInvite::CopyFrom(const AppRequest_EventInvite& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool AppRequest_EventInvite::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-
-  return true;
-}
-
-void AppRequest_EventInvite::Swap(AppRequest_EventInvite* other) {
-  if (other != this) {
-    std::swap(event_uuid1_, other->event_uuid1_);
-    invited_users_.Swap(&other->invited_users_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata AppRequest_EventInvite::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = AppRequest_EventInvite_descriptor_;
-  metadata.reflection = AppRequest_EventInvite_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
-const int AppRequest_PollInvitedEvents::kOffsetFieldNumber;
-const int AppRequest_PollInvitedEvents::kAmountFieldNumber;
-#endif  // !_MSC_VER
-
-AppRequest_PollInvitedEvents::AppRequest_PollInvitedEvents()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:netmsg.AppRequest.PollInvitedEvents)
-}
-
-void AppRequest_PollInvitedEvents::InitAsDefaultInstance() {
-}
-
-AppRequest_PollInvitedEvents::AppRequest_PollInvitedEvents(const AppRequest_PollInvitedEvents& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.PollInvitedEvents)
-}
-
-void AppRequest_PollInvitedEvents::SharedCtor() {
+void AppRequest_PollingParameters::SharedCtor() {
   _cached_size_ = 0;
   offset_ = GOOGLE_LONGLONG(0);
   amount_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-AppRequest_PollInvitedEvents::~AppRequest_PollInvitedEvents() {
-  // @@protoc_insertion_point(destructor:netmsg.AppRequest.PollInvitedEvents)
+AppRequest_PollingParameters::~AppRequest_PollingParameters() {
+  // @@protoc_insertion_point(destructor:netmsg.AppRequest.PollingParameters)
   SharedDtor();
 }
 
-void AppRequest_PollInvitedEvents::SharedDtor() {
+void AppRequest_PollingParameters::SharedDtor() {
   if (this != default_instance_) {
   }
 }
 
-void AppRequest_PollInvitedEvents::SetCachedSize(int size) const {
+void AppRequest_PollingParameters::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* AppRequest_PollInvitedEvents::descriptor() {
+const ::google::protobuf::Descriptor* AppRequest_PollingParameters::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return AppRequest_PollInvitedEvents_descriptor_;
+  return AppRequest_PollingParameters_descriptor_;
 }
 
-const AppRequest_PollInvitedEvents& AppRequest_PollInvitedEvents::default_instance() {
+const AppRequest_PollingParameters& AppRequest_PollingParameters::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_social_2eproto();
   return *default_instance_;
 }
 
-AppRequest_PollInvitedEvents* AppRequest_PollInvitedEvents::default_instance_ = NULL;
+AppRequest_PollingParameters* AppRequest_PollingParameters::default_instance_ = NULL;
 
-AppRequest_PollInvitedEvents* AppRequest_PollInvitedEvents::New() const {
-  return new AppRequest_PollInvitedEvents;
+AppRequest_PollingParameters* AppRequest_PollingParameters::New() const {
+  return new AppRequest_PollingParameters;
 }
 
-void AppRequest_PollInvitedEvents::Clear() {
+void AppRequest_PollingParameters::Clear() {
 #define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<AppRequest_PollInvitedEvents*>(16)->f) - \
+  &reinterpret_cast<AppRequest_PollingParameters*>(16)->f) - \
    reinterpret_cast<char*>(16))
 
 #define ZR_(first, last) do {                              \
@@ -2635,11 +2538,11 @@ void AppRequest_PollInvitedEvents::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool AppRequest_PollInvitedEvents::MergePartialFromCodedStream(
+bool AppRequest_PollingParameters::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.PollInvitedEvents)
+  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.PollingParameters)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -2688,17 +2591,17 @@ bool AppRequest_PollInvitedEvents::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.PollInvitedEvents)
+  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.PollingParameters)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.PollInvitedEvents)
+  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.PollingParameters)
   return false;
 #undef DO_
 }
 
-void AppRequest_PollInvitedEvents::SerializeWithCachedSizes(
+void AppRequest_PollingParameters::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.PollInvitedEvents)
+  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.PollingParameters)
   // optional int64 offset = 1;
   if (has_offset()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->offset(), output);
@@ -2713,12 +2616,12 @@ void AppRequest_PollInvitedEvents::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.PollInvitedEvents)
+  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.PollingParameters)
 }
 
-::google::protobuf::uint8* AppRequest_PollInvitedEvents::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* AppRequest_PollingParameters::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.PollInvitedEvents)
+  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.PollingParameters)
   // optional int64 offset = 1;
   if (has_offset()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->offset(), target);
@@ -2733,11 +2636,11 @@ void AppRequest_PollInvitedEvents::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.PollInvitedEvents)
+  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.PollingParameters)
   return target;
 }
 
-int AppRequest_PollInvitedEvents::ByteSize() const {
+int AppRequest_PollingParameters::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -2767,10 +2670,10 @@ int AppRequest_PollInvitedEvents::ByteSize() const {
   return total_size;
 }
 
-void AppRequest_PollInvitedEvents::MergeFrom(const ::google::protobuf::Message& from) {
+void AppRequest_PollingParameters::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const AppRequest_PollInvitedEvents* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_PollInvitedEvents*>(
+  const AppRequest_PollingParameters* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_PollingParameters*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -2779,7 +2682,7 @@ void AppRequest_PollInvitedEvents::MergeFrom(const ::google::protobuf::Message& 
   }
 }
 
-void AppRequest_PollInvitedEvents::MergeFrom(const AppRequest_PollInvitedEvents& from) {
+void AppRequest_PollingParameters::MergeFrom(const AppRequest_PollingParameters& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_offset()) {
@@ -2792,24 +2695,24 @@ void AppRequest_PollInvitedEvents::MergeFrom(const AppRequest_PollInvitedEvents&
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void AppRequest_PollInvitedEvents::CopyFrom(const ::google::protobuf::Message& from) {
+void AppRequest_PollingParameters::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void AppRequest_PollInvitedEvents::CopyFrom(const AppRequest_PollInvitedEvents& from) {
+void AppRequest_PollingParameters::CopyFrom(const AppRequest_PollingParameters& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool AppRequest_PollInvitedEvents::IsInitialized() const {
+bool AppRequest_PollingParameters::IsInitialized() const {
 
   return true;
 }
 
-void AppRequest_PollInvitedEvents::Swap(AppRequest_PollInvitedEvents* other) {
+void AppRequest_PollingParameters::Swap(AppRequest_PollingParameters* other) {
   if (other != this) {
     std::swap(offset_, other->offset_);
     std::swap(amount_, other->amount_);
@@ -2819,285 +2722,11 @@ void AppRequest_PollInvitedEvents::Swap(AppRequest_PollInvitedEvents* other) {
   }
 }
 
-::google::protobuf::Metadata AppRequest_PollInvitedEvents::GetMetadata() const {
+::google::protobuf::Metadata AppRequest_PollingParameters::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = AppRequest_PollInvitedEvents_descriptor_;
-  metadata.reflection = AppRequest_PollInvitedEvents_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
-const int AppRequest_PollAcceptedEvents::kOffsetFieldNumber;
-const int AppRequest_PollAcceptedEvents::kAmountFieldNumber;
-#endif  // !_MSC_VER
-
-AppRequest_PollAcceptedEvents::AppRequest_PollAcceptedEvents()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:netmsg.AppRequest.PollAcceptedEvents)
-}
-
-void AppRequest_PollAcceptedEvents::InitAsDefaultInstance() {
-}
-
-AppRequest_PollAcceptedEvents::AppRequest_PollAcceptedEvents(const AppRequest_PollAcceptedEvents& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:netmsg.AppRequest.PollAcceptedEvents)
-}
-
-void AppRequest_PollAcceptedEvents::SharedCtor() {
-  _cached_size_ = 0;
-  offset_ = GOOGLE_LONGLONG(0);
-  amount_ = GOOGLE_LONGLONG(0);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-AppRequest_PollAcceptedEvents::~AppRequest_PollAcceptedEvents() {
-  // @@protoc_insertion_point(destructor:netmsg.AppRequest.PollAcceptedEvents)
-  SharedDtor();
-}
-
-void AppRequest_PollAcceptedEvents::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void AppRequest_PollAcceptedEvents::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* AppRequest_PollAcceptedEvents::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return AppRequest_PollAcceptedEvents_descriptor_;
-}
-
-const AppRequest_PollAcceptedEvents& AppRequest_PollAcceptedEvents::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_social_2eproto();
-  return *default_instance_;
-}
-
-AppRequest_PollAcceptedEvents* AppRequest_PollAcceptedEvents::default_instance_ = NULL;
-
-AppRequest_PollAcceptedEvents* AppRequest_PollAcceptedEvents::New() const {
-  return new AppRequest_PollAcceptedEvents;
-}
-
-void AppRequest_PollAcceptedEvents::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<AppRequest_PollAcceptedEvents*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(offset_, amount_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool AppRequest_PollAcceptedEvents::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:netmsg.AppRequest.PollAcceptedEvents)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int64 offset = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &offset_)));
-          set_has_offset();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_amount;
-        break;
-      }
-
-      // optional int64 amount = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_amount:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &amount_)));
-          set_has_amount();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:netmsg.AppRequest.PollAcceptedEvents)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:netmsg.AppRequest.PollAcceptedEvents)
-  return false;
-#undef DO_
-}
-
-void AppRequest_PollAcceptedEvents::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:netmsg.AppRequest.PollAcceptedEvents)
-  // optional int64 offset = 1;
-  if (has_offset()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->offset(), output);
-  }
-
-  // optional int64 amount = 2;
-  if (has_amount()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->amount(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:netmsg.AppRequest.PollAcceptedEvents)
-}
-
-::google::protobuf::uint8* AppRequest_PollAcceptedEvents::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:netmsg.AppRequest.PollAcceptedEvents)
-  // optional int64 offset = 1;
-  if (has_offset()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->offset(), target);
-  }
-
-  // optional int64 amount = 2;
-  if (has_amount()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->amount(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:netmsg.AppRequest.PollAcceptedEvents)
-  return target;
-}
-
-int AppRequest_PollAcceptedEvents::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int64 offset = 1;
-    if (has_offset()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->offset());
-    }
-
-    // optional int64 amount = 2;
-    if (has_amount()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->amount());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void AppRequest_PollAcceptedEvents::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const AppRequest_PollAcceptedEvents* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const AppRequest_PollAcceptedEvents*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void AppRequest_PollAcceptedEvents::MergeFrom(const AppRequest_PollAcceptedEvents& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_offset()) {
-      set_offset(from.offset());
-    }
-    if (from.has_amount()) {
-      set_amount(from.amount());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void AppRequest_PollAcceptedEvents::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void AppRequest_PollAcceptedEvents::CopyFrom(const AppRequest_PollAcceptedEvents& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool AppRequest_PollAcceptedEvents::IsInitialized() const {
-
-  return true;
-}
-
-void AppRequest_PollAcceptedEvents::Swap(AppRequest_PollAcceptedEvents* other) {
-  if (other != this) {
-    std::swap(offset_, other->offset_);
-    std::swap(amount_, other->amount_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata AppRequest_PollAcceptedEvents::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = AppRequest_PollAcceptedEvents_descriptor_;
-  metadata.reflection = AppRequest_PollAcceptedEvents_reflection_;
+  metadata.descriptor = AppRequest_PollingParameters_descriptor_;
+  metadata.reflection = AppRequest_PollingParameters_reflection_;
   return metadata;
 }
 
@@ -4762,12 +4391,10 @@ const int AppRequest::kPhoneIdFieldNumber;
 const int AppRequest::kMsgTypeFieldNumber;
 const int AppRequest::kRegMsgFieldNumber;
 const int AppRequest::kLoginMsgFieldNumber;
-const int AppRequest::kCreateEventFieldNumber;
+const int AppRequest::kCreatePrivateEventFieldNumber;
+const int AppRequest::kCreatePublicEventFieldNumber;
 const int AppRequest::kAcceptEventFieldNumber;
-const int AppRequest::kRejectEventFieldNumber;
-const int AppRequest::kInviteEventFieldNumber;
-const int AppRequest::kPollInvitedFieldNumber;
-const int AppRequest::kPollAcceptedFieldNumber;
+const int AppRequest::kPollParamsFieldNumber;
 const int AppRequest::kFriendRequestFieldNumber;
 const int AppRequest::kAcceptFriendRequestFieldNumber;
 const int AppRequest::kUpdateProfileFieldNumber;
@@ -4783,12 +4410,10 @@ AppRequest::AppRequest()
 void AppRequest::InitAsDefaultInstance() {
   reg_msg_ = const_cast< ::netmsg::AppRequest_RegisterMessage*>(&::netmsg::AppRequest_RegisterMessage::default_instance());
   login_msg_ = const_cast< ::netmsg::AppRequest_LoginMessage*>(&::netmsg::AppRequest_LoginMessage::default_instance());
-  create_event_ = const_cast< ::netmsg::AppRequest_CreateEvent*>(&::netmsg::AppRequest_CreateEvent::default_instance());
+  create_private_event_ = const_cast< ::netmsg::AppRequest_CreatePrivateEvent*>(&::netmsg::AppRequest_CreatePrivateEvent::default_instance());
+  create_public_event_ = const_cast< ::netmsg::AppRequest_CreatePublicEvent*>(&::netmsg::AppRequest_CreatePublicEvent::default_instance());
   accept_event_ = const_cast< ::netmsg::AppRequest_EventAccept*>(&::netmsg::AppRequest_EventAccept::default_instance());
-  reject_event_ = const_cast< ::netmsg::AppRequest_EventReject*>(&::netmsg::AppRequest_EventReject::default_instance());
-  invite_event_ = const_cast< ::netmsg::AppRequest_EventInvite*>(&::netmsg::AppRequest_EventInvite::default_instance());
-  poll_invited_ = const_cast< ::netmsg::AppRequest_PollInvitedEvents*>(&::netmsg::AppRequest_PollInvitedEvents::default_instance());
-  poll_accepted_ = const_cast< ::netmsg::AppRequest_PollAcceptedEvents*>(&::netmsg::AppRequest_PollAcceptedEvents::default_instance());
+  poll_params_ = const_cast< ::netmsg::AppRequest_PollingParameters*>(&::netmsg::AppRequest_PollingParameters::default_instance());
   friend_request_ = const_cast< ::netmsg::AppRequest_FriendRequest*>(&::netmsg::AppRequest_FriendRequest::default_instance());
   accept_friend_request_ = const_cast< ::netmsg::AppRequest_AcceptFriendRequest*>(&::netmsg::AppRequest_AcceptFriendRequest::default_instance());
   update_profile_ = const_cast< ::netmsg::AppRequest_UpdateProfile*>(&::netmsg::AppRequest_UpdateProfile::default_instance());
@@ -4807,12 +4432,10 @@ void AppRequest::SharedCtor() {
   msg_type_ = 1;
   reg_msg_ = NULL;
   login_msg_ = NULL;
-  create_event_ = NULL;
+  create_private_event_ = NULL;
+  create_public_event_ = NULL;
   accept_event_ = NULL;
-  reject_event_ = NULL;
-  invite_event_ = NULL;
-  poll_invited_ = NULL;
-  poll_accepted_ = NULL;
+  poll_params_ = NULL;
   friend_request_ = NULL;
   accept_friend_request_ = NULL;
   update_profile_ = NULL;
@@ -4828,12 +4451,10 @@ void AppRequest::SharedDtor() {
   if (this != default_instance_) {
     delete reg_msg_;
     delete login_msg_;
-    delete create_event_;
+    delete create_private_event_;
+    delete create_public_event_;
     delete accept_event_;
-    delete reject_event_;
-    delete invite_event_;
-    delete poll_invited_;
-    delete poll_accepted_;
+    delete poll_params_;
     delete friend_request_;
     delete accept_friend_request_;
     delete update_profile_;
@@ -4871,26 +4492,20 @@ void AppRequest::Clear() {
     if (has_login_msg()) {
       if (login_msg_ != NULL) login_msg_->::netmsg::AppRequest_LoginMessage::Clear();
     }
-    if (has_create_event()) {
-      if (create_event_ != NULL) create_event_->::netmsg::AppRequest_CreateEvent::Clear();
+    if (has_create_private_event()) {
+      if (create_private_event_ != NULL) create_private_event_->::netmsg::AppRequest_CreatePrivateEvent::Clear();
+    }
+    if (has_create_public_event()) {
+      if (create_public_event_ != NULL) create_public_event_->::netmsg::AppRequest_CreatePublicEvent::Clear();
     }
     if (has_accept_event()) {
       if (accept_event_ != NULL) accept_event_->::netmsg::AppRequest_EventAccept::Clear();
     }
-    if (has_reject_event()) {
-      if (reject_event_ != NULL) reject_event_->::netmsg::AppRequest_EventReject::Clear();
-    }
-    if (has_invite_event()) {
-      if (invite_event_ != NULL) invite_event_->::netmsg::AppRequest_EventInvite::Clear();
+    if (has_poll_params()) {
+      if (poll_params_ != NULL) poll_params_->::netmsg::AppRequest_PollingParameters::Clear();
     }
   }
-  if (_has_bits_[8 / 32] & 7936) {
-    if (has_poll_invited()) {
-      if (poll_invited_ != NULL) poll_invited_->::netmsg::AppRequest_PollInvitedEvents::Clear();
-    }
-    if (has_poll_accepted()) {
-      if (poll_accepted_ != NULL) poll_accepted_->::netmsg::AppRequest_PollAcceptedEvents::Clear();
-    }
+  if (_has_bits_[8 / 32] & 1792) {
     if (has_friend_request()) {
       if (friend_request_ != NULL) friend_request_->::netmsg::AppRequest_FriendRequest::Clear();
     }
@@ -4972,81 +4587,55 @@ bool AppRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_create_event;
+        if (input->ExpectTag(42)) goto parse_create_private_event;
         break;
       }
 
-      // optional .netmsg.AppRequest.CreateEvent create_event = 5;
+      // optional .netmsg.AppRequest.CreatePrivateEvent create_private_event = 5;
       case 5: {
         if (tag == 42) {
-         parse_create_event:
+         parse_create_private_event:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_create_event()));
+               input, mutable_create_private_event()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(50)) goto parse_accept_event;
+        if (input->ExpectTag(50)) goto parse_create_public_event;
         break;
       }
 
-      // optional .netmsg.AppRequest.EventAccept accept_event = 6;
+      // optional .netmsg.AppRequest.CreatePublicEvent create_public_event = 6;
       case 6: {
         if (tag == 50) {
+         parse_create_public_event:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_create_public_event()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(58)) goto parse_accept_event;
+        break;
+      }
+
+      // optional .netmsg.AppRequest.EventAccept accept_event = 7;
+      case 7: {
+        if (tag == 58) {
          parse_accept_event:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_accept_event()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_reject_event;
+        if (input->ExpectTag(82)) goto parse_poll_params;
         break;
       }
 
-      // optional .netmsg.AppRequest.EventReject reject_event = 7;
-      case 7: {
-        if (tag == 58) {
-         parse_reject_event:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_reject_event()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(66)) goto parse_invite_event;
-        break;
-      }
-
-      // optional .netmsg.AppRequest.EventInvite invite_event = 8;
-      case 8: {
-        if (tag == 66) {
-         parse_invite_event:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_invite_event()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(74)) goto parse_poll_invited;
-        break;
-      }
-
-      // optional .netmsg.AppRequest.PollInvitedEvents poll_invited = 9;
-      case 9: {
-        if (tag == 74) {
-         parse_poll_invited:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_poll_invited()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(82)) goto parse_poll_accepted;
-        break;
-      }
-
-      // optional .netmsg.AppRequest.PollAcceptedEvents poll_accepted = 10;
+      // optional .netmsg.AppRequest.PollingParameters poll_params = 10;
       case 10: {
         if (tag == 82) {
-         parse_poll_accepted:
+         parse_poll_params:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_poll_accepted()));
+               input, mutable_poll_params()));
         } else {
           goto handle_unusual;
         }
@@ -5160,40 +4749,28 @@ void AppRequest::SerializeWithCachedSizes(
       4, this->login_msg(), output);
   }
 
-  // optional .netmsg.AppRequest.CreateEvent create_event = 5;
-  if (has_create_event()) {
+  // optional .netmsg.AppRequest.CreatePrivateEvent create_private_event = 5;
+  if (has_create_private_event()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->create_event(), output);
+      5, this->create_private_event(), output);
   }
 
-  // optional .netmsg.AppRequest.EventAccept accept_event = 6;
+  // optional .netmsg.AppRequest.CreatePublicEvent create_public_event = 6;
+  if (has_create_public_event()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      6, this->create_public_event(), output);
+  }
+
+  // optional .netmsg.AppRequest.EventAccept accept_event = 7;
   if (has_accept_event()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      6, this->accept_event(), output);
+      7, this->accept_event(), output);
   }
 
-  // optional .netmsg.AppRequest.EventReject reject_event = 7;
-  if (has_reject_event()) {
+  // optional .netmsg.AppRequest.PollingParameters poll_params = 10;
+  if (has_poll_params()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, this->reject_event(), output);
-  }
-
-  // optional .netmsg.AppRequest.EventInvite invite_event = 8;
-  if (has_invite_event()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      8, this->invite_event(), output);
-  }
-
-  // optional .netmsg.AppRequest.PollInvitedEvents poll_invited = 9;
-  if (has_poll_invited()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      9, this->poll_invited(), output);
-  }
-
-  // optional .netmsg.AppRequest.PollAcceptedEvents poll_accepted = 10;
-  if (has_poll_accepted()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      10, this->poll_accepted(), output);
+      10, this->poll_params(), output);
   }
 
   // optional .netmsg.AppRequest.FriendRequest friend_request = 11;
@@ -5255,46 +4832,32 @@ void AppRequest::SerializeWithCachedSizes(
         4, this->login_msg(), target);
   }
 
-  // optional .netmsg.AppRequest.CreateEvent create_event = 5;
-  if (has_create_event()) {
+  // optional .netmsg.AppRequest.CreatePrivateEvent create_private_event = 5;
+  if (has_create_private_event()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->create_event(), target);
+        5, this->create_private_event(), target);
   }
 
-  // optional .netmsg.AppRequest.EventAccept accept_event = 6;
+  // optional .netmsg.AppRequest.CreatePublicEvent create_public_event = 6;
+  if (has_create_public_event()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        6, this->create_public_event(), target);
+  }
+
+  // optional .netmsg.AppRequest.EventAccept accept_event = 7;
   if (has_accept_event()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        6, this->accept_event(), target);
+        7, this->accept_event(), target);
   }
 
-  // optional .netmsg.AppRequest.EventReject reject_event = 7;
-  if (has_reject_event()) {
+  // optional .netmsg.AppRequest.PollingParameters poll_params = 10;
+  if (has_poll_params()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        7, this->reject_event(), target);
-  }
-
-  // optional .netmsg.AppRequest.EventInvite invite_event = 8;
-  if (has_invite_event()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->invite_event(), target);
-  }
-
-  // optional .netmsg.AppRequest.PollInvitedEvents poll_invited = 9;
-  if (has_poll_invited()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        9, this->poll_invited(), target);
-  }
-
-  // optional .netmsg.AppRequest.PollAcceptedEvents poll_accepted = 10;
-  if (has_poll_accepted()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        10, this->poll_accepted(), target);
+        10, this->poll_params(), target);
   }
 
   // optional .netmsg.AppRequest.FriendRequest friend_request = 11;
@@ -5363,50 +4926,36 @@ int AppRequest::ByteSize() const {
           this->login_msg());
     }
 
-    // optional .netmsg.AppRequest.CreateEvent create_event = 5;
-    if (has_create_event()) {
+    // optional .netmsg.AppRequest.CreatePrivateEvent create_private_event = 5;
+    if (has_create_private_event()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->create_event());
+          this->create_private_event());
     }
 
-    // optional .netmsg.AppRequest.EventAccept accept_event = 6;
+    // optional .netmsg.AppRequest.CreatePublicEvent create_public_event = 6;
+    if (has_create_public_event()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->create_public_event());
+    }
+
+    // optional .netmsg.AppRequest.EventAccept accept_event = 7;
     if (has_accept_event()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->accept_event());
     }
 
-    // optional .netmsg.AppRequest.EventReject reject_event = 7;
-    if (has_reject_event()) {
+    // optional .netmsg.AppRequest.PollingParameters poll_params = 10;
+    if (has_poll_params()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->reject_event());
-    }
-
-    // optional .netmsg.AppRequest.EventInvite invite_event = 8;
-    if (has_invite_event()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->invite_event());
+          this->poll_params());
     }
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional .netmsg.AppRequest.PollInvitedEvents poll_invited = 9;
-    if (has_poll_invited()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->poll_invited());
-    }
-
-    // optional .netmsg.AppRequest.PollAcceptedEvents poll_accepted = 10;
-    if (has_poll_accepted()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->poll_accepted());
-    }
-
     // optional .netmsg.AppRequest.FriendRequest friend_request = 11;
     if (has_friend_request()) {
       total_size += 1 +
@@ -5478,26 +5027,20 @@ void AppRequest::MergeFrom(const AppRequest& from) {
     if (from.has_login_msg()) {
       mutable_login_msg()->::netmsg::AppRequest_LoginMessage::MergeFrom(from.login_msg());
     }
-    if (from.has_create_event()) {
-      mutable_create_event()->::netmsg::AppRequest_CreateEvent::MergeFrom(from.create_event());
+    if (from.has_create_private_event()) {
+      mutable_create_private_event()->::netmsg::AppRequest_CreatePrivateEvent::MergeFrom(from.create_private_event());
+    }
+    if (from.has_create_public_event()) {
+      mutable_create_public_event()->::netmsg::AppRequest_CreatePublicEvent::MergeFrom(from.create_public_event());
     }
     if (from.has_accept_event()) {
       mutable_accept_event()->::netmsg::AppRequest_EventAccept::MergeFrom(from.accept_event());
     }
-    if (from.has_reject_event()) {
-      mutable_reject_event()->::netmsg::AppRequest_EventReject::MergeFrom(from.reject_event());
-    }
-    if (from.has_invite_event()) {
-      mutable_invite_event()->::netmsg::AppRequest_EventInvite::MergeFrom(from.invite_event());
+    if (from.has_poll_params()) {
+      mutable_poll_params()->::netmsg::AppRequest_PollingParameters::MergeFrom(from.poll_params());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_poll_invited()) {
-      mutable_poll_invited()->::netmsg::AppRequest_PollInvitedEvents::MergeFrom(from.poll_invited());
-    }
-    if (from.has_poll_accepted()) {
-      mutable_poll_accepted()->::netmsg::AppRequest_PollAcceptedEvents::MergeFrom(from.poll_accepted());
-    }
     if (from.has_friend_request()) {
       mutable_friend_request()->::netmsg::AppRequest_FriendRequest::MergeFrom(from.friend_request());
     }
@@ -5532,17 +5075,14 @@ bool AppRequest::IsInitialized() const {
   if (has_login_msg()) {
     if (!this->login_msg().IsInitialized()) return false;
   }
-  if (has_create_event()) {
-    if (!this->create_event().IsInitialized()) return false;
+  if (has_create_private_event()) {
+    if (!this->create_private_event().IsInitialized()) return false;
+  }
+  if (has_create_public_event()) {
+    if (!this->create_public_event().IsInitialized()) return false;
   }
   if (has_accept_event()) {
     if (!this->accept_event().IsInitialized()) return false;
-  }
-  if (has_reject_event()) {
-    if (!this->reject_event().IsInitialized()) return false;
-  }
-  if (has_invite_event()) {
-    if (!this->invite_event().IsInitialized()) return false;
   }
   if (has_friend_request()) {
     if (!this->friend_request().IsInitialized()) return false;
@@ -5562,12 +5102,10 @@ void AppRequest::Swap(AppRequest* other) {
     std::swap(msg_type_, other->msg_type_);
     std::swap(reg_msg_, other->reg_msg_);
     std::swap(login_msg_, other->login_msg_);
-    std::swap(create_event_, other->create_event_);
+    std::swap(create_private_event_, other->create_private_event_);
+    std::swap(create_public_event_, other->create_public_event_);
     std::swap(accept_event_, other->accept_event_);
-    std::swap(reject_event_, other->reject_event_);
-    std::swap(invite_event_, other->invite_event_);
-    std::swap(poll_invited_, other->poll_invited_);
-    std::swap(poll_accepted_, other->poll_accepted_);
+    std::swap(poll_params_, other->poll_params_);
     std::swap(friend_request_, other->friend_request_);
     std::swap(accept_friend_request_, other->accept_friend_request_);
     std::swap(update_profile_, other->update_profile_);
